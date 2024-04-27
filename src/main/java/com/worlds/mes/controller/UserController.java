@@ -1,10 +1,18 @@
 package com.worlds.mes.controller;
 
+import com.github.pagehelper.Page;
 import com.worlds.mes.UrlMapping;
+import com.worlds.mes.dto.ResultDto;
+import com.worlds.mes.dto.UserDto;
 import com.worlds.mes.entity.User;
 import com.worlds.mes.service.UserService;
+import com.worlds.mes.service.impl.UserServiceImpl;
+import com.worlds.mes.utils.BaseController;
+import com.worlds.mes.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/User")
 @Api(value = "用户表",tags = "用户表")
-public class UserController {
+public class UserController extends BaseController {
+
+    private static Log log = LogFactory.getLog(UserServiceImpl.class);
 
     @Autowired
     private UserService userService;
@@ -31,7 +42,25 @@ public class UserController {
     public List<User> listAll() {
         return userService.listAll();
     }
-
+    /**
+     * 根据条件查询所有记录
+     *
+     * @return 返回集合，没有返回空List
+     */
+    @RequestMapping(value = UrlMapping.LIST_ALL_BY_PARAM)
+    @ApiOperation(value = "根据条件查询所有记录")
+    public ResultDto<List<UserDto>> LIST_ALL_BY_PARAM (@RequestBody UserVo userVo) {
+        ResultDto<List<UserDto>> result = new ResultDto();
+        Page<Map<String, Object>> page = userService.listAllByParam(userVo);
+        if (page.isEmpty()) {
+            result.setCode(500);
+            result.setSuccess(false);
+            result.setMessage("未查询到数据");
+            return result;
+        }
+        result =getPageDataByMap(page,UserDto.class);
+        return result;
+    }
 
     /**
      * 根据主键查询
@@ -40,7 +69,7 @@ public class UserController {
      * @return 返回记录，没有返回null
      */
 
-    @RequestMapping(value = UrlMapping.GETBYID)
+    @RequestMapping(value = UrlMapping.GET_BY_ID)
     @ApiOperation(value = "根据主键查询")
     public User getById(Integer id) {
         return userService.getById(id);
@@ -64,7 +93,7 @@ public class UserController {
      * @param user 新增的记录
      * @return 返回影响行数
      */
-    @RequestMapping(value = UrlMapping.INSERTIGNORENULL, method = RequestMethod.POST)
+    @RequestMapping(value = UrlMapping.INSERT_IGNORE_NULL, method = RequestMethod.POST)
     @ApiOperation(value = "新增，忽略null字段")
     public int insertIgnoreNull(@RequestBody User user) {
         return userService.insertIgnoreNull(user);
@@ -88,7 +117,7 @@ public class UserController {
      * @param user 修改的记录
      * @return 返回影响行数
      */
-    @RequestMapping(value = UrlMapping.UPDATEIGNORENULL, method = RequestMethod.POST)
+    @RequestMapping(value = UrlMapping.UPDATE_IGNORE_NULL, method = RequestMethod.POST)
     @ApiOperation(value = "修改，忽略null字段")
     public int updateIgnoreNull(@RequestBody User user) {
         return userService.updateIgnoreNull(user);

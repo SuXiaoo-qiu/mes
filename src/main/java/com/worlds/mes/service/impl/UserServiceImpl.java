@@ -1,15 +1,25 @@
 package com.worlds.mes.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.worlds.mes.commons.SimplePageInfo;
 import com.worlds.mes.entity.User;
 import com.worlds.mes.mapper.UserMapper;
 import com.worlds.mes.service.UserService;
+import com.worlds.mes.vo.UserVo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements  UserService  {
+
+    private static Log log = LogFactory.getLog(UserServiceImpl.class);
+
 
     @Autowired
     private UserMapper userMapper;
@@ -22,6 +32,14 @@ public class UserServiceImpl implements  UserService  {
     @Override
     public List<User> listAll() {
         return userMapper.listAll();
+    }
+
+    @Override
+    public Page<Map<String, Object>> listAllByParam(UserVo userVo) {
+        SimplePageInfo pageInfo = userVo.getPageInfo();
+        PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getCount());
+        Page<Map<String,Object>> page = (Page<Map<String, Object>>)  userMapper.listAllByParam(userVo);;
+        return page;
     }
 
 

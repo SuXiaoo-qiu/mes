@@ -8,12 +8,13 @@ public interface UrlMapping {
     String INDEX_PATH = "/";
     String TEST = "/test";
     String LIST = "/list";
-    String GETBYID = "/getbyid";
+    String GET_BY_ID = "/getbyid";
     String INSERT = "/insert";
-    String INSERTIGNORENULL = "/insertIgnoreNull";
+    String INSERT_IGNORE_NULL = "/insertIgnoreNull";
     String UPDATE = "/update";
-    String UPDATEIGNORENULL = "/updateIgnoreNull";
+    String UPDATE_IGNORE_NULL = "/updateIgnoreNull";
     String DELETE = "/delete";
+    String LIST_ALL_BY_PARAM = "/listAllByParam";
 
 
 

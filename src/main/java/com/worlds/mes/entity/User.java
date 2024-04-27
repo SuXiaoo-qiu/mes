@@ -2,14 +2,23 @@ package com.worlds.mes.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.io.Serializable;
 import java.util.Date;
 
+
 /**
- * 用户表
- */
+ * @program: mes用户表实体
+ * @author: joeWorlds
+ * @create: 2024-04-26 15:41:41
+ * @return: 用户表
+ **/
 @ApiModel(value = "用户表",description = "用户表实体")
 @Data
-public class User {
+public class User implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	/** 用户表 */
 	@ApiModelProperty(value = "用户表",required=true)
 	private Integer id;
@@ -33,9 +42,11 @@ public class User {
 	private String avatarUrl;
 	/** 创建时间 */
 	@ApiModelProperty(value = "创建时间",required=false)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date createTime;
 	/** 修改时间 */
 	@ApiModelProperty(value = "修改时间",required=false)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
 	private Date updateTime;
 	/** 创建人 */
 	@ApiModelProperty(value = "创建人",required=false)
@@ -45,10 +56,10 @@ public class User {
 	private String updatePeople;
 	/** 是否为超级管理员 0否1是 */
 	@ApiModelProperty(value = "是否为超级管理员 0否1是",required=true)
-	private Integer admin;
+	private Byte admin;
 	/** 是否启用，0否1是 */
 	@ApiModelProperty(value = "是否启用，0否1是",required=true)
-	private Integer enable;
+	private Byte enable;
 
 
 }

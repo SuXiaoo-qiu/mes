@@ -41,6 +41,28 @@
         FROM sys_user t
     </select>
 
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_user t
+        <where>
+            <if test="id!=null and id!=''">AND t.id = #{id}</if>
+            <if test="loginName!=null and loginName!=''">AND t.login_name = #{loginName}</if>
+            <if test="nickName!=null and nickName!=''">AND t.nick_name = #{nickName}</if>
+            <if test="pwd!=null and pwd!=''">AND t.pwd = #{pwd}</if>
+            <if test="roleId!=null and roleId!=''">AND t.role_id = #{roleId}</if>
+            <if test="deptId!=null and deptId!=''">AND t.dept_id = #{deptId}</if>
+            <if test="avatarUrl!=null and avatarUrl!=''">AND t.avatar_url = #{avatarUrl}</if>
+            <if test="createTime!=null and createTime!=''">AND t.create_time = #{createTime}</if>
+            <if test="updateTime!=null and updateTime!=''">AND t.update_time = #{updateTime}</if>
+            <if test="createPeople!=null and createPeople!=''">AND t.create_people = #{createPeople}</if>
+            <if test="updatePeople!=null and updatePeople!=''">AND t.update_people = #{updatePeople}</if>
+            <if test="admin!=null and admin!=''">AND t.admin = #{admin}</if>
+            <if test="enable!=null and enable!=''">AND t.enable = #{enable}</if>
+        </where>
+    </select>
+
     <!-- 根据主键获取单条记录 -->
     <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
         SELECT

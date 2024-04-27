@@ -1,7 +1,11 @@
 package com.worlds.mes.service;
 
+import com.github.pagehelper.Page;
 import com.worlds.mes.entity.User;
+import com.worlds.mes.vo.UserVo;
+
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
@@ -11,6 +15,14 @@ public interface UserService {
      * @return 返回集合，没有返回空List
      */
     public List<User> listAll();
+
+
+    /**
+     * 查询所有记录
+     *
+     * @return 返回集合，没有返回空List
+     */
+    public Page<Map<String,Object>> listAllByParam(UserVo userVo);
 
     /**
      * 根据主键查询

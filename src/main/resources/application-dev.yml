@@ -3,7 +3,7 @@ server:
 logging:
   level:
     root: info
-    com.joe: debug
+    com.worlds: debug
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
