@@ -4,8 +4,8 @@ import com.worlds.mes.entity.User;
 import com.worlds.mes.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -22,7 +22,7 @@ public interface UserMapper {
 	 *
 	 * @return 返回集合，没有返回空List
 	 */
-	List<Map<String, Object>> listAllByParam(UserVo userVo);
+	List<HashMap<String, Object>> listAllByParam(UserVo userVo);
 
 
 	/**

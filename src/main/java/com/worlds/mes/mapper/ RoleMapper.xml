@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.worlds.mes.entity.Role">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="create_id" property="createId" />
+        <result column="create_name" property="createName" />
+        <result column="create_time" property="createTime" />
+        <result column="enable" property="enable" />
+        <result column="scope" property="scope" />
+        <result column="department_id" property="departmentId" />
+        <result column="resource_id" property="resourceId" />
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.name
+        , t.create_id
+        , t.create_name
+        , t.create_time
+        , t.enable
+        , t.scope
+        , t.department_id
+        , t.resource_id
+        </sql>
+
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+    </select>
+
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+        <where>
+            <if test="id!=null and id!=''">AND t.id = #{id}</if>
+            <if test="name!=null and name!=''">AND t.name = #{name}</if>
+            <if test="createId!=null and createId!=''">AND t.create_id = #{createId}</if>
+            <if test="createName!=null and createName!=''">AND t.create_name = #{createName}</if>
+            <if test="createTime!=null and createTime!=''">AND t.create_time = #{createTime}</if>
+            <if test="enable!=null and enable!=''">AND t.enable = #{enable}</if>
+            <if test="scope!=null and scope!=''">AND t.scope = #{scope}</if>
+            <if test="departmentId!=null and departmentId!=''">AND t.department_id = #{departmentId}</if>
+            <if test="resourceId!=null and resourceId!=''">AND t.resource_id = #{resourceId}</if>
+        </where>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+        WHERE id = #{id}
+    </select>
+
+    <!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.Role"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            name,
+            create_id,
+            create_name,
+            create_time,
+            enable,
+            scope,
+            department_id,
+            resource_id,
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            #{name},
+            #{createId},
+            #{createName},
+            #{createTime},
+            #{enable},
+            #{scope},
+            #{departmentId},
+            #{resourceId},
+        </trim>
+    </insert>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.Role"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="name != null">
+                name,
+            </if>
+            <if test="createId != null">
+                create_id,
+            </if>
+            <if test="createName != null">
+                create_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="enable != null">
+                enable,
+            </if>
+            <if test="scope != null">
+                scope,
+            </if>
+            <if test="departmentId != null">
+                department_id,
+            </if>
+            <if test="resourceId != null">
+                resource_id,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="name != null" >
+                #{name},
+            </if>
+            <if test="createId != null" >
+                #{createId},
+            </if>
+            <if test="createName != null" >
+                #{createName},
+            </if>
+            <if test="createTime != null" >
+                #{createTime},
+            </if>
+            <if test="enable != null" >
+                #{enable},
+            </if>
+            <if test="scope != null" >
+                #{scope},
+            </if>
+            <if test="departmentId != null" >
+                #{departmentId},
+            </if>
+            <if test="resourceId != null" >
+                #{resourceId},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.Role">
+        UPDATE sys_role
+        <set>
+            name=#{name},
+            create_id=#{createId},
+            create_name=#{createName},
+            create_time=#{createTime},
+            enable=#{enable},
+            scope=#{scope},
+            department_id=#{departmentId},
+            resource_id=#{resourceId},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.Role">
+        UPDATE sys_role
+        <set>
+            <if test="name != null" >
+                name=#{name},
+            </if>
+            <if test="createId != null" >
+                create_id=#{createId},
+            </if>
+            <if test="createName != null" >
+                create_name=#{createName},
+            </if>
+            <if test="createTime != null" >
+                create_time=#{createTime},
+            </if>
+            <if test="enable != null" >
+                enable=#{enable},
+            </if>
+            <if test="scope != null" >
+                scope=#{scope},
+            </if>
+            <if test="departmentId != null" >
+                department_id=#{departmentId},
+            </if>
+            <if test="resourceId != null" >
+                resource_id=#{resourceId},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 根据主键删除记录 -->
+    <delete id="delete" parameterType="com.worlds.mes.entity.Role">
+		UPDATE sys_role
+		SET is_deleted=1
+		WHERE id = #{id}
+	</delete>
+
+
+</mapper>

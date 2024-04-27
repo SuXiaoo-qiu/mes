@@ -1,26 +1,28 @@
-package com.worlds.mes.service;
+package com.worlds.mes.mapper;
 
-import com.worlds.mes.entity.User;
-import com.github.pagehelper.Page;
-import com.worlds.mes.vo.UserVo;
-import java.util.List;
+import com.worlds.mes.entity.Role;
+import com.worlds.mes.vo.RoleVo;
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.HashMap;
+import java.util.List;
 
-public interface UserService {
+@Mapper
+public interface RoleMapper {
 
     /**
      * 查询所有记录
      *
      * @return 返回集合，没有返回空List
      */
-    public List<User> listAll();
+    List<Role> listAll();
 
     /**
      * 根据条件查询所有记录
      *
      * @return 返回集合，没有返回空List
      */
-    public Page<HashMap<String,Object>> listAllByParam(UserVo userVo);
+    List<HashMap<String, Object>> listAllByParam(RoleVo roleVo);
 
     /**
      * 根据主键查询
@@ -28,46 +30,46 @@ public interface UserService {
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-    public User getById(Integer id);
+    Role getById(Integer id);
 
     /**
      * 新增，插入所有字段
      *
-     * @param user 新增的记录
+     * @param role 新增的记录
      * @return 返回影响行数
      */
-    public int insert(User user);
+    int insert(Role role);
 
     /**
      * 新增，忽略null字段
      *
-     * @param user 新增的记录
+     * @param role 新增的记录
      * @return 返回影响行数
      */
-    public int insertIgnoreNull(User user);
+    int insertIgnoreNull(Role role);
 
     /**
      * 修改，修改所有字段
      *
-     * @param user 修改的记录
+     * @param role 修改的记录
      * @return 返回影响行数
      */
-    public int update(User user);
+    int update(Role role);
 
     /**
      * 修改，忽略null字段
      *
-     * @param user 修改的记录
+     * @param role 修改的记录
      * @return 返回影响行数
      */
-    public int updateIgnoreNull(User user);
+    int updateIgnoreNull(Role role);
 
     /**
      * 删除记录
      *
-     * @param user 待删除的记录
+     * @param role 待删除的记录
      * @return 返回影响行数
      */
-    public int delete(User user);
+    int delete(Role role);
 
 }

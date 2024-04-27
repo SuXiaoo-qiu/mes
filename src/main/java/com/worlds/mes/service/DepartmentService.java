@@ -1,26 +1,26 @@
 package com.worlds.mes.service;
 
-import com.worlds.mes.entity.User;
+import com.worlds.mes.entity.Department;
 import com.github.pagehelper.Page;
-import com.worlds.mes.vo.UserVo;
+import com.worlds.mes.vo.DepartmentVo;
 import java.util.List;
 import java.util.HashMap;
 
-public interface UserService {
+public interface DepartmentService {
 
     /**
      * 查询所有记录
      *
      * @return 返回集合，没有返回空List
      */
-    public List<User> listAll();
-
+    public List<Department> listAll();
+    
     /**
      * 根据条件查询所有记录
      *
      * @return 返回集合，没有返回空List
      */
-    public Page<HashMap<String,Object>> listAllByParam(UserVo userVo);
+    public Page<HashMap<String,Object>> listAllByParam(DepartmentVo departmentVo);
 
     /**
      * 根据主键查询
@@ -28,46 +28,46 @@ public interface UserService {
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-    public User getById(Integer id);
-
+    public Department getById(Integer id);
+	
     /**
      * 新增，插入所有字段
      *
-     * @param user 新增的记录
+     * @param department 新增的记录
      * @return 返回影响行数
      */
-    public int insert(User user);
-
+    public int insert(Department department);
+    
     /**
      * 新增，忽略null字段
      *
-     * @param user 新增的记录
+     * @param department 新增的记录
      * @return 返回影响行数
      */
-    public int insertIgnoreNull(User user);
-
+    public int insertIgnoreNull(Department department);
+	
     /**
      * 修改，修改所有字段
      *
-     * @param user 修改的记录
+     * @param department 修改的记录
      * @return 返回影响行数
      */
-    public int update(User user);
-
+    public int update(Department department);
+    
     /**
      * 修改，忽略null字段
      *
-     * @param user 修改的记录
+     * @param department 修改的记录
      * @return 返回影响行数
      */
-    public int updateIgnoreNull(User user);
-
+    public int updateIgnoreNull(Department department);
+    
     /**
      * 删除记录
      *
-     * @param user 待删除的记录
+     * @param department 待删除的记录
      * @return 返回影响行数
      */
-    public int delete(User user);
-
+    public int delete(Department department);
+    
 }
