@@ -26,10 +26,17 @@ public class RedisController extends BaseController {
     private RedisTemplate  redisTemplate;
 
     @RequestMapping(value = UrlMapping.TEST)
-    @ApiOperation(value = "redis测试")
-    public ResultDto  login(@RequestBody HashMap<String, Object> map) {
+    @ApiOperation(value = "redis测试新增")
+    public ResultDto  test(@RequestBody HashMap<String, Object> map) {
         ResultDto result = new ResultDto();
         redisTemplate.opsForValue().set(map.get("username"),map.get("password"));
+        return result ;
+    }
+    @RequestMapping(value = UrlMapping.DELETE)
+    @ApiOperation(value = "清空redis")
+    public ResultDto  delete(@RequestBody HashMap<String, Object> map) {
+        ResultDto result = new ResultDto();
+        redisTemplate.getConnectionFactory().getConnection().flushAll();
         return result ;
     }
 }
