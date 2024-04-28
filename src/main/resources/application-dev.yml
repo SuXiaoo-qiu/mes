@@ -39,6 +39,11 @@ spring:
       maximum-pool-size: 12
       minimum-idle: 10
       pool-name: GGLiliKariPool
+  redis:
+    database: 1
+    host: 47.103.77.149
+    port: 6379
+    password: f*a%vvmM%7Se
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

@@ -22,6 +22,17 @@ public class BaseController {
         result.setTotal(page.getTotal());
         result.setPageNum(page.getPageNum());
         result.setPageSize(page.getPageSize());
+        result.setCode(200);
+        result.setSuccess(true);
+        result.setMessage("成功");
+        result.setData((List<T>) page);
+        return result;
+    }
+    public <T> ResultDto<List<T>> getPageDataByMap(List page, Class<T> clazz) {
+        ResultDto<List<T>> result = new ResultDto<List<T>>();
+        result.setCode(200);
+        result.setSuccess(true);
+        result.setMessage("成功");
         result.setData((List<T>) page);
         return result;
     }
