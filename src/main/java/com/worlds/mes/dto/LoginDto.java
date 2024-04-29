@@ -52,9 +52,6 @@ public class LoginDto implements Serializable {
     /** 是否启用，0否1是 */
     @ApiModelProperty(value = "是否启用，0否1是",required=true)
     private Byte enable;
-    /** token */
-    @ApiModelProperty(value = "token",required=false)
-    private String token;
 
 
 }

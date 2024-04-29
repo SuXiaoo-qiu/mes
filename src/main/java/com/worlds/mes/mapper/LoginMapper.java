@@ -2,28 +2,28 @@ package com.worlds.mes.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.worlds.mes.dto.LoginDto;
-import com.worlds.mes.entity.User;
-import com.worlds.mes.vo.UserVo;
+import com.worlds.mes.entity.SysUser;
+import com.worlds.mes.vo.SysUserVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface LoginMapper extends BaseMapper<User> {
+public interface LoginMapper extends BaseMapper<SysUser> {
 
 	/**
 	 * 查询所有记录
 	 *
 	 * @return 返回集合，没有返回空List
 	 */
-	List<User> listAll();
+	List<SysUser> listAll();
 
 	/**
 	 * 查询所有记录
 	 *
 	 * @return 返回集合，没有返回空List
 	 */
-	List<LoginDto> listAllByParam(UserVo userVo);
+	List<LoginDto> listAllByParam(SysUserVo userVo);
 
 
 	/**
@@ -32,7 +32,7 @@ public interface LoginMapper extends BaseMapper<User> {
 	 * @param id 主键
 	 * @return 返回记录，没有返回null
 	 */
-	User getById(Integer id);
+	SysUser getById(Integer id);
 
 	/**
 	 * 新增，插入所有字段
@@ -40,7 +40,8 @@ public interface LoginMapper extends BaseMapper<User> {
 	 * @param user 新增的记录
 	 * @return 返回影响行数
 	 */
-	int insert(User user);
+	@Override
+	int insert(SysUser user);
 
 	/**
 	 * 新增，忽略null字段
@@ -48,7 +49,7 @@ public interface LoginMapper extends BaseMapper<User> {
 	 * @param user 新增的记录
 	 * @return 返回影响行数
 	 */
-	int insertIgnoreNull(User user);
+	int insertIgnoreNull(SysUser user);
 
 	/**
 	 * 修改，修改所有字段
@@ -56,7 +57,7 @@ public interface LoginMapper extends BaseMapper<User> {
 	 * @param user 修改的记录
 	 * @return 返回影响行数
 	 */
-	int update(User user);
+	int update(SysUser user);
 
 	/**
 	 * 修改，忽略null字段
@@ -64,14 +65,7 @@ public interface LoginMapper extends BaseMapper<User> {
 	 * @param user 修改的记录
 	 * @return 返回影响行数
 	 */
-	int updateIgnoreNull(User user);
+	int updateIgnoreNull(SysUser user);
 
-	/**
-	 * 删除记录
-	 *
-	 * @param user 待删除的记录
-	 * @return 返回影响行数
-	 */
-	int delete(User user);
 
 }

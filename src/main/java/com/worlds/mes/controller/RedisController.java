@@ -20,7 +20,7 @@ import java.util.HashMap;
 @RequestMapping("/redis")
 public class RedisController extends BaseController {
 
-    private static Log log = LogFactory.getLog(DepartmentController.class);
+    private static Log log = LogFactory.getLog(RedisController.class);
 
     @Autowired
     private RedisTemplate  redisTemplate;
@@ -37,6 +37,7 @@ public class RedisController extends BaseController {
     public ResultDto  delete(@RequestBody HashMap<String, Object> map) {
         ResultDto result = new ResultDto();
         redisTemplate.getConnectionFactory().getConnection().flushAll();
+       log.info("清空redis");
         return result ;
     }
 }

@@ -2,6 +2,7 @@ package com.worlds.mes.utils;
 
 import com.github.pagehelper.Page;
 import com.worlds.mes.dto.ResultDto;
+import com.worlds.mes.dto.ResultTokenDto;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashMap;
@@ -34,6 +35,14 @@ public class BaseController {
         result.setSuccess(true);
         result.setMessage("成功");
         result.setData((List<T>) page);
+        return result;
+    }
+    public <T> ResultTokenDto<List<T>> getTokenDataByLogin(List data, Class<T> clazz) {
+        ResultTokenDto<List<T>> result = new ResultTokenDto<List<T>>();
+        result.setCode(200);
+        result.setSuccess(true);
+        result.setMessage("成功");
+        result.setData((List<T>) data);
         return result;
     }
 }
