@@ -22,6 +22,7 @@ public interface UrlMapping {
      */
     String LOGIN = "/login";
     String LOGIN_OUT = "/loginOut";
+    String USER_REGISTER = "/userRegister";
 
 
 }

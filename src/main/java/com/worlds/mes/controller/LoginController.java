@@ -3,6 +3,7 @@ package com.worlds.mes.controller;
 import com.github.pagehelper.util.StringUtil;
 import com.worlds.mes.UrlMapping;
 import com.worlds.mes.dto.LoginDto;
+import com.worlds.mes.dto.ResultNoPageDto;
 import com.worlds.mes.dto.ResultTokenDto;
 import com.worlds.mes.entity.SysUser;
 import com.worlds.mes.service.LoginService;
@@ -10,6 +11,7 @@ import com.worlds.mes.utils.BaseController;
 import com.worlds.mes.utils.JwtTokenUtil;
 import com.worlds.mes.utils.MesEnumUtils;
 import com.worlds.mes.vo.LoginVo;
+import com.worlds.mes.vo.UserRegisterVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
@@ -104,6 +106,74 @@ public class LoginController  extends BaseController {
         resultTokenDto.setSuccess(b);
         resultTokenDto.setMessage("退出登录成功");
         return resultTokenDto;
+    }
+
+    /**
+     * 用户注册
+     *
+     * @param vo ,requestIp
+     * @return resultTokenDto
+     */
+    @RequestMapping(value = UrlMapping.USER_REGISTER)
+    @ApiOperation(value = "用户注册")
+    public ResultNoPageDto userRegister(@RequestBody UserRegisterVo vo, HttpServletRequest requestIp) {
+        ResultNoPageDto resultNoPageDto = new ResultNoPageDto();
+        resultNoPageDto.setCode(MesEnumUtils.CODE_5001);
+        resultNoPageDto.setSuccess(false);
+        if (null==vo){
+            resultNoPageDto.setMessage("参数不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getLoginName())){
+            resultNoPageDto.setMessage("登录名不能为空");
+            return resultNoPageDto;
+
+        }
+        if (StringUtils.isEmpty(vo.getPwd())){
+            resultNoPageDto.setMessage("密码不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getNickName())){
+            resultNoPageDto.setMessage("昵称不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getDeptId())){
+            resultNoPageDto.setMessage("部门id不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getEnable())){
+            resultNoPageDto.setMessage("是否启用不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getRoleId())){
+            resultNoPageDto.setMessage("角色不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getAdmin())){
+            resultNoPageDto.setMessage("是否为超级管理员不能为空");
+            return resultNoPageDto;
+        }
+        if (StringUtils.isEmpty(vo.getPhoneNum())){
+            resultNoPageDto.setMessage("手机号不能为空");
+            return resultNoPageDto;
+        }
+        String ip = "";
+        if (requestIp != null) {
+            ip = requestIp.getHeader("X-FORWARDED-FOR");
+            if (ip == null || "".equals(ip)) {
+                ip = requestIp.getRemoteAddr();
+            }
+        }
+        boolean b = loginService.userRegister(vo, ip);
+        if (!b){
+            resultNoPageDto.setMessage("注册失败,可能是用户已经存在");
+            resultNoPageDto.setCode(MesEnumUtils.CODE_5002);
+            return resultNoPageDto;
+        }
+        resultNoPageDto.setCode(MesEnumUtils.CODE_200);
+        resultNoPageDto.setMessage("注册成功");
+        resultNoPageDto.setSuccess(true);
+        return new ResultNoPageDto();
     }
     /**
      * 测试

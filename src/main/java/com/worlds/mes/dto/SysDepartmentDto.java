@@ -31,5 +31,4 @@ private String name;
 @ApiModelProperty(value = "是否启用，0否1是",required=true)
 private Byte enable;
 
-	
 }
