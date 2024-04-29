@@ -8,9 +8,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://47.103.77.149:3306/mes?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT%2b8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/mes?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT%2b8&serverTimezone=Asia/Shanghai
     username: root
-    password: sfw2eEjk#6@.
+    password: root
     initialSize: 1
     minIdle: 3
     maxActive: 20
@@ -41,9 +41,8 @@ spring:
       pool-name: GGLiliKariPool
   redis:
     database: 1
-    host: 47.103.77.149
+    host: localhost
     port: 6379
-    password: f*a%vvmM%7Se
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
