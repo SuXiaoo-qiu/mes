@@ -1,15 +1,15 @@
 package com.worlds.mes.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.worlds.mes.dto.LoginDto;
 import com.worlds.mes.entity.User;
 import com.worlds.mes.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface LoginMapper extends BaseMapper<User> {
 
 	/**
 	 * 查询所有记录
@@ -23,7 +23,7 @@ public interface UserMapper extends BaseMapper<User> {
 	 *
 	 * @return 返回集合，没有返回空List
 	 */
-	List<HashMap<String, Object>> listAllByParam(UserVo userVo);
+	List<LoginDto> listAllByParam(UserVo userVo);
 
 
 	/**
@@ -34,6 +34,13 @@ public interface UserMapper extends BaseMapper<User> {
 	 */
 	User getById(Integer id);
 
+	/**
+	 * 新增，插入所有字段
+	 *
+	 * @param user 新增的记录
+	 * @return 返回影响行数
+	 */
+	int insert(User user);
 
 	/**
 	 * 新增，忽略null字段

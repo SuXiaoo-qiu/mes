@@ -1,16 +1,20 @@
 package com.worlds.mes.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.worlds.mes.commons.SimplePageInfo;
+import com.worlds.mes.entity.User;
+import com.worlds.mes.mapper.UserMapper;
+import com.worlds.mes.service.UserService;
+import com.worlds.mes.vo.UserVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.worlds.mes.entity.User;
-import com.worlds.mes.vo.UserVo;
-import com.worlds.mes.service.UserService;
-import com.worlds.mes.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,6 +35,23 @@ public class UserServiceImpl implements  UserService  {
     @Override
     public List<User> listAll() {
         return userMapper.listAll();
+    }
+
+    @Override
+    public List<User> testPlus(User user) {
+//        List<User> users = userMapper.selectList(null);
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("login_name",user.getLoginName());
+        userQueryWrapper.eq("pwd",user.getPwd());
+        User user1 = userMapper.selectOne(userQueryWrapper);
+        System.out.println(user1);
+        List<User> users = new ArrayList<>();
+        users.add(user1);
+        List<User> userLambdaQueryChainWrapper = new LambdaQueryChainWrapper<>(userMapper)
+                .like(User::getLoginName,user.getLoginName())
+                .eq(User::getLoginName,user.getLoginName()).list();
+        System.out.println(userLambdaQueryChainWrapper);
+        return users;
     }
 
     @Override

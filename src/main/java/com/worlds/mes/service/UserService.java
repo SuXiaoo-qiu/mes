@@ -16,6 +16,13 @@ public interface UserService {
     public List<User> listAll();
 
     /**
+     * 查询一条记录
+     *
+     * @return 返回集合，没有返回空List
+     */
+    public List<User> testPlus(User user);
+
+    /**
      * 根据条件查询所有记录
      *
      * @return 返回集合，没有返回空List

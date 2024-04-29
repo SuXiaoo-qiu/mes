@@ -45,6 +45,20 @@ public class UserController extends BaseController {
         return user;
     }
 
+
+    /**
+     * 查询所有记录
+     *
+     * @return 返回集合，没有返回空List
+     */
+    @RequestMapping(value = UrlMapping.TEST_PLUS)
+    @ApiOperation(value = "查询所有记录MybatisPlus")
+    public List<User> testPlus(@RequestBody User user) {
+        List<User> Listuser = userService.testPlus(user);
+        log.info("查询到数据"+ Listuser);
+        return Listuser;
+    }
+
     /**
      * 根据条件查询所有记录
      *

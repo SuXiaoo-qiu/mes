@@ -7,6 +7,7 @@ public interface UrlMapping {
      */
     String INDEX_PATH = "/";
     String TEST = "/test";
+    String TEST_PLUS = "/testPlus";
     String LIST = "/list";
     String GET_BY_ID = "/getbyid";
     String INSERT = "/insert";
@@ -16,6 +17,10 @@ public interface UrlMapping {
     String DELETE = "/delete";
     String LIST_ALL_BY_PARAM = "/listAllByParam";
 
+    /**
+     * login
+     */
+    String LOGIN = "/login";
 
 
 
