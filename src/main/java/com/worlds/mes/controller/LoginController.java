@@ -9,11 +9,13 @@ import com.worlds.mes.service.LoginService;
 import com.worlds.mes.utils.BaseController;
 import com.worlds.mes.utils.JwtTokenUtil;
 import com.worlds.mes.utils.MesEnumUtils;
+import com.worlds.mes.vo.LoginVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,6 +75,36 @@ public class LoginController  extends BaseController {
         return result;
     }
 
+
+    /**
+     * 退出登录
+     *
+     * @param vo ,requestIp
+     * @return resultTokenDto
+     */
+    @RequestMapping(value = UrlMapping.LOGIN_OUT)
+    @ApiOperation(value = "退出登录")
+    public ResultTokenDto loginOut(@RequestBody LoginVo vo,HttpServletRequest requestIp) {
+        ResultTokenDto resultTokenDto = new ResultTokenDto();
+        if (null==vo || StringUtils.isEmpty(vo.getLoginName())||StringUtils.isEmpty(vo.getToken())||StringUtils.isEmpty(vo.getNickName()) ){
+            resultTokenDto.setCode(MesEnumUtils.CODE_5000);
+            resultTokenDto.setMessage("账号或者token或者昵称不能为空呦");
+            resultTokenDto.setSuccess(false);
+            return resultTokenDto;
+        }
+        String ip = "";
+        if (requestIp != null) {
+            ip = requestIp.getHeader("X-FORWARDED-FOR");
+            if (ip == null || "".equals(ip)) {
+                ip = requestIp.getRemoteAddr();
+            }
+        }
+        boolean b = loginService.loginOut(vo,ip);
+        resultTokenDto.setCode(MesEnumUtils.CODE_200);
+        resultTokenDto.setSuccess(b);
+        resultTokenDto.setMessage("退出登录成功");
+        return resultTokenDto;
+    }
     /**
      * 测试
      *
@@ -80,7 +112,7 @@ public class LoginController  extends BaseController {
      * @return 测试
      */
     @RequestMapping(value = UrlMapping.TEST)
-    @ApiOperation(value = "测试")
+    @ApiOperation(value = "测试ip")
     public String test(@RequestBody HashMap<String, String> request, HttpServletRequest requestIp) {
         String remoteAddr = requestIp.getRemoteAddr();
         log.info(remoteAddr);

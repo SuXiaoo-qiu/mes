@@ -7,7 +7,9 @@ import com.worlds.mes.mapper.LoginLogMapper;
 import com.worlds.mes.mapper.LoginMapper;
 import com.worlds.mes.service.LoginService;
 import com.worlds.mes.utils.HashUtil;
+import com.worlds.mes.utils.JwtTokenUtil;
 import com.worlds.mes.utils.MesEnumUtils;
+import com.worlds.mes.vo.LoginVo;
 import com.worlds.mes.vo.SysUserVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,7 +33,8 @@ public class LoginServiceImpl implements LoginService {
     private LoginMapper loginMapper;
     @Autowired
     private RedisTemplate redisTemplate;
-
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private LoginLogMapper loginLogMapper;
 
@@ -71,5 +74,26 @@ public class LoginServiceImpl implements LoginService {
             log.info("登录成功");
         }
         return sysUsers;
+    }
+
+    @Override
+    public boolean loginOut(LoginVo vo, String ip) {
+        /*new LambdaQueryChainWrapper<>(loginMapper)
+                .eq(SysUser::getLoginName,vo.getLoginName())
+                .eq(SysUser::get)*/
+        //销毁token
+        jwtTokenUtil.removeToken(vo.getLoginName());
+        //删除redis中的token
+        redisTemplate.delete(vo.getLoginName());
+        LoginLog loginLog = new LoginLog();
+        loginLog.setIp(ip);
+        loginLog.setId(0);
+        loginLog.setUserId(vo.getLoginName());
+        loginLog.setUserName(vo.getNickName());
+        loginLog.setLoginDate(new Date());
+        loginLog.setMessage("退出成功");
+        loginLogMapper.insert(loginLog);
+        log.info("退出成功");
+        return true;
     }
 }

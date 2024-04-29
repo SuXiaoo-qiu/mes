@@ -25,7 +25,7 @@ public class JwtTokenUtil {
     public String getUsernameFromToken(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
     }
-
+    //判断koken是否有效
     public HashMap<String, Object> validateToken(String token) {
         HashMap<String, Object> res = new HashMap<>();
         res.put("state", "false");

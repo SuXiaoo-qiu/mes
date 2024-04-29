@@ -1,15 +1,15 @@
 package com.worlds.mes.utils;
 
 public class MesEnumUtils {
-    //状态码 200:OK 400:错误的请求 401:未经授权 403:被禁止的 404:未找到 500:内部服务器错误 5000:没查询到数据 5001:数据不允许为空
+    //状态码 200:OK 400:错误的请求 401:未经授权 403:被禁止的 404:未找到 500:内部服务器错误
     public static final Integer CODE_200 = 200;
     public static final Integer CODE_400 = 400;
     public static final Integer CODE_401 = 401;
     public static final Integer CODE_403 = 403;
     public static final Integer CODE_404 = 404;
     public static final Integer CODE_500 = 500;
-    public static final Integer CODE_5000 = 5000;
-    public static final Integer CODE_5001 = 5001;
+    public static final Integer CODE_5000 = 5000;//5000:没查询到数据
+    public static final Integer CODE_5001 = 5001;// 5001:数据不允许为空
 
 
     //redis 过期时间 有效期30分钟 1800秒
