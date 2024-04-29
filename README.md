@@ -3,6 +3,7 @@
 2.该项目是基于springboot 开发的mes系统
 
 3.使用到的技术 springboot + mybatis + mybatisPlus + mysql + redis + rabbitmq + jwt 
+          前端:vue3+ts
 
 4.实现功能:
           按照功能分类：MES系统可以根据其功能的不同进行分类，如生产调度、生产执行、质量管理、物料管理、设备管理等。
