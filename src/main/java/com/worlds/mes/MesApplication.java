@@ -12,9 +12,7 @@ import org.springframework.context.annotation.Import;
 @MapperScan(basePackages = "com.worlds.mes.mapper")
 @Import({JwtTokenInterceptor.class})
 public class MesApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MesApplication.class, args);
     }
-
 }
