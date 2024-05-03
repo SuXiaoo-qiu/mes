@@ -29,6 +29,7 @@ public interface UrlMapping {
     String GET_ROLE_DEPT_MENU = "/getRoleAnDeptAndMenu";
     // 新增用户和角色和菜单和部门
     String INSERT_USER_ROLE_DEPT_MENU = "/insertUserAndRoleAnDeptAndMenu";
+    /// 根据用户id查询该用户的角色和菜单和部门
 
 
 
