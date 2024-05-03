@@ -2,13 +2,16 @@ package com.worlds.mes.controller;
 
 import com.github.pagehelper.Page;
 import com.worlds.mes.UrlMapping;
+import com.worlds.mes.dto.PermissionsMenuDto;
 import com.worlds.mes.dto.ResultDto;
 import com.worlds.mes.dto.SysUserDto;
 import com.worlds.mes.entity.SysUser;
 import com.worlds.mes.service.SysUserService;
 import com.worlds.mes.utils.BaseController;
 import com.worlds.mes.utils.MesEnumUtils;
+import com.worlds.mes.vo.RoleAnDeptAndMenuVo;
 import com.worlds.mes.vo.SysUserVo;
+import com.worlds.mes.vo.UserAndRoleAnDeptAndMenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
@@ -38,24 +41,11 @@ public class SysUserController extends BaseController {
     @RequestMapping(value = UrlMapping.LIST)
     @ApiOperation(value = "查询所有记录")
     public List<SysUser> listAll() {
-      List<SysUser> sysUser = sysUserService.listAll();
+        List<SysUser> sysUser = sysUserService.listAll();
         log.info("查询到数据"+ sysUser);
         return sysUser;
     }
 
-    /**
-     * 查询所有记录
-     *
-     * @return 返回集合，没有返回空List
-     */
-    @RequestMapping(value = UrlMapping.TEST_PLUS)
-    @ApiOperation(value = "查询所有记录MybatisPlus")
-    public List<SysUser> testPlus(@RequestBody SysUser user) {
-        List<SysUser> Listuser = sysUserService.testPlus(user);
-        log.info("查询到数据"+ Listuser);
-        return Listuser;
-    }
-    
     /**
      * 根据条件查询所有记录
      *
@@ -65,32 +55,37 @@ public class SysUserController extends BaseController {
     @ApiOperation(value = "根据条件查询所有记录")
     public ResultDto<List<SysUserDto>> LIST_ALL_BY_PARAM (@RequestBody SysUserVo sysUserVo) {
         ResultDto<List<SysUserDto>> result = new ResultDto();
+        if (null==sysUserVo || null == sysUserVo.getPageInfo()){
+            result.setCode(MesEnumUtils.CODE_5001);
+            result.setSuccess(false);
+            result.setMessage("参数不能为空或者分页信息不能为空");
+            return result;
+        }
         Page<HashMap<String, Object>> page = sysUserService.listAllByParam(sysUserVo);
-                if (page.isEmpty()) {
-                    result.setCode(MesEnumUtils.CODE_5000);
-                    result.setSuccess(false);
-                    result.setMessage("未查询到数据");
-                    return result;
-                }
-                result =getPageDataByMap(page,SysUserDto.class);
-                log.info("查询到数据"+ result);
-                return result;
+        if (page.isEmpty()) {
+            result.setCode(MesEnumUtils.CODE_5000);
+            result.setSuccess(false);
+            result.setMessage("未查询到数据");
+            return result;
+        }
+        result =getPageDataByMap(page,SysUserDto.class);
+        log.info("查询到数据"+ result);
+        return result;
     }
 
-    
     /**
      * 根据主键查询
      *
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-  
+
     @RequestMapping(value = UrlMapping.GET_BY_ID)
     @ApiOperation(value = "根据主键查询")
     public SysUser getById(Integer id) {
         return sysUserService.getById(id);
     }
-    
+
     /**
      * 新增，插入所有字段
      *
@@ -102,7 +97,7 @@ public class SysUserController extends BaseController {
     public int insert(@RequestBody SysUser sysUser) {
         return sysUserService.insert(sysUser);
     }
-    
+
     /**
      * 新增，忽略null字段
      *
@@ -114,7 +109,7 @@ public class SysUserController extends BaseController {
     public int insertIgnoreNull(@RequestBody SysUser sysUser) {
         return sysUserService.insertIgnoreNull(sysUser);
     }
-    
+
     /**
      * 修改，修改所有字段
      *
@@ -126,7 +121,7 @@ public class SysUserController extends BaseController {
     public int update(@RequestBody SysUser sysUser) {
         return sysUserService.update(sysUser);
     }
-    
+
     /**
      * 修改，忽略null字段
      *
@@ -138,7 +133,7 @@ public class SysUserController extends BaseController {
     public int updateIgnoreNull(@RequestBody SysUser sysUser) {
         return sysUserService.updateIgnoreNull(sysUser);
     }
-    
+
     /**
      * 删除记录
      *
@@ -150,5 +145,28 @@ public class SysUserController extends BaseController {
     public int delete(@RequestBody SysUser sysUser) {
         return sysUserService.delete(sysUser);
     }
-    
+
+
+    /**
+     * 根据用户名和用户id查询该用户的角色和菜单和部门
+     * @param roleAnDeptAndMenuVo
+     * @return
+     */
+    @RequestMapping(value = UrlMapping.GET_ROLE_DEPT_MENU )
+    @ApiOperation(value = "根据用户名和用户id查询该用户的角色和菜单和部门")
+    public List<PermissionsMenuDto> getRoleAeptAndMenu(@RequestBody RoleAnDeptAndMenuVo roleAnDeptAndMenuVo){
+        return this.sysUserService.getRoleAnDeptAndMenu(roleAnDeptAndMenuVo);
+    }
+
+    /**
+     * 新增用户
+     * @param roleAnDeptAndMenuVo
+     * @return
+     */
+    @RequestMapping(value = UrlMapping.INSERT_USER_ROLE_DEPT_MENU )
+    @ApiOperation(value = "新增用户用和角色和菜单和部门")
+    public List<PermissionsMenuDto> insertUserAndRoleAnDeptAndMenu(@RequestBody UserAndRoleAnDeptAndMenuVo roleAnDeptAndMenuVo){
+        return this.sysUserService.getRoleAnDeptAndMenu(roleAnDeptAndMenuVo);
+    }
+
 }

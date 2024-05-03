@@ -1,7 +1,9 @@
 package com.worlds.mes.service;
 
 import com.github.pagehelper.Page;
+import com.worlds.mes.dto.PermissionsMenuDto;
 import com.worlds.mes.entity.SysUser;
+import com.worlds.mes.vo.RoleAnDeptAndMenuVo;
 import com.worlds.mes.vo.SysUserVo;
 
 import java.util.HashMap;
@@ -77,5 +79,11 @@ public interface SysUserService {
      * @return 返回影响行数
      */
     public int delete(SysUser sysUser);
-    
+
+    /**
+     * 根据用户名和用户id查询该用户的角色和菜单和部门
+     * @param roleAnDeptAndMenuVo
+     * @return
+     */
+    List<PermissionsMenuDto> getRoleAnDeptAndMenu(RoleAnDeptAndMenuVo roleAnDeptAndMenuVo);
 }

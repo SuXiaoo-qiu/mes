@@ -1,16 +1,21 @@
 package com.worlds.mes.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.worlds.mes.commons.SimplePageInfo;
+import com.worlds.mes.entity.SysRole;
+import com.worlds.mes.mapper.SysDepartmentMapper;
+import com.worlds.mes.mapper.SysResourceMapper;
+import com.worlds.mes.mapper.SysRoleMapper;
+import com.worlds.mes.mapper.SysUserMapper;
+import com.worlds.mes.service.SysRoleService;
+import com.worlds.mes.vo.SysRoleVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.worlds.mes.entity.SysRole;
-import com.worlds.mes.vo.SysRoleVo;
-import com.worlds.mes.service.SysRoleService;
-import com.worlds.mes.mapper.SysRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +27,12 @@ public class SysRoleServiceImpl implements  SysRoleService  {
 
    @Autowired
     private SysRoleMapper sysRoleMapper;
+   @Autowired
+   private SysUserMapper sysUserMapper;
+   @Autowired
+   private SysDepartmentMapper sysDepartmentMapper;
+   @Autowired
+   private SysResourceMapper resourceMapper;
 
     /**
      * 查询所有记录
@@ -41,7 +52,14 @@ public class SysRoleServiceImpl implements  SysRoleService  {
         return page;
     }
 
-/**
+    @Override
+    public List<SysRole> listAllByParamNoPage(SysRole sysRole) {
+        QueryWrapper<SysRole> sysRoleVoQueryWrapper = new QueryWrapper<>();
+        sysRoleVoQueryWrapper.setEntity(sysRole);
+        return sysRoleMapper.selectList(sysRoleVoQueryWrapper);
+    }
+
+    /**
      * 根据主键查询
      *
      * @param id 主键
@@ -106,5 +124,5 @@ public class SysRoleServiceImpl implements  SysRoleService  {
     public int delete(SysRole sysRole) {
     	return sysRoleMapper.deleteById(sysRole.getId());
     }
-	
+
 }

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.SysRegionMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.SysRegion">
+            <result column="id" property="id" />
+	        <result column="pid" property="pid" />
+	        <result column="name" property="name" />
+	        <result column="fullname" property="fullname" />
+	        <result column="level" property="level" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.pid
+        , t.name
+        , t.fullname
+        , t.level
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_region t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_region t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="pid!=null and pid!=''">AND t.pid = #{pid}</if>
+	           <if test="name!=null and name!=''">AND t.name = #{name}</if>
+	           <if test="fullname!=null and fullname!=''">AND t.fullname = #{fullname}</if>
+	           <if test="level!=null and level!=''">AND t.level = #{level}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM sys_region t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.SysRegion"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO sys_region
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	    	id,
+    	        	    	pid,
+    	        	    	name,
+    	        	    	fullname,
+    	        	    	level,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        #{id},                   
+    	        	        #{pid},                   
+    	        	        #{name},                   
+    	        	        #{fullname},                   
+    	        	        #{level},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.SysRegion"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO sys_region    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                <if test="id != null">
+                   id,
+                    </if>
+                                                                <if test="pid != null">
+                   pid,
+                    </if>
+                                                                <if test="name != null">
+                   name,
+                    </if>
+                                                                <if test="fullname != null">
+                   fullname,
+                    </if>
+                                                                <if test="level != null">
+                   level,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                <if test="id != null" >
+                    #{id},                    
+                    </if>
+                                                                <if test="pid != null" >
+                    #{pid},                    
+                    </if>
+                                                                <if test="name != null" >
+                    #{name},                    
+                    </if>
+                                                                <if test="fullname != null" >
+                    #{fullname},                    
+                    </if>
+                                                                <if test="level != null" >
+                    #{level},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.SysRegion">
+    UPDATE sys_region
+     <set>		
+                                     pid=#{pid},        
+                                name=#{name},        
+                                fullname=#{fullname},        
+                                level=#{level},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.SysRegion">
+    UPDATE sys_region
+    <set>
+    	                                                <if test="pid != null" >
+                pid=#{pid},                 
+                </if>
+                                                <if test="name != null" >
+                name=#{name},                 
+                </if>
+                                                <if test="fullname != null" >
+                fullname=#{fullname},                 
+                </if>
+                                                <if test="level != null" >
+                level=#{level},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

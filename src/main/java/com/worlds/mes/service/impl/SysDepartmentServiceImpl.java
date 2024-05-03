@@ -36,7 +36,13 @@ public class SysDepartmentServiceImpl implements  SysDepartmentService  {
     @Override
     public Page<HashMap<String, Object>> listAllByParam(SysDepartmentVo sysDepartmentVo) {
         SimplePageInfo pageInfo = sysDepartmentVo.getPageInfo();
+        if (pageInfo == null) {
+            pageInfo.setPageSize(10);
+            pageInfo.setIsCount(true);
+        }
+
         PageHelper.startPage(pageInfo.getPageNum(),pageInfo.getPageSize(),pageInfo.getCount());
+
         Page<HashMap<String,Object>> page = (Page<HashMap<String, Object>>) sysDepartmentMapper.listAllByParam(sysDepartmentVo);
         return page;
     }

@@ -6,8 +6,8 @@ import java.io.Serializable;
 
 @Data
 public class SimplePageInfo implements Serializable {
-    private Integer pageNum = 1;
-    private Integer pageSize = 10;
+    private Integer pageNum;
+    private Integer pageSize;
     private Boolean isCount;
     public SimplePageInfo() {
         this.isCount = Boolean.TRUE;

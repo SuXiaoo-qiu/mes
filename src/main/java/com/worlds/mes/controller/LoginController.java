@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -197,9 +198,20 @@ public class LoginController  extends BaseController {
             }
         }
         log.info(remoteAddr1);
-
-
-
         return remoteAddr;
+    }
+    /**
+     * 测试token
+     *
+     * @param username
+     * @return token
+     */
+    @RequestMapping(value = UrlMapping.TEST_TOKEN,method = RequestMethod.POST)
+    @ApiOperation(value = "测试token")
+    public String testToken(@RequestBody String username) {
+        JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+        String token = jwtTokenUtil.generateToken(username);
+        log.info(token);
+        return token;
     }
 }
