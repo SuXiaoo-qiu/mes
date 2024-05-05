@@ -6,16 +6,23 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.worlds.mes.commons.SimplePageInfo;
 import com.worlds.mes.dto.PermissionsMenuDto;
+import com.worlds.mes.dto.ResultNoPageDto;
 import com.worlds.mes.entity.*;
 import com.worlds.mes.mapper.*;
 import com.worlds.mes.service.SysUserService;
+import com.worlds.mes.utils.HashUtil;
+import com.worlds.mes.utils.MesEnumUtils;
 import com.worlds.mes.vo.RoleAnDeptAndMenuVo;
 import com.worlds.mes.vo.SysUserVo;
+import com.worlds.mes.vo.UserAndRoleAnDeptAndMenuVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import java.beans.Transient;
 import java.util.*;
 
 @Service
@@ -34,6 +41,8 @@ public class SysUserServiceImpl implements  SysUserService {
     private SysResourceMapper sysResourceMapper;
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
 
     /**
      * 查询所有记录
@@ -174,8 +183,6 @@ public class SysUserServiceImpl implements  SysUserService {
                         }
                         // 添加到集合
                         deptList.add(deptPid);
-
-
                     }
                 }
                 //根据id进行排序
@@ -228,4 +235,32 @@ public class SysUserServiceImpl implements  SysUserService {
         // TODO: 2024/5/1 添加到redis中
         return res;
     }
+
+    @Override
+    @Transactional
+    public ResultNoPageDto insertUserAndRoleAnDeptAndMenu(UserAndRoleAnDeptAndMenuVo userAndRoleAnDeptAndMenuVo) {
+        ResultNoPageDto resultNoPageDto = new ResultNoPageDto();
+
+        SysUser user = userAndRoleAnDeptAndMenuVo.getUser();
+        user.setDeptId(Integer.valueOf(userAndRoleAnDeptAndMenuVo.getDeptId()));
+        user.setRoleId(Integer.valueOf(userAndRoleAnDeptAndMenuVo.getRoleId()));
+        user.setPwd(HashUtil.hash(user.getPwd()));
+        int i = this.sysUserMapper.insertIgnoreNull(user);
+        if (i <= 0) {
+            resultNoPageDto.setCode(MesEnumUtils.CODE_5003);
+            resultNoPageDto.setSuccess(false);
+            resultNoPageDto.setMessage("用户数据新增失败请检查");
+            return resultNoPageDto;
+        }
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setRoleId(Integer.valueOf(userAndRoleAnDeptAndMenuVo.getRoleId()));
+        sysUserRole.setUserId(user.getId());
+        this.sysUserRoleMapper.insertIgnoreNull(sysUserRole);
+        resultNoPageDto.setCode(MesEnumUtils.CODE_200);
+        resultNoPageDto.setSuccess(true);
+        resultNoPageDto.setMessage("成功");
+        return resultNoPageDto;
+    }
+
+
 }

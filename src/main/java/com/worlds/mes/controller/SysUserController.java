@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.worlds.mes.UrlMapping;
 import com.worlds.mes.dto.PermissionsMenuDto;
 import com.worlds.mes.dto.ResultDto;
+import com.worlds.mes.dto.ResultNoPageDto;
 import com.worlds.mes.dto.SysUserDto;
 import com.worlds.mes.entity.SysUser;
 import com.worlds.mes.service.SysUserService;
@@ -159,14 +160,14 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 新增用户
+     * 新增用户用和角色和菜单和部门
      * @param roleAnDeptAndMenuVo
      * @return
      */
     @RequestMapping(value = UrlMapping.INSERT_USER_ROLE_DEPT_MENU )
     @ApiOperation(value = "新增用户用和角色和菜单和部门")
-    public List<PermissionsMenuDto> insertUserAndRoleAnDeptAndMenu(@RequestBody UserAndRoleAnDeptAndMenuVo roleAnDeptAndMenuVo){
-        return this.sysUserService.getRoleAnDeptAndMenu(roleAnDeptAndMenuVo);
+    public ResultNoPageDto insertUserAndRoleAnDeptAndMenu(@RequestBody UserAndRoleAnDeptAndMenuVo roleAnDeptAndMenuVo){
+        return this.sysUserService.insertUserAndRoleAnDeptAndMenu(roleAnDeptAndMenuVo);
     }
 
 }

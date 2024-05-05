@@ -1,4 +1,7 @@
 package com.worlds.mes.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -20,6 +23,7 @@ private static final long serialVersionUID = 1L;
 
 /** id */
 @ApiModelProperty(value = "id",required=true)
+@TableId(value = "id",type = IdType.AUTO)
 private Integer id;
 /** 用户id */
 @ApiModelProperty(value = "用户id",required=false)

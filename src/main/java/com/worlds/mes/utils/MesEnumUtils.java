@@ -11,6 +11,7 @@ public class MesEnumUtils {
     public static final Integer CODE_5000 = 5000;//5000:没查询到数据
     public static final Integer CODE_5001 = 5001;// 5001:数据不允许为空
     public static final Integer CODE_5002 = 5002;// 注册失败
+    public static final Integer CODE_5003 = 5003;// 数据新增失败
 
 
     //redis 过期时间 有效期30分钟 1800秒

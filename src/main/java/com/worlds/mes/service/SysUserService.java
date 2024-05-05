@@ -2,12 +2,15 @@ package com.worlds.mes.service;
 
 import com.github.pagehelper.Page;
 import com.worlds.mes.dto.PermissionsMenuDto;
+import com.worlds.mes.dto.ResultNoPageDto;
 import com.worlds.mes.entity.SysUser;
 import com.worlds.mes.vo.RoleAnDeptAndMenuVo;
 import com.worlds.mes.vo.SysUserVo;
+import com.worlds.mes.vo.UserAndRoleAnDeptAndMenuVo;
 
 import java.util.HashMap;
 import java.util.List;
+
 
 public interface SysUserService {
 
@@ -86,4 +89,6 @@ public interface SysUserService {
      * @return
      */
     List<PermissionsMenuDto> getRoleAnDeptAndMenu(RoleAnDeptAndMenuVo roleAnDeptAndMenuVo);
+
+    ResultNoPageDto insertUserAndRoleAnDeptAndMenu(UserAndRoleAnDeptAndMenuVo userAndRoleAnDeptAndMenuVo);
 }
