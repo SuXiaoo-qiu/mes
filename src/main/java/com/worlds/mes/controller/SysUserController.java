@@ -152,7 +152,7 @@ public class SysUserController extends BaseController {
      * @param roleAnDeptAndMenuVo
      * @return
      */
-    @RequestMapping(value = UrlMapping.GET_ROLE_DEPT_MENU )
+    @RequestMapping(value = UrlMapping.GET_ROLE_DEPT_MENU,method = RequestMethod.POST )
     @ApiOperation(value = "根据用户名和用户id查询该用户的角色和菜单和部门")
     public List<PermissionsMenuDto> getRoleAeptAndMenu(@RequestBody RoleAnDeptAndMenuVo roleAnDeptAndMenuVo){
         return this.sysUserService.getRoleAnDeptAndMenu(roleAnDeptAndMenuVo);

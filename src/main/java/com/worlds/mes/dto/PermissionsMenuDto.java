@@ -23,6 +23,8 @@ public class PermissionsMenuDto<T> implements Serializable {
     private T roleList;
     @ApiModelProperty(value = "菜单信息")
     private T resourceList;
+    @ApiModelProperty(value = "用户信息")
+    private T userList;
 
 
         public PermissionsMenuDto() {

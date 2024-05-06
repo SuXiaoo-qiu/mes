@@ -167,6 +167,9 @@ public class SysUserServiceImpl implements  SysUserService {
                 .eq(SysUser::getLoginName, roleAnDeptAndMenuVo.getLoginName()).one();
 
         if (null != sysUser) {
+            sysUser.setPD(sysUser.getPwd());
+            //添加用户
+            permissionsMenuDto.setUserList(sysUser);
             // 查询部门
             List<SysDepartment> deptList = new ArrayList<>();
             SysDepartment dept = new LambdaQueryChainWrapper<>(sysDepartmentMapper)
@@ -193,6 +196,7 @@ public class SysUserServiceImpl implements  SysUserService {
                 }
                 //根据id进行排序
                 deptList.sort(Comparator.comparing(SysDepartment::getId));
+                //添加部门
                 permissionsMenuDto.setDeptList(deptList);
             }
 
@@ -236,6 +240,7 @@ public class SysUserServiceImpl implements  SysUserService {
                             }
                         }
                     });
+                    //set the list of resource
                     permissionsMenuDto.setResourceList(resourceList);
                     permissionsMenuDto.setMessage("成功");
                     permissionsMenuDto.setCode(MesEnumUtils.CODE_200);
