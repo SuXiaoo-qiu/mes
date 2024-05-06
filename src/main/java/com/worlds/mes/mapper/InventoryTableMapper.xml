@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.InventoryTableMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.InventoryTable">
+            <result column="id" property="id" />
+	        <result column="inventory_id" property="inventoryId" />
+	        <result column="inventory_name" property="inventoryName" />
+	        <result column="material_id" property="materialId" />
+	        <result column="warehouse_id" property="warehouseId" />
+	        <result column="in_order_id" property="inOrderId" />
+	        <result column="out_order_id" property="outOrderId" />
+	        <result column="in_date" property="inDate" />
+	        <result column="out_date" property="outDate" />
+	        <result column="in_quantity" property="inQuantity" />
+	        <result column="out_quantity" property="outQuantity" />
+	        <result column="in_price" property="inPrice" />
+	        <result column="out_price" property="outPrice" />
+	        <result column="max_stock" property="maxStock" />
+	        <result column="safe_stock" property="safeStock" />
+	        <result column="remaining_stock" property="remainingStock" />
+	        <result column="type" property="type" />
+	        <result column="batch_number" property="batchNumber" />
+	        <result column="remarks" property="remarks" />
+	        <result column="status" property="status" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.inventory_id
+        , t.inventory_name
+        , t.material_id
+        , t.warehouse_id
+        , t.in_order_id
+        , t.out_order_id
+        , t.in_date
+        , t.out_date
+        , t.in_quantity
+        , t.out_quantity
+        , t.in_price
+        , t.out_price
+        , t.max_stock
+        , t.safe_stock
+        , t.remaining_stock
+        , t.type
+        , t.batch_number
+        , t.remarks
+        , t.status
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM inventory_table t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM inventory_table t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="inventoryId!=null and inventoryId!=''">AND t.inventory_id = #{inventoryId}</if>
+	           <if test="inventoryName!=null and inventoryName!=''">AND t.inventory_name = #{inventoryName}</if>
+	           <if test="materialId!=null and materialId!=''">AND t.material_id = #{materialId}</if>
+	           <if test="warehouseId!=null and warehouseId!=''">AND t.warehouse_id = #{warehouseId}</if>
+	           <if test="inOrderId!=null and inOrderId!=''">AND t.in_order_id = #{inOrderId}</if>
+	           <if test="outOrderId!=null and outOrderId!=''">AND t.out_order_id = #{outOrderId}</if>
+	           <if test="inDate!=null and inDate!=''">AND t.in_date = #{inDate}</if>
+	           <if test="outDate!=null and outDate!=''">AND t.out_date = #{outDate}</if>
+	           <if test="inQuantity!=null and inQuantity!=''">AND t.in_quantity = #{inQuantity}</if>
+	           <if test="outQuantity!=null and outQuantity!=''">AND t.out_quantity = #{outQuantity}</if>
+	           <if test="inPrice!=null and inPrice!=''">AND t.in_price = #{inPrice}</if>
+	           <if test="outPrice!=null and outPrice!=''">AND t.out_price = #{outPrice}</if>
+	           <if test="maxStock!=null and maxStock!=''">AND t.max_stock = #{maxStock}</if>
+	           <if test="safeStock!=null and safeStock!=''">AND t.safe_stock = #{safeStock}</if>
+	           <if test="remainingStock!=null and remainingStock!=''">AND t.remaining_stock = #{remainingStock}</if>
+	           <if test="type!=null and type!=''">AND t.type = #{type}</if>
+	           <if test="batchNumber!=null and batchNumber!=''">AND t.batch_number = #{batchNumber}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	           <if test="status!=null and status!=''">AND t.status = #{status}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM inventory_table t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.InventoryTable"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO inventory_table
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	inventory_id,
+    	        	    	inventory_name,
+    	        	    	material_id,
+    	        	    	warehouse_id,
+    	        	    	in_order_id,
+    	        	    	out_order_id,
+    	        	    	in_date,
+    	        	    	out_date,
+    	        	    	in_quantity,
+    	        	    	out_quantity,
+    	        	    	in_price,
+    	        	    	out_price,
+    	        	    	max_stock,
+    	        	    	safe_stock,
+    	        	    	remaining_stock,
+    	        	    	type,
+    	        	    	batch_number,
+    	        	    	remarks,
+    	        	    	status,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{inventoryId},                   
+    	        	        #{inventoryName},                   
+    	        	        #{materialId},                   
+    	        	        #{warehouseId},                   
+    	        	        #{inOrderId},                   
+    	        	        #{outOrderId},                   
+    	        	        #{inDate},                   
+    	        	        #{outDate},                   
+    	        	        #{inQuantity},                   
+    	        	        #{outQuantity},                   
+    	        	        #{inPrice},                   
+    	        	        #{outPrice},                   
+    	        	        #{maxStock},                   
+    	        	        #{safeStock},                   
+    	        	        #{remainingStock},                   
+    	        	        #{type},                   
+    	        	        #{batchNumber},                   
+    	        	        #{remarks},                   
+    	        	        #{status},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.InventoryTable"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO inventory_table    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="inventoryId != null">
+                   inventory_id,
+                    </if>
+                                                                <if test="inventoryName != null">
+                   inventory_name,
+                    </if>
+                                                                <if test="materialId != null">
+                   material_id,
+                    </if>
+                                                                <if test="warehouseId != null">
+                   warehouse_id,
+                    </if>
+                                                                <if test="inOrderId != null">
+                   in_order_id,
+                    </if>
+                                                                <if test="outOrderId != null">
+                   out_order_id,
+                    </if>
+                                                                <if test="inDate != null">
+                   in_date,
+                    </if>
+                                                                <if test="outDate != null">
+                   out_date,
+                    </if>
+                                                                <if test="inQuantity != null">
+                   in_quantity,
+                    </if>
+                                                                <if test="outQuantity != null">
+                   out_quantity,
+                    </if>
+                                                                <if test="inPrice != null">
+                   in_price,
+                    </if>
+                                                                <if test="outPrice != null">
+                   out_price,
+                    </if>
+                                                                <if test="maxStock != null">
+                   max_stock,
+                    </if>
+                                                                <if test="safeStock != null">
+                   safe_stock,
+                    </if>
+                                                                <if test="remainingStock != null">
+                   remaining_stock,
+                    </if>
+                                                                <if test="type != null">
+                   type,
+                    </if>
+                                                                <if test="batchNumber != null">
+                   batch_number,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                                                <if test="status != null">
+                   status,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="inventoryId != null" >
+                    #{inventoryId},                    
+                    </if>
+                                                                <if test="inventoryName != null" >
+                    #{inventoryName},                    
+                    </if>
+                                                                <if test="materialId != null" >
+                    #{materialId},                    
+                    </if>
+                                                                <if test="warehouseId != null" >
+                    #{warehouseId},                    
+                    </if>
+                                                                <if test="inOrderId != null" >
+                    #{inOrderId},                    
+                    </if>
+                                                                <if test="outOrderId != null" >
+                    #{outOrderId},                    
+                    </if>
+                                                                <if test="inDate != null" >
+                    #{inDate},                    
+                    </if>
+                                                                <if test="outDate != null" >
+                    #{outDate},                    
+                    </if>
+                                                                <if test="inQuantity != null" >
+                    #{inQuantity},                    
+                    </if>
+                                                                <if test="outQuantity != null" >
+                    #{outQuantity},                    
+                    </if>
+                                                                <if test="inPrice != null" >
+                    #{inPrice},                    
+                    </if>
+                                                                <if test="outPrice != null" >
+                    #{outPrice},                    
+                    </if>
+                                                                <if test="maxStock != null" >
+                    #{maxStock},                    
+                    </if>
+                                                                <if test="safeStock != null" >
+                    #{safeStock},                    
+                    </if>
+                                                                <if test="remainingStock != null" >
+                    #{remainingStock},                    
+                    </if>
+                                                                <if test="type != null" >
+                    #{type},                    
+                    </if>
+                                                                <if test="batchNumber != null" >
+                    #{batchNumber},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                                                <if test="status != null" >
+                    #{status},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.InventoryTable">
+    UPDATE inventory_table
+     <set>		
+                                     inventory_id=#{inventoryId},        
+                                inventory_name=#{inventoryName},        
+                                material_id=#{materialId},        
+                                warehouse_id=#{warehouseId},        
+                                in_order_id=#{inOrderId},        
+                                out_order_id=#{outOrderId},        
+                                in_date=#{inDate},        
+                                out_date=#{outDate},        
+                                in_quantity=#{inQuantity},        
+                                out_quantity=#{outQuantity},        
+                                in_price=#{inPrice},        
+                                out_price=#{outPrice},        
+                                max_stock=#{maxStock},        
+                                safe_stock=#{safeStock},        
+                                remaining_stock=#{remainingStock},        
+                                type=#{type},        
+                                batch_number=#{batchNumber},        
+                                remarks=#{remarks},        
+                                status=#{status},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.InventoryTable">
+    UPDATE inventory_table
+    <set>
+    	                                                <if test="inventoryId != null" >
+                inventory_id=#{inventoryId},                 
+                </if>
+                                                <if test="inventoryName != null" >
+                inventory_name=#{inventoryName},                 
+                </if>
+                                                <if test="materialId != null" >
+                material_id=#{materialId},                 
+                </if>
+                                                <if test="warehouseId != null" >
+                warehouse_id=#{warehouseId},                 
+                </if>
+                                                <if test="inOrderId != null" >
+                in_order_id=#{inOrderId},                 
+                </if>
+                                                <if test="outOrderId != null" >
+                out_order_id=#{outOrderId},                 
+                </if>
+                                                <if test="inDate != null" >
+                in_date=#{inDate},                 
+                </if>
+                                                <if test="outDate != null" >
+                out_date=#{outDate},                 
+                </if>
+                                                <if test="inQuantity != null" >
+                in_quantity=#{inQuantity},                 
+                </if>
+                                                <if test="outQuantity != null" >
+                out_quantity=#{outQuantity},                 
+                </if>
+                                                <if test="inPrice != null" >
+                in_price=#{inPrice},                 
+                </if>
+                                                <if test="outPrice != null" >
+                out_price=#{outPrice},                 
+                </if>
+                                                <if test="maxStock != null" >
+                max_stock=#{maxStock},                 
+                </if>
+                                                <if test="safeStock != null" >
+                safe_stock=#{safeStock},                 
+                </if>
+                                                <if test="remainingStock != null" >
+                remaining_stock=#{remainingStock},                 
+                </if>
+                                                <if test="type != null" >
+                type=#{type},                 
+                </if>
+                                                <if test="batchNumber != null" >
+                batch_number=#{batchNumber},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                                                <if test="status != null" >
+                status=#{status},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

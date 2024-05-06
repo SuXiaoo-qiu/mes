@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.BillOfMaterialsMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.BillOfMaterials">
+            <result column="id" property="id" />
+	        <result column="material_id" property="materialId" />
+	        <result column="material_code" property="materialCode" />
+	        <result column="material_name" property="materialName" />
+	        <result column="material_specification" property="materialSpecification" />
+	        <result column="measurement_unit" property="measurementUnit" />
+	        <result column="material_category" property="materialCategory" />
+	        <result column="supplier_id" property="supplierId" />
+	        <result column="supplier_name" property="supplierName" />
+	        <result column="inventory_num" property="inventoryNum" />
+	        <result column="inventory_name" property="inventoryName" />
+	        <result column="warehouse_id" property="warehouseId" />
+	        <result column="warehouse_name" property="warehouseName" />
+	        <result column="expiration_date" property="expirationDate" />
+	        <result column="production_date" property="productionDate" />
+	        <result column="batch_number" property="batchNumber" />
+	        <result column="status" property="status" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.material_id
+        , t.material_code
+        , t.material_name
+        , t.material_specification
+        , t.measurement_unit
+        , t.material_category
+        , t.supplier_id
+        , t.supplier_name
+        , t.inventory_num
+        , t.inventory_name
+        , t.warehouse_id
+        , t.warehouse_name
+        , t.expiration_date
+        , t.production_date
+        , t.batch_number
+        , t.status
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM bill_of_materials t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM bill_of_materials t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="materialId!=null and materialId!=''">AND t.material_id = #{materialId}</if>
+	           <if test="materialCode!=null and materialCode!=''">AND t.material_code = #{materialCode}</if>
+	           <if test="materialName!=null and materialName!=''">AND t.material_name = #{materialName}</if>
+	           <if test="materialSpecification!=null and materialSpecification!=''">AND t.material_specification = #{materialSpecification}</if>
+	           <if test="measurementUnit!=null and measurementUnit!=''">AND t.measurement_unit = #{measurementUnit}</if>
+	           <if test="materialCategory!=null and materialCategory!=''">AND t.material_category = #{materialCategory}</if>
+	           <if test="supplierId!=null and supplierId!=''">AND t.supplier_id = #{supplierId}</if>
+	           <if test="supplierName!=null and supplierName!=''">AND t.supplier_name = #{supplierName}</if>
+	           <if test="inventoryNum!=null and inventoryNum!=''">AND t.inventory_num = #{inventoryNum}</if>
+	           <if test="inventoryName!=null and inventoryName!=''">AND t.inventory_name = #{inventoryName}</if>
+	           <if test="warehouseId!=null and warehouseId!=''">AND t.warehouse_id = #{warehouseId}</if>
+	           <if test="warehouseName!=null and warehouseName!=''">AND t.warehouse_name = #{warehouseName}</if>
+	           <if test="expirationDate!=null and expirationDate!=''">AND t.expiration_date = #{expirationDate}</if>
+	           <if test="productionDate!=null and productionDate!=''">AND t.production_date = #{productionDate}</if>
+	           <if test="batchNumber!=null and batchNumber!=''">AND t.batch_number = #{batchNumber}</if>
+	           <if test="status!=null and status!=''">AND t.status = #{status}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM bill_of_materials t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.BillOfMaterials"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO bill_of_materials
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	material_id,
+    	        	    	material_code,
+    	        	    	material_name,
+    	        	    	material_specification,
+    	        	    	measurement_unit,
+    	        	    	material_category,
+    	        	    	supplier_id,
+    	        	    	supplier_name,
+    	        	    	inventory_num,
+    	        	    	inventory_name,
+    	        	    	warehouse_id,
+    	        	    	warehouse_name,
+    	        	    	expiration_date,
+    	        	    	production_date,
+    	        	    	batch_number,
+    	        	    	status,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{materialId},                   
+    	        	        #{materialCode},                   
+    	        	        #{materialName},                   
+    	        	        #{materialSpecification},                   
+    	        	        #{measurementUnit},                   
+    	        	        #{materialCategory},                   
+    	        	        #{supplierId},                   
+    	        	        #{supplierName},                   
+    	        	        #{inventoryNum},                   
+    	        	        #{inventoryName},                   
+    	        	        #{warehouseId},                   
+    	        	        #{warehouseName},                   
+    	        	        #{expirationDate},                   
+    	        	        #{productionDate},                   
+    	        	        #{batchNumber},                   
+    	        	        #{status},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.BillOfMaterials"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO bill_of_materials    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="materialId != null">
+                   material_id,
+                    </if>
+                                                                <if test="materialCode != null">
+                   material_code,
+                    </if>
+                                                                <if test="materialName != null">
+                   material_name,
+                    </if>
+                                                                <if test="materialSpecification != null">
+                   material_specification,
+                    </if>
+                                                                <if test="measurementUnit != null">
+                   measurement_unit,
+                    </if>
+                                                                <if test="materialCategory != null">
+                   material_category,
+                    </if>
+                                                                <if test="supplierId != null">
+                   supplier_id,
+                    </if>
+                                                                <if test="supplierName != null">
+                   supplier_name,
+                    </if>
+                                                                <if test="inventoryNum != null">
+                   inventory_num,
+                    </if>
+                                                                <if test="inventoryName != null">
+                   inventory_name,
+                    </if>
+                                                                <if test="warehouseId != null">
+                   warehouse_id,
+                    </if>
+                                                                <if test="warehouseName != null">
+                   warehouse_name,
+                    </if>
+                                                                <if test="expirationDate != null">
+                   expiration_date,
+                    </if>
+                                                                <if test="productionDate != null">
+                   production_date,
+                    </if>
+                                                                <if test="batchNumber != null">
+                   batch_number,
+                    </if>
+                                                                <if test="status != null">
+                   status,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="materialId != null" >
+                    #{materialId},                    
+                    </if>
+                                                                <if test="materialCode != null" >
+                    #{materialCode},                    
+                    </if>
+                                                                <if test="materialName != null" >
+                    #{materialName},                    
+                    </if>
+                                                                <if test="materialSpecification != null" >
+                    #{materialSpecification},                    
+                    </if>
+                                                                <if test="measurementUnit != null" >
+                    #{measurementUnit},                    
+                    </if>
+                                                                <if test="materialCategory != null" >
+                    #{materialCategory},                    
+                    </if>
+                                                                <if test="supplierId != null" >
+                    #{supplierId},                    
+                    </if>
+                                                                <if test="supplierName != null" >
+                    #{supplierName},                    
+                    </if>
+                                                                <if test="inventoryNum != null" >
+                    #{inventoryNum},                    
+                    </if>
+                                                                <if test="inventoryName != null" >
+                    #{inventoryName},                    
+                    </if>
+                                                                <if test="warehouseId != null" >
+                    #{warehouseId},                    
+                    </if>
+                                                                <if test="warehouseName != null" >
+                    #{warehouseName},                    
+                    </if>
+                                                                <if test="expirationDate != null" >
+                    #{expirationDate},                    
+                    </if>
+                                                                <if test="productionDate != null" >
+                    #{productionDate},                    
+                    </if>
+                                                                <if test="batchNumber != null" >
+                    #{batchNumber},                    
+                    </if>
+                                                                <if test="status != null" >
+                    #{status},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.BillOfMaterials">
+    UPDATE bill_of_materials
+     <set>		
+                                     material_id=#{materialId},        
+                                material_code=#{materialCode},        
+                                material_name=#{materialName},        
+                                material_specification=#{materialSpecification},        
+                                measurement_unit=#{measurementUnit},        
+                                material_category=#{materialCategory},        
+                                supplier_id=#{supplierId},        
+                                supplier_name=#{supplierName},        
+                                inventory_num=#{inventoryNum},        
+                                inventory_name=#{inventoryName},        
+                                warehouse_id=#{warehouseId},        
+                                warehouse_name=#{warehouseName},        
+                                expiration_date=#{expirationDate},        
+                                production_date=#{productionDate},        
+                                batch_number=#{batchNumber},        
+                                status=#{status},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.BillOfMaterials">
+    UPDATE bill_of_materials
+    <set>
+    	                                                <if test="materialId != null" >
+                material_id=#{materialId},                 
+                </if>
+                                                <if test="materialCode != null" >
+                material_code=#{materialCode},                 
+                </if>
+                                                <if test="materialName != null" >
+                material_name=#{materialName},                 
+                </if>
+                                                <if test="materialSpecification != null" >
+                material_specification=#{materialSpecification},                 
+                </if>
+                                                <if test="measurementUnit != null" >
+                measurement_unit=#{measurementUnit},                 
+                </if>
+                                                <if test="materialCategory != null" >
+                material_category=#{materialCategory},                 
+                </if>
+                                                <if test="supplierId != null" >
+                supplier_id=#{supplierId},                 
+                </if>
+                                                <if test="supplierName != null" >
+                supplier_name=#{supplierName},                 
+                </if>
+                                                <if test="inventoryNum != null" >
+                inventory_num=#{inventoryNum},                 
+                </if>
+                                                <if test="inventoryName != null" >
+                inventory_name=#{inventoryName},                 
+                </if>
+                                                <if test="warehouseId != null" >
+                warehouse_id=#{warehouseId},                 
+                </if>
+                                                <if test="warehouseName != null" >
+                warehouse_name=#{warehouseName},                 
+                </if>
+                                                <if test="expirationDate != null" >
+                expiration_date=#{expirationDate},                 
+                </if>
+                                                <if test="productionDate != null" >
+                production_date=#{productionDate},                 
+                </if>
+                                                <if test="batchNumber != null" >
+                batch_number=#{batchNumber},                 
+                </if>
+                                                <if test="status != null" >
+                status=#{status},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

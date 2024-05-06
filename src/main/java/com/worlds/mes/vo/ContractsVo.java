@@ -42,15 +42,15 @@ public class ContractsVo implements Serializable {
         private String contractType;
         /** 合同签订的日期 */
         @ApiModelProperty(value = "合同签订的日期",required=true)
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+        @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
         private Date contractSignDate;
         /** 合同生效的日期 */
         @ApiModelProperty(value = "合同生效的日期",required=true)
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+        @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
         private Date effectiveDate;
         /** 合同终止的日期 */
         @ApiModelProperty(value = "合同终止的日期",required=false)
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+        @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
         private Date terminationDate;
         /** 合同的总金额 */
         @ApiModelProperty(value = "合同的总金额",required=true)
