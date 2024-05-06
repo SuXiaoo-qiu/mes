@@ -19,6 +19,11 @@ public class PermissionsMenuDto<T> implements Serializable {
     private T data;
     @ApiModelProperty(value = "部门信息")
     private T deptList;
+    @ApiModelProperty(value = "角色信息")
+    private T roleList;
+    @ApiModelProperty(value = "菜单信息")
+    private T resourceList;
+
 
         public PermissionsMenuDto() {
             this.success = Boolean.TRUE;

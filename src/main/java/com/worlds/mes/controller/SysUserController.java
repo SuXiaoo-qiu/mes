@@ -12,7 +12,6 @@ import com.worlds.mes.utils.BaseController;
 import com.worlds.mes.utils.MesEnumUtils;
 import com.worlds.mes.vo.RoleAnDeptAndMenuVo;
 import com.worlds.mes.vo.SysUserVo;
-import com.worlds.mes.vo.UserAndRoleAnDeptAndMenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
@@ -161,13 +160,13 @@ public class SysUserController extends BaseController {
 
     /**
      * 新增用户用和角色和菜单和部门
-     * @param roleAnDeptAndMenuVo
+     * @param sysUserVo
      * @return
      */
     @RequestMapping(value = UrlMapping.INSERT_USER_ROLE_DEPT_MENU )
     @ApiOperation(value = "新增用户用和角色和菜单和部门")
-    public ResultNoPageDto insertUserAndRoleAnDeptAndMenu(@RequestBody UserAndRoleAnDeptAndMenuVo roleAnDeptAndMenuVo){
-        return this.sysUserService.insertUserAndRoleAnDeptAndMenu(roleAnDeptAndMenuVo);
+    public ResultNoPageDto insertUserAndRoleAnDeptAndMenu(@RequestBody SysUserVo sysUserVo){
+        return this.sysUserService.insertUserAndRoleAnDeptAndMenu(sysUserVo);
     }
 
 }

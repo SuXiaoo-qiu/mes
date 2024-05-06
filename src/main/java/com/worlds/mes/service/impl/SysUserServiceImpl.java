@@ -1,5 +1,7 @@
 package com.worlds.mes.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.github.pagehelper.Page;
@@ -14,16 +16,16 @@ import com.worlds.mes.utils.HashUtil;
 import com.worlds.mes.utils.MesEnumUtils;
 import com.worlds.mes.vo.RoleAnDeptAndMenuVo;
 import com.worlds.mes.vo.SysUserVo;
-import com.worlds.mes.vo.UserAndRoleAnDeptAndMenuVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import java.beans.Transient;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class SysUserServiceImpl implements  SysUserService {
@@ -42,7 +44,7 @@ public class SysUserServiceImpl implements  SysUserService {
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
-    private TransactionTemplate transactionTemplate;
+    private RedisTemplate redisTemplate;
 
     /**
      * 查询所有记录
@@ -154,10 +156,12 @@ public class SysUserServiceImpl implements  SysUserService {
      */
     @Override
     public List<PermissionsMenuDto> getRoleAnDeptAndMenu(RoleAnDeptAndMenuVo roleAnDeptAndMenuVo) {
+        Object o = redisTemplate.opsForValue().get(roleAnDeptAndMenuVo.getLoginName() + "deptAndRoleAndMenu");
+        if (null != o) {
+            return JSONObject.parseArray(o.toString(), PermissionsMenuDto.class);
+        }
         List<PermissionsMenuDto> res = new ArrayList<>();
         PermissionsMenuDto permissionsMenuDto = new PermissionsMenuDto();
-
-
         SysUser sysUser = new LambdaQueryChainWrapper<>(sysUserMapper)
                 .eq(SysUser::getId, roleAnDeptAndMenuVo.getUserId())
                 .eq(SysUser::getLoginName, roleAnDeptAndMenuVo.getLoginName()).one();
@@ -179,6 +183,8 @@ public class SysUserServiceImpl implements  SysUserService {
                             break;
                         }
                         if (deptPid.getPid() == 0) {
+                            // 添加到集合 (最后一个)
+                            deptList.add(deptPid);
                             break;
                         }
                         // 添加到集合
@@ -205,7 +211,9 @@ public class SysUserServiceImpl implements  SysUserService {
 
                 });
                 // TODO: 2024/4/30  写查菜单 根据roleList
-                if (roleList.size() > 1) {
+                if (roleList.size() >= 1) {
+                    //set the role
+                    permissionsMenuDto.setRoleList(roleList);
                     List<SysResource> resourceList = new ArrayList<>();
                     //临时list
                     roleList.forEach(role -> {
@@ -228,23 +236,28 @@ public class SysUserServiceImpl implements  SysUserService {
                             }
                         }
                     });
-
+                    permissionsMenuDto.setResourceList(resourceList);
+                    permissionsMenuDto.setMessage("成功");
+                    permissionsMenuDto.setCode(MesEnumUtils.CODE_200);
+                    permissionsMenuDto.setSuccess(true);
+                    res.add(permissionsMenuDto);
                 }
             }
         }
         // TODO: 2024/5/1 添加到redis中
+        String s = JSON.toJSONString(res);
+        redisTemplate.opsForValue().set(roleAnDeptAndMenuVo.getLoginName() + "deptAndRoleAndMenu",s);
+        redisTemplate.expire(roleAnDeptAndMenuVo.getLoginName() + "deptAndRoleAndMenu", 60, TimeUnit.SECONDS);
         return res;
     }
 
     @Override
     @Transactional
-    public ResultNoPageDto insertUserAndRoleAnDeptAndMenu(UserAndRoleAnDeptAndMenuVo userAndRoleAnDeptAndMenuVo) {
+    public ResultNoPageDto insertUserAndRoleAnDeptAndMenu(SysUserVo sysUserVo) {
         ResultNoPageDto resultNoPageDto = new ResultNoPageDto();
-
-        SysUser user = userAndRoleAnDeptAndMenuVo.getUser();
-        user.setDeptId(Integer.valueOf(userAndRoleAnDeptAndMenuVo.getDeptId()));
-        user.setRoleId(Integer.valueOf(userAndRoleAnDeptAndMenuVo.getRoleId()));
-        user.setPwd(HashUtil.hash(user.getPwd()));
+        sysUserVo.setPwd(HashUtil.hash(sysUserVo.getPwd()));
+        ModelMapper modelMapper = new ModelMapper();
+        SysUser user = modelMapper.map(sysUserVo, SysUser.class);
         int i = this.sysUserMapper.insertIgnoreNull(user);
         if (i <= 0) {
             resultNoPageDto.setCode(MesEnumUtils.CODE_5003);
@@ -253,7 +266,7 @@ public class SysUserServiceImpl implements  SysUserService {
             return resultNoPageDto;
         }
         SysUserRole sysUserRole = new SysUserRole();
-        sysUserRole.setRoleId(Integer.valueOf(userAndRoleAnDeptAndMenuVo.getRoleId()));
+        sysUserRole.setRoleId(Integer.valueOf(user.getRoleId()));
         sysUserRole.setUserId(user.getId());
         this.sysUserRoleMapper.insertIgnoreNull(sysUserRole);
         resultNoPageDto.setCode(MesEnumUtils.CODE_200);
