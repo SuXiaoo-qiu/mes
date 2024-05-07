@@ -1,20 +1,19 @@
 package com.worlds.mes.dto;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.math.BigDecimal;
+
 import java.util.Date;
+import java.math.BigDecimal;
 
 /**
  * @program: mes合同信息表实体
  * @author: joeWorlds
- * @create: 2024-05-06 17:20:30
+ * @create: 2024-05-07 08:49:22
  * @return: 合同信息表
  **/
 @ApiModel(value = "合同信息表",description = "合同信息表实体")
@@ -38,15 +37,15 @@ public class ContractsDto implements Serializable {
     private String contractType;
     /** 合同签订的日期 */
     @ApiModelProperty(value = "合同签订的日期",required=true)
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date contractSignDate;
     /** 合同生效的日期 */
     @ApiModelProperty(value = "合同生效的日期",required=true)
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date effectiveDate;
     /** 合同终止的日期 */
     @ApiModelProperty(value = "合同终止的日期",required=false)
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date terminationDate;
     /** 合同的总金额 */
     @ApiModelProperty(value = "合同的总金额",required=true)
@@ -134,6 +133,9 @@ public class ContractsDto implements Serializable {
     /** 计量单位1:吨2:件3:包4:车 */
     @ApiModelProperty(value = "计量单位1:吨2:件3:包4:车",required=false)
     private String unitOfMeasurement;
+    /** 合同量例如100吨 100件 100车等 */
+    @ApiModelProperty(value = "合同量例如100吨 100件 100车等",required=false)
+    private String congruentAmount;
 
 
 }

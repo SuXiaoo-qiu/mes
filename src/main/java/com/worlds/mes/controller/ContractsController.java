@@ -38,11 +38,11 @@ public class ContractsController extends BaseController {
     @RequestMapping(value = UrlMapping.LIST)
     @ApiOperation(value = "查询所有记录")
     public List<Contracts> listAll() {
-      List<Contracts> contracts = contractsService.listAll();
+        List<Contracts> contracts = contractsService.listAll();
         log.info("查询到数据"+ contracts);
         return contracts;
     }
-    
+
     /**
      * 根据条件分页查询合同信息表所有记录
      *
@@ -52,25 +52,25 @@ public class ContractsController extends BaseController {
     @ApiOperation(value = "根据条件分页查询所有记录")
     public ResultDto<List<ContractsDto>> LIST_ALL_BY_PARAM (@RequestBody ContractsVo contractsVo) {
         ResultDto<List<ContractsDto>> result = new ResultDto();
-       if (null==contractsVo || null == contractsVo.getPageInfo()){
+        if (null==contractsVo || null == contractsVo.getPageInfo()){
             result.setCode(MesEnumUtils.CODE_5001);
             result.setSuccess(false);
             result.setMessage("参数不能为空或者分页信息不能为空");
             return result;
         }
         Page<HashMap<String, Object>> page = contractsService.listAllByParam(contractsVo);
-                if (page.isEmpty()) {
-                    result.setCode(MesEnumUtils.CODE_5000);
-                    result.setSuccess(false);
-                    result.setMessage("未查询到数据");
-                    return result;
-                }
-                result =getPageDataByMap(page,ContractsDto.class);
-                log.info("查询到数据"+ result);
-                return result;
+        if (page.isEmpty()) {
+            result.setCode(MesEnumUtils.CODE_5000);
+            result.setSuccess(false);
+            result.setMessage("未查询到数据");
+            return result;
+        }
+        result =getPageDataByMap(page,ContractsDto.class);
+        log.info("查询到数据"+ result);
+        return result;
     }
-    
-     /**
+
+    /**
      * 根据条件查询合同信息表所有记录
      *
      * @return 返回集合，没有返回空List
@@ -78,43 +78,43 @@ public class ContractsController extends BaseController {
 
     @RequestMapping(value = UrlMapping.LIST_ALL_BY_PARAM_NO_PAGE)
     @ApiOperation(value = "根据条件查询所有记录")
-     public ResultDto<List<ContractsDto>> LIST_ALL_BY_PARAM (@RequestBody Contracts contracts) {
+    public ResultDto<List<ContractsDto>> LIST_ALL_BY_PARAM (@RequestBody Contracts contracts) {
         ResultDto<List<ContractsDto>> result = new ResultDto();
-       if (null==contracts){
+        if (null==contracts){
             result.setCode(MesEnumUtils.CODE_5001);
             result.setSuccess(false);
             result.setMessage("参数信息不能为空");
             return result;
         }
-       List<Contracts>  res = contractsService.listAllByParamNoPage(contracts);
-                if (res.isEmpty()) {
-                    result.setCode(MesEnumUtils.CODE_5000);
-                    result.setSuccess(false);
-                    result.setMessage("未查询到数据");
-                    return result;
-                }
-                result =getPageDataByMap(res,ContractsDto.class);
-                log.info("查询到数据"+ result);
-                return result;
+        List<Contracts>  res = contractsService.listAllByParamNoPage(contracts);
+        if (res.isEmpty()) {
+            result.setCode(MesEnumUtils.CODE_5000);
+            result.setSuccess(false);
+            result.setMessage("未查询到数据");
+            return result;
+        }
+        result =getPageDataByMap(res,ContractsDto.class);
+        log.info("查询到数据"+ result);
+        return result;
     }
 
 
-    
-    
-    
+
+
+
     /**
      * 根据主键查询合同信息表
      *
      * @param id 主键
      * @return 返回记录，没有返回null
      */
-  
+
     @RequestMapping(value = UrlMapping.GET_BY_ID)
     @ApiOperation(value = "根据主键查询")
     public Contracts getById(Integer id) {
         return contractsService.getById(id);
     }
-    
+
     /**
      * 新增，插入合同信息表所有字段
      *
@@ -126,19 +126,19 @@ public class ContractsController extends BaseController {
     public int insert(@RequestBody Contracts contracts) {
         return contractsService.insert(contracts);
     }
-    
+
     /**
      * 新增，忽略null字段 合同信息表
      *
      * @param contracts 新增的记录
      * @return 返回影响行数
      */
-    @RequestMapping(value = UrlMapping.INSERT_IGNORE_NULL)
+    @RequestMapping(value = UrlMapping.INSERT_IGNORE_NULL, method = RequestMethod.POST)
     @ApiOperation(value = "新增，忽略null字段")
     public int insertIgnoreNull(@RequestBody Contracts contracts) {
         return contractsService.insertIgnoreNull(contracts);
     }
-    
+
     /**
      * 修改，修改合同信息表所有字段
      *
@@ -150,7 +150,7 @@ public class ContractsController extends BaseController {
     public int update(@RequestBody Contracts contracts) {
         return contractsService.update(contracts);
     }
-    
+
     /**
      * 修改，忽略null字段 合同信息表
      *
@@ -162,7 +162,7 @@ public class ContractsController extends BaseController {
     public int updateIgnoreNull(@RequestBody Contracts contracts) {
         return contractsService.updateIgnoreNull(contracts);
     }
-    
+
     /**
      * 删除合同信息表记录 
      *
@@ -174,5 +174,5 @@ public class ContractsController extends BaseController {
     public int delete(@RequestBody Contracts contracts) {
         return contractsService.delete(contracts);
     }
-    
+
 }

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.worlds.mes.mapper.WarehouseTableMapper">
-	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.WarehouseTable">
-            <result column="id" property="id" />
-	        <result column="warehouse_id" property="warehouseId" />
-	        <result column="warehouse_name" property="warehouseName" />
-	        <result column="warehouse_address" property="warehouseAddress" />
-	        <result column="warehouse_type" property="warehouseType" />
-	        <result column="warehouse_area" property="warehouseArea" />
-	        <result column="storage_capacity" property="storageCapacity" />
-	        <result column="responsible_person" property="responsiblePerson" />
-	        <result column="contact_phone" property="contactPhone" />
-	        <result column="remarks" property="remarks" />
-		</resultMap>  
-    
+    <resultMap id="BaseResultMap" type="com.worlds.mes.entity.WarehouseTable">
+        <result column="id" property="id" />
+        <result column="warehouse_id" property="warehouseId" />
+        <result column="warehouse_name" property="warehouseName" />
+        <result column="warehouse_address" property="warehouseAddress" />
+        <result column="warehouse_type" property="warehouseType" />
+        <result column="warehouse_area" property="warehouseArea" />
+        <result column="storage_capacity" property="storageCapacity" />
+        <result column="responsible_person" property="responsiblePerson" />
+        <result column="contact_phone" property="contactPhone" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+
     <!-- 表字段 -->
     <sql id="baseColumns">
          t.id
@@ -26,188 +26,221 @@
         , t.responsible_person
         , t.contact_phone
         , t.remarks
-        </sql> 
-    
+        </sql>
+
     <!-- 查询全部 -->
     <select id="listAll" resultMap="BaseResultMap">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM warehouse_table t
-	</select>
-    
+        SELECT
+        <include refid="baseColumns" />
+        FROM warehouse_table t
+    </select>
+
     <!-- 根据条件查询所有记录 -->
     <select id="listAllByParam" resultMap="BaseResultMap">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM warehouse_table t
+        SELECT
+        <include refid="baseColumns" />
+        FROM warehouse_table t
         <where>
-               <if test="id!=null and id!=''">AND t.id = #{id}</if>
-	           <if test="warehouseId!=null and warehouseId!=''">AND t.warehouse_id = #{warehouseId}</if>
-	           <if test="warehouseName!=null and warehouseName!=''">AND t.warehouse_name = #{warehouseName}</if>
-	           <if test="warehouseAddress!=null and warehouseAddress!=''">AND t.warehouse_address = #{warehouseAddress}</if>
-	           <if test="warehouseType!=null and warehouseType!=''">AND t.warehouse_type = #{warehouseType}</if>
-	           <if test="warehouseArea!=null and warehouseArea!=''">AND t.warehouse_area = #{warehouseArea}</if>
-	           <if test="storageCapacity!=null and storageCapacity!=''">AND t.storage_capacity = #{storageCapacity}</if>
-	           <if test="responsiblePerson!=null and responsiblePerson!=''">AND t.responsible_person = #{responsiblePerson}</if>
-	           <if test="contactPhone!=null and contactPhone!=''">AND t.contact_phone = #{contactPhone}</if>
-	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
-	    		</where>
-	 </select>
-    
- 	<!-- 根据主键获取单条记录 -->
+            <if test="id!=null and id!=''">AND t.id = #{id}</if>
+            <if test="warehouseId!=null and warehouseId!=''">AND t.warehouse_id = #{warehouseId}</if>
+            <if test="warehouseName!=null and warehouseName!=''">AND t.warehouse_name = #{warehouseName}</if>
+            <if test="warehouseAddress!=null and warehouseAddress!=''">AND t.warehouse_address = #{warehouseAddress}</if>
+            <if test="warehouseType!=null and warehouseType!=''">AND t.warehouse_type = #{warehouseType}</if>
+            <if test="warehouseArea!=null and warehouseArea!=''">AND t.warehouse_area = #{warehouseArea}</if>
+            <if test="storageCapacity!=null and storageCapacity!=''">AND t.storage_capacity = #{storageCapacity}</if>
+            <if test="responsiblePerson!=null and responsiblePerson!=''">AND t.responsible_person = #{responsiblePerson}</if>
+            <if test="contactPhone!=null and contactPhone!=''">AND t.contact_phone = #{contactPhone}</if>
+            <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+        </where>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
     <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM warehouse_table t
-		WHERE id = #{id}
-	</select>
+        SELECT
+        <include refid="baseColumns" />
+        FROM warehouse_table t
+        WHERE id = #{id}
+    </select>
 
-	<!-- 插入全部字段 -->
+    <!-- 插入全部字段 -->
     <insert id="insert" parameterType="com.worlds.mes.entity.WarehouseTable"
-		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true"
     >
-	INSERT INTO warehouse_table
-    <trim prefix="(" suffix=")" suffixOverrides=",">	 
-        	        	    	warehouse_id,
-    	        	    	warehouse_name,
-    	        	    	warehouse_address,
-    	        	    	warehouse_type,
-    	        	    	warehouse_area,
-    	        	    	storage_capacity,
-    	        	    	responsible_person,
-    	        	    	contact_phone,
-    	        	    	remarks,
-    	        </trim>
-    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
-        	        	        #{warehouseId},                   
-    	        	        #{warehouseName},                   
-    	        	        #{warehouseAddress},                   
-    	        	        #{warehouseType},                   
-    	        	        #{warehouseArea},                   
-    	        	        #{storageCapacity},                   
-    	        	        #{responsiblePerson},                   
-    	        	        #{contactPhone},                   
-    	        	        #{remarks},                   
-    	        </trim>
-	</insert>
-    
-    <!-- 插入不为NULL的字段 -->
-    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.WarehouseTable"
-        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
-        >
-        INSERT INTO warehouse_table    
-        <trim prefix="(" suffix=")" suffixOverrides=",">	 
-
-                                                                            <if test="warehouseId != null">
-                   warehouse_id,
-                    </if>
-                                                                <if test="warehouseName != null">
-                   warehouse_name,
-                    </if>
-                                                                <if test="warehouseAddress != null">
-                   warehouse_address,
-                    </if>
-                                                                <if test="warehouseType != null">
-                   warehouse_type,
-                    </if>
-                                                                <if test="warehouseArea != null">
-                   warehouse_area,
-                    </if>
-                                                                <if test="storageCapacity != null">
-                   storage_capacity,
-                    </if>
-                                                                <if test="responsiblePerson != null">
-                   responsible_person,
-                    </if>
-                                                                <if test="contactPhone != null">
-                   contact_phone,
-                    </if>
-                                                                <if test="remarks != null">
-                   remarks,
-                    </if>
-                                    </trim>
-        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
-                                                                            <if test="warehouseId != null" >
-                    #{warehouseId},                    
-                    </if>
-                                                                <if test="warehouseName != null" >
-                    #{warehouseName},                    
-                    </if>
-                                                                <if test="warehouseAddress != null" >
-                    #{warehouseAddress},                    
-                    </if>
-                                                                <if test="warehouseType != null" >
-                    #{warehouseType},                    
-                    </if>
-                                                                <if test="warehouseArea != null" >
-                    #{warehouseArea},                    
-                    </if>
-                                                                <if test="storageCapacity != null" >
-                    #{storageCapacity},                    
-                    </if>
-                                                                <if test="responsiblePerson != null" >
-                    #{responsiblePerson},                    
-                    </if>
-                                                                <if test="contactPhone != null" >
-                    #{contactPhone},                    
-                    </if>
-                                                                <if test="remarks != null" >
-                    #{remarks},                    
-                    </if>
-                                    </trim>
+        INSERT INTO warehouse_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            warehouse_id,
+            warehouse_name,
+            warehouse_address,
+            warehouse_type,
+            warehouse_area,
+            storage_capacity,
+            responsible_person,
+            contact_phone,
+            remarks,
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            #{warehouseId},
+            #{warehouseName},
+            #{warehouseAddress},
+            #{warehouseType},
+            #{warehouseArea},
+            #{storageCapacity},
+            #{responsiblePerson},
+            #{contactPhone},
+            #{remarks},
+        </trim>
     </insert>
 
-	<!-- 更新,更新全部字段 -->
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.WarehouseTable"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+        INSERT INTO warehouse_table
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="warehouseId != null">
+                warehouse_id,
+            </if>
+            <if test="warehouseName != null">
+                warehouse_name,
+            </if>
+            <if test="warehouseAddress != null">
+                warehouse_address,
+            </if>
+            <if test="warehouseType != null">
+                warehouse_type,
+            </if>
+            <if test="warehouseArea != null">
+                warehouse_area,
+            </if>
+            <if test="storageCapacity != null">
+                storage_capacity,
+            </if>
+            <if test="responsiblePerson != null">
+                responsible_person,
+            </if>
+            <if test="contactPhone != null">
+                contact_phone,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="warehouseId != null" >
+                #{warehouseId},
+            </if>
+            <if test="warehouseName != null" >
+                #{warehouseName},
+            </if>
+            <if test="warehouseAddress != null" >
+                #{warehouseAddress},
+            </if>
+            <if test="warehouseType != null" >
+                #{warehouseType},
+            </if>
+            <if test="warehouseArea != null" >
+                #{warehouseArea},
+            </if>
+            <if test="storageCapacity != null" >
+                #{storageCapacity},
+            </if>
+            <if test="responsiblePerson != null" >
+                #{responsiblePerson},
+            </if>
+            <if test="contactPhone != null" >
+                #{contactPhone},
+            </if>
+            <if test="remarks != null" >
+                #{remarks},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新,更新全部字段 -->
     <update id="update" parameterType="com.worlds.mes.entity.WarehouseTable">
-    UPDATE warehouse_table
-     <set>		
-                                     warehouse_id=#{warehouseId},        
-                                warehouse_name=#{warehouseName},        
-                                warehouse_address=#{warehouseAddress},        
-                                warehouse_type=#{warehouseType},        
-                                warehouse_area=#{warehouseArea},        
-                                storage_capacity=#{storageCapacity},        
-                                responsible_person=#{responsiblePerson},        
-                                contact_phone=#{contactPhone},        
-                                remarks=#{remarks},        
-                   </set>	
-    WHERE id = #{id}
-    </update>  
-    
-    
+        UPDATE warehouse_table
+        <set>
+            warehouse_id=#{warehouseId},
+            warehouse_name=#{warehouseName},
+            warehouse_address=#{warehouseAddress},
+            warehouse_type=#{warehouseType},
+            warehouse_area=#{warehouseArea},
+            storage_capacity=#{storageCapacity},
+            responsible_person=#{responsiblePerson},
+            contact_phone=#{contactPhone},
+            remarks=#{remarks},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
     <!-- 更新不为NULL的字段 -->
     <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.WarehouseTable">
-    UPDATE warehouse_table
-    <set>
-    	                                                <if test="warehouseId != null" >
-                warehouse_id=#{warehouseId},                 
-                </if>
-                                                <if test="warehouseName != null" >
-                warehouse_name=#{warehouseName},                 
-                </if>
-                                                <if test="warehouseAddress != null" >
-                warehouse_address=#{warehouseAddress},                 
-                </if>
-                                                <if test="warehouseType != null" >
-                warehouse_type=#{warehouseType},                 
-                </if>
-                                                <if test="warehouseArea != null" >
-                warehouse_area=#{warehouseArea},                 
-                </if>
-                                                <if test="storageCapacity != null" >
-                storage_capacity=#{storageCapacity},                 
-                </if>
-                                                <if test="responsiblePerson != null" >
-                responsible_person=#{responsiblePerson},                 
-                </if>
-                                                <if test="contactPhone != null" >
-                contact_phone=#{contactPhone},                 
-                </if>
-                                                <if test="remarks != null" >
-                remarks=#{remarks},                 
-                </if>
-                        </set>
-    WHERE id = #{id}
+        UPDATE warehouse_table
+        <set>
+            <if test="warehouseId != null" >
+                warehouse_id=#{warehouseId},
+            </if>
+            <if test="warehouseName != null" >
+                warehouse_name=#{warehouseName},
+            </if>
+            <if test="warehouseAddress != null" >
+                warehouse_address=#{warehouseAddress},
+            </if>
+            <if test="warehouseType != null" >
+                warehouse_type=#{warehouseType},
+            </if>
+            <if test="warehouseArea != null" >
+                warehouse_area=#{warehouseArea},
+            </if>
+            <if test="storageCapacity != null" >
+                storage_capacity=#{storageCapacity},
+            </if>
+            <if test="responsiblePerson != null" >
+                responsible_person=#{responsiblePerson},
+            </if>
+            <if test="contactPhone != null" >
+                contact_phone=#{contactPhone},
+            </if>
+            <if test="remarks != null" >
+                remarks=#{remarks},
+            </if>
+        </set>
+        WHERE id = #{id}
     </update>
+
+
+
+
+
+        <!-- 批量插入仓库信息 -->
+        <insert id="isnetBatch" parameterType="java.util.List">
+            INSERT INTO warehouse_table (
+                    warehouse_id,
+                    warehouse_name,
+                    warehouse_address,
+                    warehouse_type,
+                    warehouse_area,
+                    storage_capacity,
+                    responsible_person,
+                    contact_phone,
+                    remarks
+            ) VALUES
+            <foreach collection="list" item="item" index="index" separator=",">
+                (
+                #{item.warehouseId},
+                #{item.warehouseName},
+                #{item.warehouseAddress},
+                #{item.warehouseType},
+                #{item.warehouseArea},
+                #{item.storageCapacity},
+                #{item.responsiblePerson},
+                #{item.contactPhone},
+                #{item.remarks}
+                )
+            </foreach>
+        </insert>
+
 
 </mapper>

@@ -49,7 +49,14 @@ public interface UrlMapping {
      * user
      */
     // 新增角色
-    String ISNER_ROLE = "/isnerRole";
+    String INSERT_ROLE = "/isnerRole";
+
+    /**
+     * 仓库表
+     */
+    // 批量新增仓库
+    String INSERT_BATCH = "/insertBatch";
+
 
 
 

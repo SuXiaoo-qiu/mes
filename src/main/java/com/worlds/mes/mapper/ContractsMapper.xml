@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.worlds.mes.mapper.ContractsMapper">
-	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.Contracts">
-            <result column="id" property="id" />
-	        <result column="contract_num" property="contractNum" />
-	        <result column="contract_name" property="contractName" />
-	        <result column="contract_type" property="contractType" />
-	        <result column="contract_sign_date" property="contractSignDate" />
-	        <result column="effective_date" property="effectiveDate" />
-	        <result column="termination_date" property="terminationDate" />
-	        <result column="contract_amount" property="contractAmount" />
-	        <result column="currency" property="currency" />
-	        <result column="contract_text" property="contractText" />
-	        <result column="attachment" property="attachment" />
-	        <result column="party_a_name" property="partyAName" />
-	        <result column="party_a_address" property="partyAAddress" />
-	        <result column="party_a_contact_info" property="partyAContactInfo" />
-	        <result column="party_b_name" property="partyBName" />
-	        <result column="party_b_address" property="partyBAddress" />
-	        <result column="party_b_contact_info" property="partyBContactInfo" />
-	        <result column="fulfillment_term" property="fulfillmentTerm" />
-	        <result column="fulfillment_responsibility" property="fulfillmentResponsibility" />
-	        <result column="payment_method" property="paymentMethod" />
-	        <result column="payment_term" property="paymentTerm" />
-	        <result column="acceptance_criteria" property="acceptanceCriteria" />
-	        <result column="breach_liability" property="breachLiability" />
-	        <result column="contract_status" property="contractStatus" />
-	        <result column="contract_manager" property="contractManager" />
-	        <result column="review_opinion" property="reviewOpinion" />
-	        <result column="change_log" property="changeLog" />
-	        <result column="dispute_record" property="disputeRecord" />
-	        <result column="created_by" property="createdBy" />
-	        <result column="created_time" property="createdTime" />
-	        <result column="modified_by" property="modifiedBy" />
-	        <result column="modified_time" property="modifiedTime" />
-		</resultMap>  
-    
+    <resultMap id="BaseResultMap" type="com.worlds.mes.entity.Contracts">
+        <result column="id" property="id" />
+        <result column="contract_num" property="contractNum" />
+        <result column="contract_name" property="contractName" />
+        <result column="contract_type" property="contractType" />
+        <result column="contract_sign_date" property="contractSignDate" />
+        <result column="effective_date" property="effectiveDate" />
+        <result column="termination_date" property="terminationDate" />
+        <result column="contract_amount" property="contractAmount" />
+        <result column="currency" property="currency" />
+        <result column="contract_text" property="contractText" />
+        <result column="attachment" property="attachment" />
+        <result column="party_a_name" property="partyAName" />
+        <result column="party_a_address" property="partyAAddress" />
+        <result column="party_a_contact_info" property="partyAContactInfo" />
+        <result column="party_b_name" property="partyBName" />
+        <result column="party_b_address" property="partyBAddress" />
+        <result column="party_b_contact_info" property="partyBContactInfo" />
+        <result column="fulfillment_term" property="fulfillmentTerm" />
+        <result column="fulfillment_responsibility" property="fulfillmentResponsibility" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="payment_term" property="paymentTerm" />
+        <result column="acceptance_criteria" property="acceptanceCriteria" />
+        <result column="breach_liability" property="breachLiability" />
+        <result column="contract_status" property="contractStatus" />
+        <result column="contract_manager" property="contractManager" />
+        <result column="review_opinion" property="reviewOpinion" />
+        <result column="change_log" property="changeLog" />
+        <result column="dispute_record" property="disputeRecord" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_time" property="createdTime" />
+        <result column="modified_by" property="modifiedBy" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="material_num" property="materialNum" />
+        <result column="material_name" property="materialName" />
+        <result column="unit_of_measurement" property="unitOfMeasurement" />
+        <result column="congruent_amount" property="congruentAmount" />
+    </resultMap>
+
     <!-- 表字段 -->
     <sql id="baseColumns">
          t.id
@@ -70,474 +74,530 @@
         , t.created_time
         , t.modified_by
         , t.modified_time
-        </sql> 
-    
+        , t.material_num
+        , t.material_name
+        , t.unit_of_measurement
+        , t.congruent_amount
+        </sql>
+
     <!-- 查询全部 -->
     <select id="listAll" resultMap="BaseResultMap">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM contracts t
-	</select>
-    
+        SELECT
+        <include refid="baseColumns" />
+        FROM contracts t
+    </select>
+
     <!-- 根据条件查询所有记录 -->
     <select id="listAllByParam" resultMap="BaseResultMap">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM contracts t
+        SELECT
+        <include refid="baseColumns" />
+        FROM contracts t
         <where>
-               <if test="id!=null and id!=''">AND t.id = #{id}</if>
-	           <if test="contractNum!=null and contractNum!=''">AND t.contract_num = #{contractNum}</if>
-	           <if test="contractName!=null and contractName!=''">AND t.contract_name = #{contractName}</if>
-	           <if test="contractType!=null and contractType!=''">AND t.contract_type = #{contractType}</if>
-	           <if test="contractSignDate!=null and contractSignDate!=''">AND t.contract_sign_date = #{contractSignDate}</if>
-	           <if test="effectiveDate!=null and effectiveDate!=''">AND t.effective_date = #{effectiveDate}</if>
-	           <if test="terminationDate!=null and terminationDate!=''">AND t.termination_date = #{terminationDate}</if>
-	           <if test="contractAmount!=null and contractAmount!=''">AND t.contract_amount = #{contractAmount}</if>
-	           <if test="currency!=null and currency!=''">AND t.currency = #{currency}</if>
-	           <if test="contractText!=null and contractText!=''">AND t.contract_text = #{contractText}</if>
-	           <if test="attachment!=null and attachment!=''">AND t.attachment = #{attachment}</if>
-	           <if test="partyAName!=null and partyAName!=''">AND t.party_a_name = #{partyAName}</if>
-	           <if test="partyAAddress!=null and partyAAddress!=''">AND t.party_a_address = #{partyAAddress}</if>
-	           <if test="partyAContactInfo!=null and partyAContactInfo!=''">AND t.party_a_contact_info = #{partyAContactInfo}</if>
-	           <if test="partyBName!=null and partyBName!=''">AND t.party_b_name = #{partyBName}</if>
-	           <if test="partyBAddress!=null and partyBAddress!=''">AND t.party_b_address = #{partyBAddress}</if>
-	           <if test="partyBContactInfo!=null and partyBContactInfo!=''">AND t.party_b_contact_info = #{partyBContactInfo}</if>
-	           <if test="fulfillmentTerm!=null and fulfillmentTerm!=''">AND t.fulfillment_term = #{fulfillmentTerm}</if>
-	           <if test="fulfillmentResponsibility!=null and fulfillmentResponsibility!=''">AND t.fulfillment_responsibility = #{fulfillmentResponsibility}</if>
-	           <if test="paymentMethod!=null and paymentMethod!=''">AND t.payment_method = #{paymentMethod}</if>
-	           <if test="paymentTerm!=null and paymentTerm!=''">AND t.payment_term = #{paymentTerm}</if>
-	           <if test="acceptanceCriteria!=null and acceptanceCriteria!=''">AND t.acceptance_criteria = #{acceptanceCriteria}</if>
-	           <if test="breachLiability!=null and breachLiability!=''">AND t.breach_liability = #{breachLiability}</if>
-	           <if test="contractStatus!=null and contractStatus!=''">AND t.contract_status = #{contractStatus}</if>
-	           <if test="contractManager!=null and contractManager!=''">AND t.contract_manager = #{contractManager}</if>
-	           <if test="reviewOpinion!=null and reviewOpinion!=''">AND t.review_opinion = #{reviewOpinion}</if>
-	           <if test="changeLog!=null and changeLog!=''">AND t.change_log = #{changeLog}</if>
-	           <if test="disputeRecord!=null and disputeRecord!=''">AND t.dispute_record = #{disputeRecord}</if>
-	           <if test="createdBy!=null and createdBy!=''">AND t.created_by = #{createdBy}</if>
-	           <if test="createdTime!=null and createdTime!=''">AND t.created_time = #{createdTime}</if>
-	           <if test="modifiedBy!=null and modifiedBy!=''">AND t.modified_by = #{modifiedBy}</if>
-	           <if test="modifiedTime!=null and modifiedTime!=''">AND t.modified_time = #{modifiedTime}</if>
-	    		</where>
-	 </select>
-    
- 	<!-- 根据主键获取单条记录 -->
+            <if test="id!=null and id!=''">AND t.id = #{id}</if>
+            <if test="contractNum!=null and contractNum!=''">AND t.contract_num = #{contractNum}</if>
+            <if test="contractName!=null and contractName!=''">AND t.contract_name = #{contractName}</if>
+            <if test="contractType!=null and contractType!=''">AND t.contract_type = #{contractType}</if>
+            <if test="contractSignDate!=null and contractSignDate!=''">AND t.contract_sign_date = #{contractSignDate}</if>
+            <if test="effectiveDate!=null and effectiveDate!=''">AND t.effective_date = #{effectiveDate}</if>
+            <if test="terminationDate!=null and terminationDate!=''">AND t.termination_date = #{terminationDate}</if>
+            <if test="contractAmount!=null and contractAmount!=''">AND t.contract_amount = #{contractAmount}</if>
+            <if test="currency!=null and currency!=''">AND t.currency = #{currency}</if>
+            <if test="contractText!=null and contractText!=''">AND t.contract_text = #{contractText}</if>
+            <if test="attachment!=null and attachment!=''">AND t.attachment = #{attachment}</if>
+            <if test="partyAName!=null and partyAName!=''">AND t.party_a_name = #{partyAName}</if>
+            <if test="partyAAddress!=null and partyAAddress!=''">AND t.party_a_address = #{partyAAddress}</if>
+            <if test="partyAContactInfo!=null and partyAContactInfo!=''">AND t.party_a_contact_info = #{partyAContactInfo}</if>
+            <if test="partyBName!=null and partyBName!=''">AND t.party_b_name = #{partyBName}</if>
+            <if test="partyBAddress!=null and partyBAddress!=''">AND t.party_b_address = #{partyBAddress}</if>
+            <if test="partyBContactInfo!=null and partyBContactInfo!=''">AND t.party_b_contact_info = #{partyBContactInfo}</if>
+            <if test="fulfillmentTerm!=null and fulfillmentTerm!=''">AND t.fulfillment_term = #{fulfillmentTerm}</if>
+            <if test="fulfillmentResponsibility!=null and fulfillmentResponsibility!=''">AND t.fulfillment_responsibility = #{fulfillmentResponsibility}</if>
+            <if test="paymentMethod!=null and paymentMethod!=''">AND t.payment_method = #{paymentMethod}</if>
+            <if test="paymentTerm!=null and paymentTerm!=''">AND t.payment_term = #{paymentTerm}</if>
+            <if test="acceptanceCriteria!=null and acceptanceCriteria!=''">AND t.acceptance_criteria = #{acceptanceCriteria}</if>
+            <if test="breachLiability!=null and breachLiability!=''">AND t.breach_liability = #{breachLiability}</if>
+            <if test="contractStatus!=null and contractStatus!=''">AND t.contract_status = #{contractStatus}</if>
+            <if test="contractManager!=null and contractManager!=''">AND t.contract_manager = #{contractManager}</if>
+            <if test="reviewOpinion!=null and reviewOpinion!=''">AND t.review_opinion = #{reviewOpinion}</if>
+            <if test="changeLog!=null and changeLog!=''">AND t.change_log = #{changeLog}</if>
+            <if test="disputeRecord!=null and disputeRecord!=''">AND t.dispute_record = #{disputeRecord}</if>
+            <if test="createdBy!=null and createdBy!=''">AND t.created_by = #{createdBy}</if>
+            <if test="createdTime!=null and createdTime!=''">AND t.created_time = #{createdTime}</if>
+            <if test="modifiedBy!=null and modifiedBy!=''">AND t.modified_by = #{modifiedBy}</if>
+            <if test="modifiedTime!=null and modifiedTime!=''">AND t.modified_time = #{modifiedTime}</if>
+            <if test="materialNum!=null and materialNum!=''">AND t.material_num = #{materialNum}</if>
+            <if test="materialName!=null and materialName!=''">AND t.material_name = #{materialName}</if>
+            <if test="unitOfMeasurement!=null and unitOfMeasurement!=''">AND t.unit_of_measurement = #{unitOfMeasurement}</if>
+            <if test="congruentAmount!=null and congruentAmount!=''">AND t.congruent_amount = #{congruentAmount}</if>
+        </where>
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
     <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
-		SELECT         
-        	<include refid="baseColumns" />
-		FROM contracts t
-		WHERE id = #{id}
-	</select>
+        SELECT
+        <include refid="baseColumns" />
+        FROM contracts t
+        WHERE id = #{id}
+    </select>
 
-	<!-- 插入全部字段 -->
+    <!-- 插入全部字段 -->
     <insert id="insert" parameterType="com.worlds.mes.entity.Contracts"
-		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true"
     >
-	INSERT INTO contracts
-    <trim prefix="(" suffix=")" suffixOverrides=",">	 
-        	        	    	contract_num,
-    	        	    	contract_name,
-    	        	    	contract_type,
-    	        	    	contract_sign_date,
-    	        	    	effective_date,
-    	        	    	termination_date,
-    	        	    	contract_amount,
-    	        	    	currency,
-    	        	    	contract_text,
-    	        	    	attachment,
-    	        	    	party_a_name,
-    	        	    	party_a_address,
-    	        	    	party_a_contact_info,
-    	        	    	party_b_name,
-    	        	    	party_b_address,
-    	        	    	party_b_contact_info,
-    	        	    	fulfillment_term,
-    	        	    	fulfillment_responsibility,
-    	        	    	payment_method,
-    	        	    	payment_term,
-    	        	    	acceptance_criteria,
-    	        	    	breach_liability,
-    	        	    	contract_status,
-    	        	    	contract_manager,
-    	        	    	review_opinion,
-    	        	    	change_log,
-    	        	    	dispute_record,
-    	        	    	created_by,
-    	        	    	created_time,
-    	        	    	modified_by,
-    	        	    	modified_time,
-    	        </trim>
-    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
-        	        	        #{contractNum},                   
-    	        	        #{contractName},                   
-    	        	        #{contractType},                   
-    	        	        #{contractSignDate},                   
-    	        	        #{effectiveDate},                   
-    	        	        #{terminationDate},                   
-    	        	        #{contractAmount},                   
-    	        	        #{currency},                   
-    	        	        #{contractText},                   
-    	        	        #{attachment},                   
-    	        	        #{partyAName},                   
-    	        	        #{partyAAddress},                   
-    	        	        #{partyAContactInfo},                   
-    	        	        #{partyBName},                   
-    	        	        #{partyBAddress},                   
-    	        	        #{partyBContactInfo},                   
-    	        	        #{fulfillmentTerm},                   
-    	        	        #{fulfillmentResponsibility},                   
-    	        	        #{paymentMethod},                   
-    	        	        #{paymentTerm},                   
-    	        	        #{acceptanceCriteria},                   
-    	        	        #{breachLiability},                   
-    	        	        #{contractStatus},                   
-    	        	        #{contractManager},                   
-    	        	        #{reviewOpinion},                   
-    	        	        #{changeLog},                   
-    	        	        #{disputeRecord},                   
-    	        	        #{createdBy},                   
-    	        	        #{createdTime},                   
-    	        	        #{modifiedBy},                   
-    	        	        #{modifiedTime},                   
-    	        </trim>
-	</insert>
-    
-    <!-- 插入不为NULL的字段 -->
-    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.Contracts"
-        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
-        >
-        INSERT INTO contracts    
-        <trim prefix="(" suffix=")" suffixOverrides=",">	 
-
-                                                                            <if test="contractNum != null">
-                   contract_num,
-                    </if>
-                                                                <if test="contractName != null">
-                   contract_name,
-                    </if>
-                                                                <if test="contractType != null">
-                   contract_type,
-                    </if>
-                                                                <if test="contractSignDate != null">
-                   contract_sign_date,
-                    </if>
-                                                                <if test="effectiveDate != null">
-                   effective_date,
-                    </if>
-                                                                <if test="terminationDate != null">
-                   termination_date,
-                    </if>
-                                                                <if test="contractAmount != null">
-                   contract_amount,
-                    </if>
-                                                                <if test="currency != null">
-                   currency,
-                    </if>
-                                                                <if test="contractText != null">
-                   contract_text,
-                    </if>
-                                                                <if test="attachment != null">
-                   attachment,
-                    </if>
-                                                                <if test="partyAName != null">
-                   party_a_name,
-                    </if>
-                                                                <if test="partyAAddress != null">
-                   party_a_address,
-                    </if>
-                                                                <if test="partyAContactInfo != null">
-                   party_a_contact_info,
-                    </if>
-                                                                <if test="partyBName != null">
-                   party_b_name,
-                    </if>
-                                                                <if test="partyBAddress != null">
-                   party_b_address,
-                    </if>
-                                                                <if test="partyBContactInfo != null">
-                   party_b_contact_info,
-                    </if>
-                                                                <if test="fulfillmentTerm != null">
-                   fulfillment_term,
-                    </if>
-                                                                <if test="fulfillmentResponsibility != null">
-                   fulfillment_responsibility,
-                    </if>
-                                                                <if test="paymentMethod != null">
-                   payment_method,
-                    </if>
-                                                                <if test="paymentTerm != null">
-                   payment_term,
-                    </if>
-                                                                <if test="acceptanceCriteria != null">
-                   acceptance_criteria,
-                    </if>
-                                                                <if test="breachLiability != null">
-                   breach_liability,
-                    </if>
-                                                                <if test="contractStatus != null">
-                   contract_status,
-                    </if>
-                                                                <if test="contractManager != null">
-                   contract_manager,
-                    </if>
-                                                                <if test="reviewOpinion != null">
-                   review_opinion,
-                    </if>
-                                                                <if test="changeLog != null">
-                   change_log,
-                    </if>
-                                                                <if test="disputeRecord != null">
-                   dispute_record,
-                    </if>
-                                                                <if test="createdBy != null">
-                   created_by,
-                    </if>
-                                                                <if test="createdTime != null">
-                   created_time,
-                    </if>
-                                                                <if test="modifiedBy != null">
-                   modified_by,
-                    </if>
-                                                                <if test="modifiedTime != null">
-                   modified_time,
-                    </if>
-                                    </trim>
-        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
-                                                                            <if test="contractNum != null" >
-                    #{contractNum},                    
-                    </if>
-                                                                <if test="contractName != null" >
-                    #{contractName},                    
-                    </if>
-                                                                <if test="contractType != null" >
-                    #{contractType},                    
-                    </if>
-                                                                <if test="contractSignDate != null" >
-                    #{contractSignDate},                    
-                    </if>
-                                                                <if test="effectiveDate != null" >
-                    #{effectiveDate},                    
-                    </if>
-                                                                <if test="terminationDate != null" >
-                    #{terminationDate},                    
-                    </if>
-                                                                <if test="contractAmount != null" >
-                    #{contractAmount},                    
-                    </if>
-                                                                <if test="currency != null" >
-                    #{currency},                    
-                    </if>
-                                                                <if test="contractText != null" >
-                    #{contractText},                    
-                    </if>
-                                                                <if test="attachment != null" >
-                    #{attachment},                    
-                    </if>
-                                                                <if test="partyAName != null" >
-                    #{partyAName},                    
-                    </if>
-                                                                <if test="partyAAddress != null" >
-                    #{partyAAddress},                    
-                    </if>
-                                                                <if test="partyAContactInfo != null" >
-                    #{partyAContactInfo},                    
-                    </if>
-                                                                <if test="partyBName != null" >
-                    #{partyBName},                    
-                    </if>
-                                                                <if test="partyBAddress != null" >
-                    #{partyBAddress},                    
-                    </if>
-                                                                <if test="partyBContactInfo != null" >
-                    #{partyBContactInfo},                    
-                    </if>
-                                                                <if test="fulfillmentTerm != null" >
-                    #{fulfillmentTerm},                    
-                    </if>
-                                                                <if test="fulfillmentResponsibility != null" >
-                    #{fulfillmentResponsibility},                    
-                    </if>
-                                                                <if test="paymentMethod != null" >
-                    #{paymentMethod},                    
-                    </if>
-                                                                <if test="paymentTerm != null" >
-                    #{paymentTerm},                    
-                    </if>
-                                                                <if test="acceptanceCriteria != null" >
-                    #{acceptanceCriteria},                    
-                    </if>
-                                                                <if test="breachLiability != null" >
-                    #{breachLiability},                    
-                    </if>
-                                                                <if test="contractStatus != null" >
-                    #{contractStatus},                    
-                    </if>
-                                                                <if test="contractManager != null" >
-                    #{contractManager},                    
-                    </if>
-                                                                <if test="reviewOpinion != null" >
-                    #{reviewOpinion},                    
-                    </if>
-                                                                <if test="changeLog != null" >
-                    #{changeLog},                    
-                    </if>
-                                                                <if test="disputeRecord != null" >
-                    #{disputeRecord},                    
-                    </if>
-                                                                <if test="createdBy != null" >
-                    #{createdBy},                    
-                    </if>
-                                                                <if test="createdTime != null" >
-                    #{createdTime},                    
-                    </if>
-                                                                <if test="modifiedBy != null" >
-                    #{modifiedBy},                    
-                    </if>
-                                                                <if test="modifiedTime != null" >
-                    #{modifiedTime},                    
-                    </if>
-                                    </trim>
+        INSERT INTO contracts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            contract_num,
+            contract_name,
+            contract_type,
+            contract_sign_date,
+            effective_date,
+            termination_date,
+            contract_amount,
+            currency,
+            contract_text,
+            attachment,
+            party_a_name,
+            party_a_address,
+            party_a_contact_info,
+            party_b_name,
+            party_b_address,
+            party_b_contact_info,
+            fulfillment_term,
+            fulfillment_responsibility,
+            payment_method,
+            payment_term,
+            acceptance_criteria,
+            breach_liability,
+            contract_status,
+            contract_manager,
+            review_opinion,
+            change_log,
+            dispute_record,
+            created_by,
+            created_time,
+            modified_by,
+            modified_time,
+            material_num,
+            material_name,
+            unit_of_measurement,
+            congruent_amount,
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            #{contractNum},
+            #{contractName},
+            #{contractType},
+            #{contractSignDate},
+            #{effectiveDate},
+            #{terminationDate},
+            #{contractAmount},
+            #{currency},
+            #{contractText},
+            #{attachment},
+            #{partyAName},
+            #{partyAAddress},
+            #{partyAContactInfo},
+            #{partyBName},
+            #{partyBAddress},
+            #{partyBContactInfo},
+            #{fulfillmentTerm},
+            #{fulfillmentResponsibility},
+            #{paymentMethod},
+            #{paymentTerm},
+            #{acceptanceCriteria},
+            #{breachLiability},
+            #{contractStatus},
+            #{contractManager},
+            #{reviewOpinion},
+            #{changeLog},
+            #{disputeRecord},
+            #{createdBy},
+            #{createdTime},
+            #{modifiedBy},
+            #{modifiedTime},
+            #{materialNum},
+            #{materialName},
+            #{unitOfMeasurement},
+            #{congruentAmount},
+        </trim>
     </insert>
 
-	<!-- 更新,更新全部字段 -->
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.Contracts"
+            keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+        INSERT INTO contracts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+            <if test="contractNum != null">
+                contract_num,
+            </if>
+            <if test="contractName != null">
+                contract_name,
+            </if>
+            <if test="contractType != null">
+                contract_type,
+            </if>
+            <if test="contractSignDate != null">
+                contract_sign_date,
+            </if>
+            <if test="effectiveDate != null">
+                effective_date,
+            </if>
+            <if test="terminationDate != null">
+                termination_date,
+            </if>
+            <if test="contractAmount != null">
+                contract_amount,
+            </if>
+            <if test="currency != null">
+                currency,
+            </if>
+            <if test="contractText != null">
+                contract_text,
+            </if>
+            <if test="attachment != null">
+                attachment,
+            </if>
+            <if test="partyAName != null">
+                party_a_name,
+            </if>
+            <if test="partyAAddress != null">
+                party_a_address,
+            </if>
+            <if test="partyAContactInfo != null">
+                party_a_contact_info,
+            </if>
+            <if test="partyBName != null">
+                party_b_name,
+            </if>
+            <if test="partyBAddress != null">
+                party_b_address,
+            </if>
+            <if test="partyBContactInfo != null">
+                party_b_contact_info,
+            </if>
+            <if test="fulfillmentTerm != null">
+                fulfillment_term,
+            </if>
+            <if test="fulfillmentResponsibility != null">
+                fulfillment_responsibility,
+            </if>
+            <if test="paymentMethod != null">
+                payment_method,
+            </if>
+            <if test="paymentTerm != null">
+                payment_term,
+            </if>
+            <if test="acceptanceCriteria != null">
+                acceptance_criteria,
+            </if>
+            <if test="breachLiability != null">
+                breach_liability,
+            </if>
+            <if test="contractStatus != null">
+                contract_status,
+            </if>
+            <if test="contractManager != null">
+                contract_manager,
+            </if>
+            <if test="reviewOpinion != null">
+                review_opinion,
+            </if>
+            <if test="changeLog != null">
+                change_log,
+            </if>
+            <if test="disputeRecord != null">
+                dispute_record,
+            </if>
+            <if test="createdBy != null">
+                created_by,
+            </if>
+            <if test="createdTime != null">
+                created_time,
+            </if>
+            <if test="modifiedBy != null">
+                modified_by,
+            </if>
+            <if test="modifiedTime != null">
+                modified_time,
+            </if>
+            <if test="materialNum != null">
+                material_num,
+            </if>
+            <if test="materialName != null">
+                material_name,
+            </if>
+            <if test="unitOfMeasurement != null">
+                unit_of_measurement,
+            </if>
+            <if test="congruentAmount != null">
+                congruent_amount,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="contractNum != null" >
+                #{contractNum},
+            </if>
+            <if test="contractName != null" >
+                #{contractName},
+            </if>
+            <if test="contractType != null" >
+                #{contractType},
+            </if>
+            <if test="contractSignDate != null" >
+                #{contractSignDate},
+            </if>
+            <if test="effectiveDate != null" >
+                #{effectiveDate},
+            </if>
+            <if test="terminationDate != null" >
+                #{terminationDate},
+            </if>
+            <if test="contractAmount != null" >
+                #{contractAmount},
+            </if>
+            <if test="currency != null" >
+                #{currency},
+            </if>
+            <if test="contractText != null" >
+                #{contractText},
+            </if>
+            <if test="attachment != null" >
+                #{attachment},
+            </if>
+            <if test="partyAName != null" >
+                #{partyAName},
+            </if>
+            <if test="partyAAddress != null" >
+                #{partyAAddress},
+            </if>
+            <if test="partyAContactInfo != null" >
+                #{partyAContactInfo},
+            </if>
+            <if test="partyBName != null" >
+                #{partyBName},
+            </if>
+            <if test="partyBAddress != null" >
+                #{partyBAddress},
+            </if>
+            <if test="partyBContactInfo != null" >
+                #{partyBContactInfo},
+            </if>
+            <if test="fulfillmentTerm != null" >
+                #{fulfillmentTerm},
+            </if>
+            <if test="fulfillmentResponsibility != null" >
+                #{fulfillmentResponsibility},
+            </if>
+            <if test="paymentMethod != null" >
+                #{paymentMethod},
+            </if>
+            <if test="paymentTerm != null" >
+                #{paymentTerm},
+            </if>
+            <if test="acceptanceCriteria != null" >
+                #{acceptanceCriteria},
+            </if>
+            <if test="breachLiability != null" >
+                #{breachLiability},
+            </if>
+            <if test="contractStatus != null" >
+                #{contractStatus},
+            </if>
+            <if test="contractManager != null" >
+                #{contractManager},
+            </if>
+            <if test="reviewOpinion != null" >
+                #{reviewOpinion},
+            </if>
+            <if test="changeLog != null" >
+                #{changeLog},
+            </if>
+            <if test="disputeRecord != null" >
+                #{disputeRecord},
+            </if>
+            <if test="createdBy != null" >
+                #{createdBy},
+            </if>
+            <if test="createdTime != null" >
+                #{createdTime},
+            </if>
+            <if test="modifiedBy != null" >
+                #{modifiedBy},
+            </if>
+            <if test="modifiedTime != null" >
+                #{modifiedTime},
+            </if>
+            <if test="materialNum != null" >
+                #{materialNum},
+            </if>
+            <if test="materialName != null" >
+                #{materialName},
+            </if>
+            <if test="unitOfMeasurement != null" >
+                #{unitOfMeasurement},
+            </if>
+            <if test="congruentAmount != null" >
+                #{congruentAmount},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新,更新全部字段 -->
     <update id="update" parameterType="com.worlds.mes.entity.Contracts">
-    UPDATE contracts
-     <set>		
-                                     contract_num=#{contractNum},        
-                                contract_name=#{contractName},        
-                                contract_type=#{contractType},        
-                                contract_sign_date=#{contractSignDate},        
-                                effective_date=#{effectiveDate},        
-                                termination_date=#{terminationDate},        
-                                contract_amount=#{contractAmount},        
-                                currency=#{currency},        
-                                contract_text=#{contractText},        
-                                attachment=#{attachment},        
-                                party_a_name=#{partyAName},        
-                                party_a_address=#{partyAAddress},        
-                                party_a_contact_info=#{partyAContactInfo},        
-                                party_b_name=#{partyBName},        
-                                party_b_address=#{partyBAddress},        
-                                party_b_contact_info=#{partyBContactInfo},        
-                                fulfillment_term=#{fulfillmentTerm},        
-                                fulfillment_responsibility=#{fulfillmentResponsibility},        
-                                payment_method=#{paymentMethod},        
-                                payment_term=#{paymentTerm},        
-                                acceptance_criteria=#{acceptanceCriteria},        
-                                breach_liability=#{breachLiability},        
-                                contract_status=#{contractStatus},        
-                                contract_manager=#{contractManager},        
-                                review_opinion=#{reviewOpinion},        
-                                change_log=#{changeLog},        
-                                dispute_record=#{disputeRecord},        
-                                created_by=#{createdBy},        
-                                created_time=#{createdTime},        
-                                modified_by=#{modifiedBy},        
-                                modified_time=#{modifiedTime},        
-                   </set>	
-    WHERE id = #{id}
-    </update>  
-    
-    
+        UPDATE contracts
+        <set>
+            contract_num=#{contractNum},
+            contract_name=#{contractName},
+            contract_type=#{contractType},
+            contract_sign_date=#{contractSignDate},
+            effective_date=#{effectiveDate},
+            termination_date=#{terminationDate},
+            contract_amount=#{contractAmount},
+            currency=#{currency},
+            contract_text=#{contractText},
+            attachment=#{attachment},
+            party_a_name=#{partyAName},
+            party_a_address=#{partyAAddress},
+            party_a_contact_info=#{partyAContactInfo},
+            party_b_name=#{partyBName},
+            party_b_address=#{partyBAddress},
+            party_b_contact_info=#{partyBContactInfo},
+            fulfillment_term=#{fulfillmentTerm},
+            fulfillment_responsibility=#{fulfillmentResponsibility},
+            payment_method=#{paymentMethod},
+            payment_term=#{paymentTerm},
+            acceptance_criteria=#{acceptanceCriteria},
+            breach_liability=#{breachLiability},
+            contract_status=#{contractStatus},
+            contract_manager=#{contractManager},
+            review_opinion=#{reviewOpinion},
+            change_log=#{changeLog},
+            dispute_record=#{disputeRecord},
+            created_by=#{createdBy},
+            created_time=#{createdTime},
+            modified_by=#{modifiedBy},
+            modified_time=#{modifiedTime},
+            material_num=#{materialNum},
+            material_name=#{materialName},
+            unit_of_measurement=#{unitOfMeasurement},
+            congruent_amount=#{congruentAmount},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
     <!-- 更新不为NULL的字段 -->
     <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.Contracts">
-    UPDATE contracts
-    <set>
-    	                                                <if test="contractNum != null" >
-                contract_num=#{contractNum},                 
-                </if>
-                                                <if test="contractName != null" >
-                contract_name=#{contractName},                 
-                </if>
-                                                <if test="contractType != null" >
-                contract_type=#{contractType},                 
-                </if>
-                                                <if test="contractSignDate != null" >
-                contract_sign_date=#{contractSignDate},                 
-                </if>
-                                                <if test="effectiveDate != null" >
-                effective_date=#{effectiveDate},                 
-                </if>
-                                                <if test="terminationDate != null" >
-                termination_date=#{terminationDate},                 
-                </if>
-                                                <if test="contractAmount != null" >
-                contract_amount=#{contractAmount},                 
-                </if>
-                                                <if test="currency != null" >
-                currency=#{currency},                 
-                </if>
-                                                <if test="contractText != null" >
-                contract_text=#{contractText},                 
-                </if>
-                                                <if test="attachment != null" >
-                attachment=#{attachment},                 
-                </if>
-                                                <if test="partyAName != null" >
-                party_a_name=#{partyAName},                 
-                </if>
-                                                <if test="partyAAddress != null" >
-                party_a_address=#{partyAAddress},                 
-                </if>
-                                                <if test="partyAContactInfo != null" >
-                party_a_contact_info=#{partyAContactInfo},                 
-                </if>
-                                                <if test="partyBName != null" >
-                party_b_name=#{partyBName},                 
-                </if>
-                                                <if test="partyBAddress != null" >
-                party_b_address=#{partyBAddress},                 
-                </if>
-                                                <if test="partyBContactInfo != null" >
-                party_b_contact_info=#{partyBContactInfo},                 
-                </if>
-                                                <if test="fulfillmentTerm != null" >
-                fulfillment_term=#{fulfillmentTerm},                 
-                </if>
-                                                <if test="fulfillmentResponsibility != null" >
-                fulfillment_responsibility=#{fulfillmentResponsibility},                 
-                </if>
-                                                <if test="paymentMethod != null" >
-                payment_method=#{paymentMethod},                 
-                </if>
-                                                <if test="paymentTerm != null" >
-                payment_term=#{paymentTerm},                 
-                </if>
-                                                <if test="acceptanceCriteria != null" >
-                acceptance_criteria=#{acceptanceCriteria},                 
-                </if>
-                                                <if test="breachLiability != null" >
-                breach_liability=#{breachLiability},                 
-                </if>
-                                                <if test="contractStatus != null" >
-                contract_status=#{contractStatus},                 
-                </if>
-                                                <if test="contractManager != null" >
-                contract_manager=#{contractManager},                 
-                </if>
-                                                <if test="reviewOpinion != null" >
-                review_opinion=#{reviewOpinion},                 
-                </if>
-                                                <if test="changeLog != null" >
-                change_log=#{changeLog},                 
-                </if>
-                                                <if test="disputeRecord != null" >
-                dispute_record=#{disputeRecord},                 
-                </if>
-                                                <if test="createdBy != null" >
-                created_by=#{createdBy},                 
-                </if>
-                                                <if test="createdTime != null" >
-                created_time=#{createdTime},                 
-                </if>
-                                                <if test="modifiedBy != null" >
-                modified_by=#{modifiedBy},                 
-                </if>
-                                                <if test="modifiedTime != null" >
-                modified_time=#{modifiedTime},                 
-                </if>
-                        </set>
-    WHERE id = #{id}
+        UPDATE contracts
+        <set>
+            <if test="contractNum != null" >
+                contract_num=#{contractNum},
+            </if>
+            <if test="contractName != null" >
+                contract_name=#{contractName},
+            </if>
+            <if test="contractType != null" >
+                contract_type=#{contractType},
+            </if>
+            <if test="contractSignDate != null" >
+                contract_sign_date=#{contractSignDate},
+            </if>
+            <if test="effectiveDate != null" >
+                effective_date=#{effectiveDate},
+            </if>
+            <if test="terminationDate != null" >
+                termination_date=#{terminationDate},
+            </if>
+            <if test="contractAmount != null" >
+                contract_amount=#{contractAmount},
+            </if>
+            <if test="currency != null" >
+                currency=#{currency},
+            </if>
+            <if test="contractText != null" >
+                contract_text=#{contractText},
+            </if>
+            <if test="attachment != null" >
+                attachment=#{attachment},
+            </if>
+            <if test="partyAName != null" >
+                party_a_name=#{partyAName},
+            </if>
+            <if test="partyAAddress != null" >
+                party_a_address=#{partyAAddress},
+            </if>
+            <if test="partyAContactInfo != null" >
+                party_a_contact_info=#{partyAContactInfo},
+            </if>
+            <if test="partyBName != null" >
+                party_b_name=#{partyBName},
+            </if>
+            <if test="partyBAddress != null" >
+                party_b_address=#{partyBAddress},
+            </if>
+            <if test="partyBContactInfo != null" >
+                party_b_contact_info=#{partyBContactInfo},
+            </if>
+            <if test="fulfillmentTerm != null" >
+                fulfillment_term=#{fulfillmentTerm},
+            </if>
+            <if test="fulfillmentResponsibility != null" >
+                fulfillment_responsibility=#{fulfillmentResponsibility},
+            </if>
+            <if test="paymentMethod != null" >
+                payment_method=#{paymentMethod},
+            </if>
+            <if test="paymentTerm != null" >
+                payment_term=#{paymentTerm},
+            </if>
+            <if test="acceptanceCriteria != null" >
+                acceptance_criteria=#{acceptanceCriteria},
+            </if>
+            <if test="breachLiability != null" >
+                breach_liability=#{breachLiability},
+            </if>
+            <if test="contractStatus != null" >
+                contract_status=#{contractStatus},
+            </if>
+            <if test="contractManager != null" >
+                contract_manager=#{contractManager},
+            </if>
+            <if test="reviewOpinion != null" >
+                review_opinion=#{reviewOpinion},
+            </if>
+            <if test="changeLog != null" >
+                change_log=#{changeLog},
+            </if>
+            <if test="disputeRecord != null" >
+                dispute_record=#{disputeRecord},
+            </if>
+            <if test="createdBy != null" >
+                created_by=#{createdBy},
+            </if>
+            <if test="createdTime != null" >
+                created_time=#{createdTime},
+            </if>
+            <if test="modifiedBy != null" >
+                modified_by=#{modifiedBy},
+            </if>
+            <if test="modifiedTime != null" >
+                modified_time=#{modifiedTime},
+            </if>
+            <if test="materialNum != null" >
+                material_num=#{materialNum},
+            </if>
+            <if test="materialName != null" >
+                material_name=#{materialName},
+            </if>
+            <if test="unitOfMeasurement != null" >
+                unit_of_measurement=#{unitOfMeasurement},
+            </if>
+            <if test="congruentAmount != null" >
+                congruent_amount=#{congruentAmount},
+            </if>
+        </set>
+        WHERE id = #{id}
     </update>
 
 </mapper>

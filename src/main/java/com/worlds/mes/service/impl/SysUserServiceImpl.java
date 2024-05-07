@@ -156,7 +156,9 @@ public class SysUserServiceImpl implements  SysUserService {
      */
     @Override
     public List<PermissionsMenuDto> getRoleAnDeptAndMenu(RoleAnDeptAndMenuVo roleAnDeptAndMenuVo) {
-        Object o = redisTemplate.opsForValue().get(roleAnDeptAndMenuVo.getLoginName() + "deptAndRoleAndMenu");
+        SysUser user = new LambdaQueryChainWrapper<>(sysUserMapper).eq(SysUser::getId, roleAnDeptAndMenuVo.getUserId()).one();
+
+        Object o = redisTemplate.opsForValue().get(user.getDeptId() + "deptAndRoleAndMenu");
         if (null != o) {
             return JSONObject.parseArray(o.toString(), PermissionsMenuDto.class);
         }
@@ -251,8 +253,8 @@ public class SysUserServiceImpl implements  SysUserService {
         }
         // TODO: 2024/5/1 添加到redis中
         String s = JSON.toJSONString(res);
-        redisTemplate.opsForValue().set(roleAnDeptAndMenuVo.getLoginName() + "deptAndRoleAndMenu",s);
-        redisTemplate.expire(roleAnDeptAndMenuVo.getLoginName() + "deptAndRoleAndMenu", 60, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(user.getDeptId() + "deptAndRoleAndMenu",s);
+        redisTemplate.expire(user.getDeptId() + "deptAndRoleAndMenu", 60, TimeUnit.SECONDS);
         return res;
     }
 

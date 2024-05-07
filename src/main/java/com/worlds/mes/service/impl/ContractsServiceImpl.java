@@ -17,11 +17,11 @@ import java.util.List;
 
 @Service
 public class ContractsServiceImpl implements  ContractsService  {
-	
+
     private static Log log = LogFactory.getLog(ContractsServiceImpl.class);
 
 
-   @Autowired
+    @Autowired
     private ContractsMapper contractsMapper;
 
     /**
@@ -31,7 +31,7 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public List<Contracts> listAll() {
-    	return contractsMapper.listAll();
+        return contractsMapper.listAll();
     }
     /**
      * 查询所有记录 带有分页
@@ -58,7 +58,7 @@ public class ContractsServiceImpl implements  ContractsService  {
     }
 
 
-/**
+    /**
      * 根据主键查询
      *
      * @param id 主键
@@ -66,9 +66,9 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public Contracts getById(Integer id) {
-    	return contractsMapper.getById(id);
+        return contractsMapper.getById(id);
     }
-	
+
     /**
      * 新增，插入所有字段
      *
@@ -77,9 +77,9 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public int insert(Contracts contracts) {
-    	return contractsMapper.insert(contracts);
+        return contractsMapper.insert(contracts);
     }
-	
+
     /**
      * 新增，忽略null字段
      *
@@ -88,9 +88,9 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public int insertIgnoreNull(Contracts contracts) {
-    	return contractsMapper.insertIgnoreNull(contracts);
+        return contractsMapper.insertIgnoreNull(contracts);
     }
-	
+
     /**
      * 修改，修改所有字段
      *
@@ -99,9 +99,9 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public int update(Contracts contracts) {
-    	return contractsMapper.update(contracts);
+        return contractsMapper.update(contracts);
     }
-	
+
     /**
      * 修改，忽略null字段
      *
@@ -110,9 +110,9 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public int updateIgnoreNull(Contracts contracts) {
-    	return contractsMapper.updateIgnoreNull(contracts);
+        return contractsMapper.updateIgnoreNull(contracts);
     }
-	
+
     /**
      * 删除记录
      *
@@ -121,7 +121,7 @@ public class ContractsServiceImpl implements  ContractsService  {
      */
     @Override
     public int delete(Contracts contracts) {
-    	return contractsMapper.deleteById(contracts.getId());
+        return contractsMapper.deleteById(contracts.getId());
     }
-	
+
 }
