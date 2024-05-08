@@ -1,10 +1,12 @@
 package com.worlds.mes.service;
 
-import com.worlds.mes.entity.Contracts;
 import com.github.pagehelper.Page;
+import com.worlds.mes.entity.Contracts;
 import com.worlds.mes.vo.ContractsVo;
-import java.util.List;
+import com.worlds.mes.vo.OrdersInfoVo;
+
 import java.util.HashMap;
+import java.util.List;
 
 public interface ContractsService {
 
@@ -76,5 +78,20 @@ public interface ContractsService {
      * @return 返回影响行数
      */
     public int delete(Contracts contracts);
+
+    /**
+     * 合同下发
+     * @param vo
+     * @return
+     */
+    boolean contractIssuance (OrdersInfoVo vo);
+
+    /**
+     * 合同录入
+     * @param vo
+     * @return
+     */
+    Integer contractInsert (ContractsVo vo);
+
 
 }

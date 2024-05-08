@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.ProductionInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.ProductionInfo">
+            <result column="id" property="id" />
+	        <result column="production_order_number" property="productionOrderNumber" />
+	        <result column="product_id" property="productId" />
+	        <result column="production_quantity" property="productionQuantity" />
+	        <result column="production_start_date" property="productionStartDate" />
+	        <result column="planned_completion_date" property="plannedCompletionDate" />
+	        <result column="actual_completion_date" property="actualCompletionDate" />
+	        <result column="process_id" property="processId" />
+	        <result column="operation_id" property="operationId" />
+	        <result column="inspection_info_id" property="inspectionInfoId" />
+	        <result column="work_shift" property="workShift" />
+	        <result column="production_status" property="productionStatus" />
+	        <result column="quality_inspection" property="qualityInspection" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.production_order_number
+        , t.product_id
+        , t.production_quantity
+        , t.production_start_date
+        , t.planned_completion_date
+        , t.actual_completion_date
+        , t.process_id
+        , t.operation_id
+        , t.inspection_info_id
+        , t.work_shift
+        , t.production_status
+        , t.quality_inspection
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM production_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM production_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="productionOrderNumber!=null and productionOrderNumber!=''">AND t.production_order_number = #{productionOrderNumber}</if>
+	           <if test="productId!=null and productId!=''">AND t.product_id = #{productId}</if>
+	           <if test="productionQuantity!=null and productionQuantity!=''">AND t.production_quantity = #{productionQuantity}</if>
+	           <if test="productionStartDate!=null and productionStartDate!=''">AND t.production_start_date = #{productionStartDate}</if>
+	           <if test="plannedCompletionDate!=null and plannedCompletionDate!=''">AND t.planned_completion_date = #{plannedCompletionDate}</if>
+	           <if test="actualCompletionDate!=null and actualCompletionDate!=''">AND t.actual_completion_date = #{actualCompletionDate}</if>
+	           <if test="processId!=null and processId!=''">AND t.process_id = #{processId}</if>
+	           <if test="operationId!=null and operationId!=''">AND t.operation_id = #{operationId}</if>
+	           <if test="inspectionInfoId!=null and inspectionInfoId!=''">AND t.inspection_info_id = #{inspectionInfoId}</if>
+	           <if test="workShift!=null and workShift!=''">AND t.work_shift = #{workShift}</if>
+	           <if test="productionStatus!=null and productionStatus!=''">AND t.production_status = #{productionStatus}</if>
+	           <if test="qualityInspection!=null and qualityInspection!=''">AND t.quality_inspection = #{qualityInspection}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM production_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.ProductionInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO production_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	production_order_number,
+    	        	    	product_id,
+    	        	    	production_quantity,
+    	        	    	production_start_date,
+    	        	    	planned_completion_date,
+    	        	    	actual_completion_date,
+    	        	    	process_id,
+    	        	    	operation_id,
+    	        	    	inspection_info_id,
+    	        	    	work_shift,
+    	        	    	production_status,
+    	        	    	quality_inspection,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{productionOrderNumber},                   
+    	        	        #{productId},                   
+    	        	        #{productionQuantity},                   
+    	        	        #{productionStartDate},                   
+    	        	        #{plannedCompletionDate},                   
+    	        	        #{actualCompletionDate},                   
+    	        	        #{processId},                   
+    	        	        #{operationId},                   
+    	        	        #{inspectionInfoId},                   
+    	        	        #{workShift},                   
+    	        	        #{productionStatus},                   
+    	        	        #{qualityInspection},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.ProductionInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO production_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="productionOrderNumber != null">
+                   production_order_number,
+                    </if>
+                                                                <if test="productId != null">
+                   product_id,
+                    </if>
+                                                                <if test="productionQuantity != null">
+                   production_quantity,
+                    </if>
+                                                                <if test="productionStartDate != null">
+                   production_start_date,
+                    </if>
+                                                                <if test="plannedCompletionDate != null">
+                   planned_completion_date,
+                    </if>
+                                                                <if test="actualCompletionDate != null">
+                   actual_completion_date,
+                    </if>
+                                                                <if test="processId != null">
+                   process_id,
+                    </if>
+                                                                <if test="operationId != null">
+                   operation_id,
+                    </if>
+                                                                <if test="inspectionInfoId != null">
+                   inspection_info_id,
+                    </if>
+                                                                <if test="workShift != null">
+                   work_shift,
+                    </if>
+                                                                <if test="productionStatus != null">
+                   production_status,
+                    </if>
+                                                                <if test="qualityInspection != null">
+                   quality_inspection,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="productionOrderNumber != null" >
+                    #{productionOrderNumber},                    
+                    </if>
+                                                                <if test="productId != null" >
+                    #{productId},                    
+                    </if>
+                                                                <if test="productionQuantity != null" >
+                    #{productionQuantity},                    
+                    </if>
+                                                                <if test="productionStartDate != null" >
+                    #{productionStartDate},                    
+                    </if>
+                                                                <if test="plannedCompletionDate != null" >
+                    #{plannedCompletionDate},                    
+                    </if>
+                                                                <if test="actualCompletionDate != null" >
+                    #{actualCompletionDate},                    
+                    </if>
+                                                                <if test="processId != null" >
+                    #{processId},                    
+                    </if>
+                                                                <if test="operationId != null" >
+                    #{operationId},                    
+                    </if>
+                                                                <if test="inspectionInfoId != null" >
+                    #{inspectionInfoId},                    
+                    </if>
+                                                                <if test="workShift != null" >
+                    #{workShift},                    
+                    </if>
+                                                                <if test="productionStatus != null" >
+                    #{productionStatus},                    
+                    </if>
+                                                                <if test="qualityInspection != null" >
+                    #{qualityInspection},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.ProductionInfo">
+    UPDATE production_info
+     <set>		
+                                     production_order_number=#{productionOrderNumber},        
+                                product_id=#{productId},        
+                                production_quantity=#{productionQuantity},        
+                                production_start_date=#{productionStartDate},        
+                                planned_completion_date=#{plannedCompletionDate},        
+                                actual_completion_date=#{actualCompletionDate},        
+                                process_id=#{processId},        
+                                operation_id=#{operationId},        
+                                inspection_info_id=#{inspectionInfoId},        
+                                work_shift=#{workShift},        
+                                production_status=#{productionStatus},        
+                                quality_inspection=#{qualityInspection},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.ProductionInfo">
+    UPDATE production_info
+    <set>
+    	                                                <if test="productionOrderNumber != null" >
+                production_order_number=#{productionOrderNumber},                 
+                </if>
+                                                <if test="productId != null" >
+                product_id=#{productId},                 
+                </if>
+                                                <if test="productionQuantity != null" >
+                production_quantity=#{productionQuantity},                 
+                </if>
+                                                <if test="productionStartDate != null" >
+                production_start_date=#{productionStartDate},                 
+                </if>
+                                                <if test="plannedCompletionDate != null" >
+                planned_completion_date=#{plannedCompletionDate},                 
+                </if>
+                                                <if test="actualCompletionDate != null" >
+                actual_completion_date=#{actualCompletionDate},                 
+                </if>
+                                                <if test="processId != null" >
+                process_id=#{processId},                 
+                </if>
+                                                <if test="operationId != null" >
+                operation_id=#{operationId},                 
+                </if>
+                                                <if test="inspectionInfoId != null" >
+                inspection_info_id=#{inspectionInfoId},                 
+                </if>
+                                                <if test="workShift != null" >
+                work_shift=#{workShift},                 
+                </if>
+                                                <if test="productionStatus != null" >
+                production_status=#{productionStatus},                 
+                </if>
+                                                <if test="qualityInspection != null" >
+                quality_inspection=#{qualityInspection},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

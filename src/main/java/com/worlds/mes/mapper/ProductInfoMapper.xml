@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.ProductInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.ProductInfo">
+            <result column="id" property="id" />
+	        <result column="product_id" property="productId" />
+	        <result column="product_name" property="productName" />
+	        <result column="product_specification" property="productSpecification" />
+	        <result column="product_category" property="productCategory" />
+	        <result column="product_status" property="productStatus" />
+	        <result column="measurement_unit" property="measurementUnit" />
+	        <result column="inspection_standard" property="inspectionStandard" />
+	        <result column="safety_standard" property="safetyStandard" />
+	        <result column="production_info_id" property="productionInfoId" />
+	        <result column="expected_delivery_date" property="expectedDeliveryDate" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.product_id
+        , t.product_name
+        , t.product_specification
+        , t.product_category
+        , t.product_status
+        , t.measurement_unit
+        , t.inspection_standard
+        , t.safety_standard
+        , t.production_info_id
+        , t.expected_delivery_date
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM product_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM product_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="productId!=null and productId!=''">AND t.product_id = #{productId}</if>
+	           <if test="productName!=null and productName!=''">AND t.product_name = #{productName}</if>
+	           <if test="productSpecification!=null and productSpecification!=''">AND t.product_specification = #{productSpecification}</if>
+	           <if test="productCategory!=null and productCategory!=''">AND t.product_category = #{productCategory}</if>
+	           <if test="productStatus!=null and productStatus!=''">AND t.product_status = #{productStatus}</if>
+	           <if test="measurementUnit!=null and measurementUnit!=''">AND t.measurement_unit = #{measurementUnit}</if>
+	           <if test="inspectionStandard!=null and inspectionStandard!=''">AND t.inspection_standard = #{inspectionStandard}</if>
+	           <if test="safetyStandard!=null and safetyStandard!=''">AND t.safety_standard = #{safetyStandard}</if>
+	           <if test="productionInfoId!=null and productionInfoId!=''">AND t.production_info_id = #{productionInfoId}</if>
+	           <if test="expectedDeliveryDate!=null and expectedDeliveryDate!=''">AND t.expected_delivery_date = #{expectedDeliveryDate}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM product_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.ProductInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO product_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	product_id,
+    	        	    	product_name,
+    	        	    	product_specification,
+    	        	    	product_category,
+    	        	    	product_status,
+    	        	    	measurement_unit,
+    	        	    	inspection_standard,
+    	        	    	safety_standard,
+    	        	    	production_info_id,
+    	        	    	expected_delivery_date,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{productId},                   
+    	        	        #{productName},                   
+    	        	        #{productSpecification},                   
+    	        	        #{productCategory},                   
+    	        	        #{productStatus},                   
+    	        	        #{measurementUnit},                   
+    	        	        #{inspectionStandard},                   
+    	        	        #{safetyStandard},                   
+    	        	        #{productionInfoId},                   
+    	        	        #{expectedDeliveryDate},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.ProductInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO product_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="productId != null">
+                   product_id,
+                    </if>
+                                                                <if test="productName != null">
+                   product_name,
+                    </if>
+                                                                <if test="productSpecification != null">
+                   product_specification,
+                    </if>
+                                                                <if test="productCategory != null">
+                   product_category,
+                    </if>
+                                                                <if test="productStatus != null">
+                   product_status,
+                    </if>
+                                                                <if test="measurementUnit != null">
+                   measurement_unit,
+                    </if>
+                                                                <if test="inspectionStandard != null">
+                   inspection_standard,
+                    </if>
+                                                                <if test="safetyStandard != null">
+                   safety_standard,
+                    </if>
+                                                                <if test="productionInfoId != null">
+                   production_info_id,
+                    </if>
+                                                                <if test="expectedDeliveryDate != null">
+                   expected_delivery_date,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="productId != null" >
+                    #{productId},                    
+                    </if>
+                                                                <if test="productName != null" >
+                    #{productName},                    
+                    </if>
+                                                                <if test="productSpecification != null" >
+                    #{productSpecification},                    
+                    </if>
+                                                                <if test="productCategory != null" >
+                    #{productCategory},                    
+                    </if>
+                                                                <if test="productStatus != null" >
+                    #{productStatus},                    
+                    </if>
+                                                                <if test="measurementUnit != null" >
+                    #{measurementUnit},                    
+                    </if>
+                                                                <if test="inspectionStandard != null" >
+                    #{inspectionStandard},                    
+                    </if>
+                                                                <if test="safetyStandard != null" >
+                    #{safetyStandard},                    
+                    </if>
+                                                                <if test="productionInfoId != null" >
+                    #{productionInfoId},                    
+                    </if>
+                                                                <if test="expectedDeliveryDate != null" >
+                    #{expectedDeliveryDate},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.ProductInfo">
+    UPDATE product_info
+     <set>		
+                                     product_id=#{productId},        
+                                product_name=#{productName},        
+                                product_specification=#{productSpecification},        
+                                product_category=#{productCategory},        
+                                product_status=#{productStatus},        
+                                measurement_unit=#{measurementUnit},        
+                                inspection_standard=#{inspectionStandard},        
+                                safety_standard=#{safetyStandard},        
+                                production_info_id=#{productionInfoId},        
+                                expected_delivery_date=#{expectedDeliveryDate},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.ProductInfo">
+    UPDATE product_info
+    <set>
+    	                                                <if test="productId != null" >
+                product_id=#{productId},                 
+                </if>
+                                                <if test="productName != null" >
+                product_name=#{productName},                 
+                </if>
+                                                <if test="productSpecification != null" >
+                product_specification=#{productSpecification},                 
+                </if>
+                                                <if test="productCategory != null" >
+                product_category=#{productCategory},                 
+                </if>
+                                                <if test="productStatus != null" >
+                product_status=#{productStatus},                 
+                </if>
+                                                <if test="measurementUnit != null" >
+                measurement_unit=#{measurementUnit},                 
+                </if>
+                                                <if test="inspectionStandard != null" >
+                inspection_standard=#{inspectionStandard},                 
+                </if>
+                                                <if test="safetyStandard != null" >
+                safety_standard=#{safetyStandard},                 
+                </if>
+                                                <if test="productionInfoId != null" >
+                production_info_id=#{productionInfoId},                 
+                </if>
+                                                <if test="expectedDeliveryDate != null" >
+                expected_delivery_date=#{expectedDeliveryDate},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

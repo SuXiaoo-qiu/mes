@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.CustomerInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.CustomerInfo">
+            <result column="id" property="id" />
+	        <result column="customer_id" property="customerId" />
+	        <result column="customer_name" property="customerName" />
+	        <result column="customer_type" property="customerType" />
+	        <result column="industry" property="industry" />
+	        <result column="location" property="location" />
+	        <result column="contact_info" property="contactInfo" />
+	        <result column="primary_contact_name" property="primaryContactName" />
+	        <result column="primary_contact_info" property="primaryContactInfo" />
+	        <result column="customer_status" property="customerStatus" />
+	        <result column="credit_terms" property="creditTerms" />
+	        <result column="payment_history" property="paymentHistory" />
+	        <result column="sales_representative" property="salesRepresentative" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.customer_id
+        , t.customer_name
+        , t.customer_type
+        , t.industry
+        , t.location
+        , t.contact_info
+        , t.primary_contact_name
+        , t.primary_contact_info
+        , t.customer_status
+        , t.credit_terms
+        , t.payment_history
+        , t.sales_representative
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM customer_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM customer_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="customerId!=null and customerId!=''">AND t.customer_id = #{customerId}</if>
+	           <if test="customerName!=null and customerName!=''">AND t.customer_name = #{customerName}</if>
+	           <if test="customerType!=null and customerType!=''">AND t.customer_type = #{customerType}</if>
+	           <if test="industry!=null and industry!=''">AND t.industry = #{industry}</if>
+	           <if test="location!=null and location!=''">AND t.location = #{location}</if>
+	           <if test="contactInfo!=null and contactInfo!=''">AND t.contact_info = #{contactInfo}</if>
+	           <if test="primaryContactName!=null and primaryContactName!=''">AND t.primary_contact_name = #{primaryContactName}</if>
+	           <if test="primaryContactInfo!=null and primaryContactInfo!=''">AND t.primary_contact_info = #{primaryContactInfo}</if>
+	           <if test="customerStatus!=null and customerStatus!=''">AND t.customer_status = #{customerStatus}</if>
+	           <if test="creditTerms!=null and creditTerms!=''">AND t.credit_terms = #{creditTerms}</if>
+	           <if test="paymentHistory!=null and paymentHistory!=''">AND t.payment_history = #{paymentHistory}</if>
+	           <if test="salesRepresentative!=null and salesRepresentative!=''">AND t.sales_representative = #{salesRepresentative}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM customer_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.CustomerInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO customer_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	customer_id,
+    	        	    	customer_name,
+    	        	    	customer_type,
+    	        	    	industry,
+    	        	    	location,
+    	        	    	contact_info,
+    	        	    	primary_contact_name,
+    	        	    	primary_contact_info,
+    	        	    	customer_status,
+    	        	    	credit_terms,
+    	        	    	payment_history,
+    	        	    	sales_representative,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{customerId},                   
+    	        	        #{customerName},                   
+    	        	        #{customerType},                   
+    	        	        #{industry},                   
+    	        	        #{location},                   
+    	        	        #{contactInfo},                   
+    	        	        #{primaryContactName},                   
+    	        	        #{primaryContactInfo},                   
+    	        	        #{customerStatus},                   
+    	        	        #{creditTerms},                   
+    	        	        #{paymentHistory},                   
+    	        	        #{salesRepresentative},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.CustomerInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO customer_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="customerId != null">
+                   customer_id,
+                    </if>
+                                                                <if test="customerName != null">
+                   customer_name,
+                    </if>
+                                                                <if test="customerType != null">
+                   customer_type,
+                    </if>
+                                                                <if test="industry != null">
+                   industry,
+                    </if>
+                                                                <if test="location != null">
+                   location,
+                    </if>
+                                                                <if test="contactInfo != null">
+                   contact_info,
+                    </if>
+                                                                <if test="primaryContactName != null">
+                   primary_contact_name,
+                    </if>
+                                                                <if test="primaryContactInfo != null">
+                   primary_contact_info,
+                    </if>
+                                                                <if test="customerStatus != null">
+                   customer_status,
+                    </if>
+                                                                <if test="creditTerms != null">
+                   credit_terms,
+                    </if>
+                                                                <if test="paymentHistory != null">
+                   payment_history,
+                    </if>
+                                                                <if test="salesRepresentative != null">
+                   sales_representative,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="customerId != null" >
+                    #{customerId},                    
+                    </if>
+                                                                <if test="customerName != null" >
+                    #{customerName},                    
+                    </if>
+                                                                <if test="customerType != null" >
+                    #{customerType},                    
+                    </if>
+                                                                <if test="industry != null" >
+                    #{industry},                    
+                    </if>
+                                                                <if test="location != null" >
+                    #{location},                    
+                    </if>
+                                                                <if test="contactInfo != null" >
+                    #{contactInfo},                    
+                    </if>
+                                                                <if test="primaryContactName != null" >
+                    #{primaryContactName},                    
+                    </if>
+                                                                <if test="primaryContactInfo != null" >
+                    #{primaryContactInfo},                    
+                    </if>
+                                                                <if test="customerStatus != null" >
+                    #{customerStatus},                    
+                    </if>
+                                                                <if test="creditTerms != null" >
+                    #{creditTerms},                    
+                    </if>
+                                                                <if test="paymentHistory != null" >
+                    #{paymentHistory},                    
+                    </if>
+                                                                <if test="salesRepresentative != null" >
+                    #{salesRepresentative},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.CustomerInfo">
+    UPDATE customer_info
+     <set>		
+                                     customer_id=#{customerId},        
+                                customer_name=#{customerName},        
+                                customer_type=#{customerType},        
+                                industry=#{industry},        
+                                location=#{location},        
+                                contact_info=#{contactInfo},        
+                                primary_contact_name=#{primaryContactName},        
+                                primary_contact_info=#{primaryContactInfo},        
+                                customer_status=#{customerStatus},        
+                                credit_terms=#{creditTerms},        
+                                payment_history=#{paymentHistory},        
+                                sales_representative=#{salesRepresentative},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.CustomerInfo">
+    UPDATE customer_info
+    <set>
+    	                                                <if test="customerId != null" >
+                customer_id=#{customerId},                 
+                </if>
+                                                <if test="customerName != null" >
+                customer_name=#{customerName},                 
+                </if>
+                                                <if test="customerType != null" >
+                customer_type=#{customerType},                 
+                </if>
+                                                <if test="industry != null" >
+                industry=#{industry},                 
+                </if>
+                                                <if test="location != null" >
+                location=#{location},                 
+                </if>
+                                                <if test="contactInfo != null" >
+                contact_info=#{contactInfo},                 
+                </if>
+                                                <if test="primaryContactName != null" >
+                primary_contact_name=#{primaryContactName},                 
+                </if>
+                                                <if test="primaryContactInfo != null" >
+                primary_contact_info=#{primaryContactInfo},                 
+                </if>
+                                                <if test="customerStatus != null" >
+                customer_status=#{customerStatus},                 
+                </if>
+                                                <if test="creditTerms != null" >
+                credit_terms=#{creditTerms},                 
+                </if>
+                                                <if test="paymentHistory != null" >
+                payment_history=#{paymentHistory},                 
+                </if>
+                                                <if test="salesRepresentative != null" >
+                sales_representative=#{salesRepresentative},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

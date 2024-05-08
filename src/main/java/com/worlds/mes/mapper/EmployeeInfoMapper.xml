@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.EmployeeInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.EmployeeInfo">
+            <result column="id" property="id" />
+	        <result column="employee_id" property="employeeId" />
+	        <result column="name" property="name" />
+	        <result column="gender" property="gender" />
+	        <result column="birth_date" property="birthDate" />
+	        <result column="department" property="department" />
+	        <result column="position" property="position" />
+	        <result column="entry_date" property="entryDate" />
+	        <result column="departure_date" property="departureDate" />
+	        <result column="employment_status" property="employmentStatus" />
+	        <result column="contact_info" property="contactInfo" />
+	        <result column="emergency_contact_info" property="emergencyContactInfo" />
+	        <result column="photo" property="photo" />
+	        <result column="education_level" property="educationLevel" />
+	        <result column="graduation_certificate_number" property="graduationCertificateNumber" />
+	        <result column="skills" property="skills" />
+	        <result column="work_experience" property="workExperience" />
+	        <result column="training_history" property="trainingHistory" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.employee_id
+        , t.name
+        , t.gender
+        , t.birth_date
+        , t.department
+        , t.position
+        , t.entry_date
+        , t.departure_date
+        , t.employment_status
+        , t.contact_info
+        , t.emergency_contact_info
+        , t.photo
+        , t.education_level
+        , t.graduation_certificate_number
+        , t.skills
+        , t.work_experience
+        , t.training_history
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM employee_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM employee_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="employeeId!=null and employeeId!=''">AND t.employee_id = #{employeeId}</if>
+	           <if test="name!=null and name!=''">AND t.name = #{name}</if>
+	           <if test="gender!=null and gender!=''">AND t.gender = #{gender}</if>
+	           <if test="birthDate!=null and birthDate!=''">AND t.birth_date = #{birthDate}</if>
+	           <if test="department!=null and department!=''">AND t.department = #{department}</if>
+	           <if test="position!=null and position!=''">AND t.position = #{position}</if>
+	           <if test="entryDate!=null and entryDate!=''">AND t.entry_date = #{entryDate}</if>
+	           <if test="departureDate!=null and departureDate!=''">AND t.departure_date = #{departureDate}</if>
+	           <if test="employmentStatus!=null and employmentStatus!=''">AND t.employment_status = #{employmentStatus}</if>
+	           <if test="contactInfo!=null and contactInfo!=''">AND t.contact_info = #{contactInfo}</if>
+	           <if test="emergencyContactInfo!=null and emergencyContactInfo!=''">AND t.emergency_contact_info = #{emergencyContactInfo}</if>
+	           <if test="photo!=null and photo!=''">AND t.photo = #{photo}</if>
+	           <if test="educationLevel!=null and educationLevel!=''">AND t.education_level = #{educationLevel}</if>
+	           <if test="graduationCertificateNumber!=null and graduationCertificateNumber!=''">AND t.graduation_certificate_number = #{graduationCertificateNumber}</if>
+	           <if test="skills!=null and skills!=''">AND t.skills = #{skills}</if>
+	           <if test="workExperience!=null and workExperience!=''">AND t.work_experience = #{workExperience}</if>
+	           <if test="trainingHistory!=null and trainingHistory!=''">AND t.training_history = #{trainingHistory}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM employee_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.EmployeeInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO employee_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	employee_id,
+    	        	    	name,
+    	        	    	gender,
+    	        	    	birth_date,
+    	        	    	department,
+    	        	    	position,
+    	        	    	entry_date,
+    	        	    	departure_date,
+    	        	    	employment_status,
+    	        	    	contact_info,
+    	        	    	emergency_contact_info,
+    	        	    	photo,
+    	        	    	education_level,
+    	        	    	graduation_certificate_number,
+    	        	    	skills,
+    	        	    	work_experience,
+    	        	    	training_history,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{employeeId},                   
+    	        	        #{name},                   
+    	        	        #{gender},                   
+    	        	        #{birthDate},                   
+    	        	        #{department},                   
+    	        	        #{position},                   
+    	        	        #{entryDate},                   
+    	        	        #{departureDate},                   
+    	        	        #{employmentStatus},                   
+    	        	        #{contactInfo},                   
+    	        	        #{emergencyContactInfo},                   
+    	        	        #{photo},                   
+    	        	        #{educationLevel},                   
+    	        	        #{graduationCertificateNumber},                   
+    	        	        #{skills},                   
+    	        	        #{workExperience},                   
+    	        	        #{trainingHistory},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.EmployeeInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO employee_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="employeeId != null">
+                   employee_id,
+                    </if>
+                                                                <if test="name != null">
+                   name,
+                    </if>
+                                                                <if test="gender != null">
+                   gender,
+                    </if>
+                                                                <if test="birthDate != null">
+                   birth_date,
+                    </if>
+                                                                <if test="department != null">
+                   department,
+                    </if>
+                                                                <if test="position != null">
+                   position,
+                    </if>
+                                                                <if test="entryDate != null">
+                   entry_date,
+                    </if>
+                                                                <if test="departureDate != null">
+                   departure_date,
+                    </if>
+                                                                <if test="employmentStatus != null">
+                   employment_status,
+                    </if>
+                                                                <if test="contactInfo != null">
+                   contact_info,
+                    </if>
+                                                                <if test="emergencyContactInfo != null">
+                   emergency_contact_info,
+                    </if>
+                                                                <if test="photo != null">
+                   photo,
+                    </if>
+                                                                <if test="educationLevel != null">
+                   education_level,
+                    </if>
+                                                                <if test="graduationCertificateNumber != null">
+                   graduation_certificate_number,
+                    </if>
+                                                                <if test="skills != null">
+                   skills,
+                    </if>
+                                                                <if test="workExperience != null">
+                   work_experience,
+                    </if>
+                                                                <if test="trainingHistory != null">
+                   training_history,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="employeeId != null" >
+                    #{employeeId},                    
+                    </if>
+                                                                <if test="name != null" >
+                    #{name},                    
+                    </if>
+                                                                <if test="gender != null" >
+                    #{gender},                    
+                    </if>
+                                                                <if test="birthDate != null" >
+                    #{birthDate},                    
+                    </if>
+                                                                <if test="department != null" >
+                    #{department},                    
+                    </if>
+                                                                <if test="position != null" >
+                    #{position},                    
+                    </if>
+                                                                <if test="entryDate != null" >
+                    #{entryDate},                    
+                    </if>
+                                                                <if test="departureDate != null" >
+                    #{departureDate},                    
+                    </if>
+                                                                <if test="employmentStatus != null" >
+                    #{employmentStatus},                    
+                    </if>
+                                                                <if test="contactInfo != null" >
+                    #{contactInfo},                    
+                    </if>
+                                                                <if test="emergencyContactInfo != null" >
+                    #{emergencyContactInfo},                    
+                    </if>
+                                                                <if test="photo != null" >
+                    #{photo},                    
+                    </if>
+                                                                <if test="educationLevel != null" >
+                    #{educationLevel},                    
+                    </if>
+                                                                <if test="graduationCertificateNumber != null" >
+                    #{graduationCertificateNumber},                    
+                    </if>
+                                                                <if test="skills != null" >
+                    #{skills},                    
+                    </if>
+                                                                <if test="workExperience != null" >
+                    #{workExperience},                    
+                    </if>
+                                                                <if test="trainingHistory != null" >
+                    #{trainingHistory},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.EmployeeInfo">
+    UPDATE employee_info
+     <set>		
+                                     employee_id=#{employeeId},        
+                                name=#{name},        
+                                gender=#{gender},        
+                                birth_date=#{birthDate},        
+                                department=#{department},        
+                                position=#{position},        
+                                entry_date=#{entryDate},        
+                                departure_date=#{departureDate},        
+                                employment_status=#{employmentStatus},        
+                                contact_info=#{contactInfo},        
+                                emergency_contact_info=#{emergencyContactInfo},        
+                                photo=#{photo},        
+                                education_level=#{educationLevel},        
+                                graduation_certificate_number=#{graduationCertificateNumber},        
+                                skills=#{skills},        
+                                work_experience=#{workExperience},        
+                                training_history=#{trainingHistory},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.EmployeeInfo">
+    UPDATE employee_info
+    <set>
+    	                                                <if test="employeeId != null" >
+                employee_id=#{employeeId},                 
+                </if>
+                                                <if test="name != null" >
+                name=#{name},                 
+                </if>
+                                                <if test="gender != null" >
+                gender=#{gender},                 
+                </if>
+                                                <if test="birthDate != null" >
+                birth_date=#{birthDate},                 
+                </if>
+                                                <if test="department != null" >
+                department=#{department},                 
+                </if>
+                                                <if test="position != null" >
+                position=#{position},                 
+                </if>
+                                                <if test="entryDate != null" >
+                entry_date=#{entryDate},                 
+                </if>
+                                                <if test="departureDate != null" >
+                departure_date=#{departureDate},                 
+                </if>
+                                                <if test="employmentStatus != null" >
+                employment_status=#{employmentStatus},                 
+                </if>
+                                                <if test="contactInfo != null" >
+                contact_info=#{contactInfo},                 
+                </if>
+                                                <if test="emergencyContactInfo != null" >
+                emergency_contact_info=#{emergencyContactInfo},                 
+                </if>
+                                                <if test="photo != null" >
+                photo=#{photo},                 
+                </if>
+                                                <if test="educationLevel != null" >
+                education_level=#{educationLevel},                 
+                </if>
+                                                <if test="graduationCertificateNumber != null" >
+                graduation_certificate_number=#{graduationCertificateNumber},                 
+                </if>
+                                                <if test="skills != null" >
+                skills=#{skills},                 
+                </if>
+                                                <if test="workExperience != null" >
+                work_experience=#{workExperience},                 
+                </if>
+                                                <if test="trainingHistory != null" >
+                training_history=#{trainingHistory},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

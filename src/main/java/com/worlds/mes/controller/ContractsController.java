@@ -4,11 +4,13 @@ import com.github.pagehelper.Page;
 import com.worlds.mes.UrlMapping;
 import com.worlds.mes.dto.ContractsDto;
 import com.worlds.mes.dto.ResultDto;
+import com.worlds.mes.dto.ResultNoPageDto;
 import com.worlds.mes.entity.Contracts;
 import com.worlds.mes.service.ContractsService;
 import com.worlds.mes.utils.BaseController;
 import com.worlds.mes.utils.MesEnumUtils;
 import com.worlds.mes.vo.ContractsVo;
+import com.worlds.mes.vo.OrdersInfoVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
@@ -175,4 +177,35 @@ public class ContractsController extends BaseController {
         return contractsService.delete(contracts);
     }
 
+    /**
+     * 合同下发
+     * @param vo
+     * @return
+     */
+    @RequestMapping(value = UrlMapping.CONTRACT_ISSUANCE)
+    @ApiOperation(value = "合同下发")
+    public ResultNoPageDto contractIssuance(@RequestBody OrdersInfoVo vo) {
+        if (null == vo) {
+            return new ResultNoPageDto(MesEnumUtils.CODE_5001, false, "参数不能为空");
+        }
+        boolean b = contractsService.contractIssuance(vo);
+        if (b) {
+            return new ResultNoPageDto(MesEnumUtils.CODE_200, true, "合同下发成功");
+        }
+        return new ResultNoPageDto(MesEnumUtils.CODE_500, false, "合同下发失败");
+    }
+
+
+    @RequestMapping(value = UrlMapping.CONTRACT_INSERT)
+    @ApiOperation(value = "新增合同")
+    public ResultNoPageDto contractInsert(@RequestBody ContractsVo vo) {
+        if (null == vo) {
+            return new ResultNoPageDto(MesEnumUtils.CODE_5001, false, "参数不能为空");
+        }
+        Integer b = contractsService.contractInsert(vo);
+        if (b>=1) {
+            return new ResultNoPageDto(MesEnumUtils.CODE_200, true, "合同新增成功");
+        }
+        return new ResultNoPageDto(MesEnumUtils.CODE_500, false, "合同新增失败");
+    }
 }

@@ -26,6 +26,11 @@ public class ResultNoPageDto<T> implements Serializable {
             this.success = Boolean.TRUE;
             this.data = data;
         }
+        public ResultNoPageDto( Integer code, Boolean success, String message) {
+            this.code = code;
+            this.success = success;
+            this.message = message;
+        }
 
         public static <T> ResultNoPageDto<T> newResult() {
             return new ResultNoPageDto();

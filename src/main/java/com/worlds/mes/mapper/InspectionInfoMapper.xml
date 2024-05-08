@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.InspectionInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.InspectionInfo">
+            <result column="id" property="id" />
+	        <result column="inspection_id" property="inspectionId" />
+	        <result column="product_id" property="productId" />
+	        <result column="production_batch_number" property="productionBatchNumber" />
+	        <result column="inspection_date" property="inspectionDate" />
+	        <result column="inspector" property="inspector" />
+	        <result column="inspection_item" property="inspectionItem" />
+	        <result column="inspection_method" property="inspectionMethod" />
+	        <result column="inspection_result" property="inspectionResult" />
+	        <result column="inspection_conclusion" property="inspectionConclusion" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.inspection_id
+        , t.product_id
+        , t.production_batch_number
+        , t.inspection_date
+        , t.inspector
+        , t.inspection_item
+        , t.inspection_method
+        , t.inspection_result
+        , t.inspection_conclusion
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM inspection_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM inspection_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="inspectionId!=null and inspectionId!=''">AND t.inspection_id = #{inspectionId}</if>
+	           <if test="productId!=null and productId!=''">AND t.product_id = #{productId}</if>
+	           <if test="productionBatchNumber!=null and productionBatchNumber!=''">AND t.production_batch_number = #{productionBatchNumber}</if>
+	           <if test="inspectionDate!=null and inspectionDate!=''">AND t.inspection_date = #{inspectionDate}</if>
+	           <if test="inspector!=null and inspector!=''">AND t.inspector = #{inspector}</if>
+	           <if test="inspectionItem!=null and inspectionItem!=''">AND t.inspection_item = #{inspectionItem}</if>
+	           <if test="inspectionMethod!=null and inspectionMethod!=''">AND t.inspection_method = #{inspectionMethod}</if>
+	           <if test="inspectionResult!=null and inspectionResult!=''">AND t.inspection_result = #{inspectionResult}</if>
+	           <if test="inspectionConclusion!=null and inspectionConclusion!=''">AND t.inspection_conclusion = #{inspectionConclusion}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM inspection_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.InspectionInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO inspection_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	inspection_id,
+    	        	    	product_id,
+    	        	    	production_batch_number,
+    	        	    	inspection_date,
+    	        	    	inspector,
+    	        	    	inspection_item,
+    	        	    	inspection_method,
+    	        	    	inspection_result,
+    	        	    	inspection_conclusion,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{inspectionId},                   
+    	        	        #{productId},                   
+    	        	        #{productionBatchNumber},                   
+    	        	        #{inspectionDate},                   
+    	        	        #{inspector},                   
+    	        	        #{inspectionItem},                   
+    	        	        #{inspectionMethod},                   
+    	        	        #{inspectionResult},                   
+    	        	        #{inspectionConclusion},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.InspectionInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO inspection_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="inspectionId != null">
+                   inspection_id,
+                    </if>
+                                                                <if test="productId != null">
+                   product_id,
+                    </if>
+                                                                <if test="productionBatchNumber != null">
+                   production_batch_number,
+                    </if>
+                                                                <if test="inspectionDate != null">
+                   inspection_date,
+                    </if>
+                                                                <if test="inspector != null">
+                   inspector,
+                    </if>
+                                                                <if test="inspectionItem != null">
+                   inspection_item,
+                    </if>
+                                                                <if test="inspectionMethod != null">
+                   inspection_method,
+                    </if>
+                                                                <if test="inspectionResult != null">
+                   inspection_result,
+                    </if>
+                                                                <if test="inspectionConclusion != null">
+                   inspection_conclusion,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="inspectionId != null" >
+                    #{inspectionId},                    
+                    </if>
+                                                                <if test="productId != null" >
+                    #{productId},                    
+                    </if>
+                                                                <if test="productionBatchNumber != null" >
+                    #{productionBatchNumber},                    
+                    </if>
+                                                                <if test="inspectionDate != null" >
+                    #{inspectionDate},                    
+                    </if>
+                                                                <if test="inspector != null" >
+                    #{inspector},                    
+                    </if>
+                                                                <if test="inspectionItem != null" >
+                    #{inspectionItem},                    
+                    </if>
+                                                                <if test="inspectionMethod != null" >
+                    #{inspectionMethod},                    
+                    </if>
+                                                                <if test="inspectionResult != null" >
+                    #{inspectionResult},                    
+                    </if>
+                                                                <if test="inspectionConclusion != null" >
+                    #{inspectionConclusion},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.InspectionInfo">
+    UPDATE inspection_info
+     <set>		
+                                     inspection_id=#{inspectionId},        
+                                product_id=#{productId},        
+                                production_batch_number=#{productionBatchNumber},        
+                                inspection_date=#{inspectionDate},        
+                                inspector=#{inspector},        
+                                inspection_item=#{inspectionItem},        
+                                inspection_method=#{inspectionMethod},        
+                                inspection_result=#{inspectionResult},        
+                                inspection_conclusion=#{inspectionConclusion},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.InspectionInfo">
+    UPDATE inspection_info
+    <set>
+    	                                                <if test="inspectionId != null" >
+                inspection_id=#{inspectionId},                 
+                </if>
+                                                <if test="productId != null" >
+                product_id=#{productId},                 
+                </if>
+                                                <if test="productionBatchNumber != null" >
+                production_batch_number=#{productionBatchNumber},                 
+                </if>
+                                                <if test="inspectionDate != null" >
+                inspection_date=#{inspectionDate},                 
+                </if>
+                                                <if test="inspector != null" >
+                inspector=#{inspector},                 
+                </if>
+                                                <if test="inspectionItem != null" >
+                inspection_item=#{inspectionItem},                 
+                </if>
+                                                <if test="inspectionMethod != null" >
+                inspection_method=#{inspectionMethod},                 
+                </if>
+                                                <if test="inspectionResult != null" >
+                inspection_result=#{inspectionResult},                 
+                </if>
+                                                <if test="inspectionConclusion != null" >
+                inspection_conclusion=#{inspectionConclusion},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

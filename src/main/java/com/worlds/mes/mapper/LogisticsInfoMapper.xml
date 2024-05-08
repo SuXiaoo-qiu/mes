@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.LogisticsInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.LogisticsInfo">
+            <result column="id" property="id" />
+	        <result column="logistics_id" property="logisticsId" />
+	        <result column="order_id" property="orderId" />
+	        <result column="product_id" property="productId" />
+	        <result column="quantity" property="quantity" />
+	        <result column="ship_date" property="shipDate" />
+	        <result column="estimated_arrival_date" property="estimatedArrivalDate" />
+	        <result column="shipping_method" property="shippingMethod" />
+	        <result column="logistics_company" property="logisticsCompany" />
+	        <result column="tracking_number" property="trackingNumber" />
+	        <result column="shipping_status" property="shippingStatus" />
+	        <result column="delivery_address" property="deliveryAddress" />
+	        <result column="recipient_name" property="recipientName" />
+	        <result column="contact_info" property="contactInfo" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.logistics_id
+        , t.order_id
+        , t.product_id
+        , t.quantity
+        , t.ship_date
+        , t.estimated_arrival_date
+        , t.shipping_method
+        , t.logistics_company
+        , t.tracking_number
+        , t.shipping_status
+        , t.delivery_address
+        , t.recipient_name
+        , t.contact_info
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM logistics_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM logistics_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="logisticsId!=null and logisticsId!=''">AND t.logistics_id = #{logisticsId}</if>
+	           <if test="orderId!=null and orderId!=''">AND t.order_id = #{orderId}</if>
+	           <if test="productId!=null and productId!=''">AND t.product_id = #{productId}</if>
+	           <if test="quantity!=null and quantity!=''">AND t.quantity = #{quantity}</if>
+	           <if test="shipDate!=null and shipDate!=''">AND t.ship_date = #{shipDate}</if>
+	           <if test="estimatedArrivalDate!=null and estimatedArrivalDate!=''">AND t.estimated_arrival_date = #{estimatedArrivalDate}</if>
+	           <if test="shippingMethod!=null and shippingMethod!=''">AND t.shipping_method = #{shippingMethod}</if>
+	           <if test="logisticsCompany!=null and logisticsCompany!=''">AND t.logistics_company = #{logisticsCompany}</if>
+	           <if test="trackingNumber!=null and trackingNumber!=''">AND t.tracking_number = #{trackingNumber}</if>
+	           <if test="shippingStatus!=null and shippingStatus!=''">AND t.shipping_status = #{shippingStatus}</if>
+	           <if test="deliveryAddress!=null and deliveryAddress!=''">AND t.delivery_address = #{deliveryAddress}</if>
+	           <if test="recipientName!=null and recipientName!=''">AND t.recipient_name = #{recipientName}</if>
+	           <if test="contactInfo!=null and contactInfo!=''">AND t.contact_info = #{contactInfo}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM logistics_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.LogisticsInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO logistics_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	logistics_id,
+    	        	    	order_id,
+    	        	    	product_id,
+    	        	    	quantity,
+    	        	    	ship_date,
+    	        	    	estimated_arrival_date,
+    	        	    	shipping_method,
+    	        	    	logistics_company,
+    	        	    	tracking_number,
+    	        	    	shipping_status,
+    	        	    	delivery_address,
+    	        	    	recipient_name,
+    	        	    	contact_info,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{logisticsId},                   
+    	        	        #{orderId},                   
+    	        	        #{productId},                   
+    	        	        #{quantity},                   
+    	        	        #{shipDate},                   
+    	        	        #{estimatedArrivalDate},                   
+    	        	        #{shippingMethod},                   
+    	        	        #{logisticsCompany},                   
+    	        	        #{trackingNumber},                   
+    	        	        #{shippingStatus},                   
+    	        	        #{deliveryAddress},                   
+    	        	        #{recipientName},                   
+    	        	        #{contactInfo},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.LogisticsInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO logistics_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="logisticsId != null">
+                   logistics_id,
+                    </if>
+                                                                <if test="orderId != null">
+                   order_id,
+                    </if>
+                                                                <if test="productId != null">
+                   product_id,
+                    </if>
+                                                                <if test="quantity != null">
+                   quantity,
+                    </if>
+                                                                <if test="shipDate != null">
+                   ship_date,
+                    </if>
+                                                                <if test="estimatedArrivalDate != null">
+                   estimated_arrival_date,
+                    </if>
+                                                                <if test="shippingMethod != null">
+                   shipping_method,
+                    </if>
+                                                                <if test="logisticsCompany != null">
+                   logistics_company,
+                    </if>
+                                                                <if test="trackingNumber != null">
+                   tracking_number,
+                    </if>
+                                                                <if test="shippingStatus != null">
+                   shipping_status,
+                    </if>
+                                                                <if test="deliveryAddress != null">
+                   delivery_address,
+                    </if>
+                                                                <if test="recipientName != null">
+                   recipient_name,
+                    </if>
+                                                                <if test="contactInfo != null">
+                   contact_info,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="logisticsId != null" >
+                    #{logisticsId},                    
+                    </if>
+                                                                <if test="orderId != null" >
+                    #{orderId},                    
+                    </if>
+                                                                <if test="productId != null" >
+                    #{productId},                    
+                    </if>
+                                                                <if test="quantity != null" >
+                    #{quantity},                    
+                    </if>
+                                                                <if test="shipDate != null" >
+                    #{shipDate},                    
+                    </if>
+                                                                <if test="estimatedArrivalDate != null" >
+                    #{estimatedArrivalDate},                    
+                    </if>
+                                                                <if test="shippingMethod != null" >
+                    #{shippingMethod},                    
+                    </if>
+                                                                <if test="logisticsCompany != null" >
+                    #{logisticsCompany},                    
+                    </if>
+                                                                <if test="trackingNumber != null" >
+                    #{trackingNumber},                    
+                    </if>
+                                                                <if test="shippingStatus != null" >
+                    #{shippingStatus},                    
+                    </if>
+                                                                <if test="deliveryAddress != null" >
+                    #{deliveryAddress},                    
+                    </if>
+                                                                <if test="recipientName != null" >
+                    #{recipientName},                    
+                    </if>
+                                                                <if test="contactInfo != null" >
+                    #{contactInfo},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.LogisticsInfo">
+    UPDATE logistics_info
+     <set>		
+                                     logistics_id=#{logisticsId},        
+                                order_id=#{orderId},        
+                                product_id=#{productId},        
+                                quantity=#{quantity},        
+                                ship_date=#{shipDate},        
+                                estimated_arrival_date=#{estimatedArrivalDate},        
+                                shipping_method=#{shippingMethod},        
+                                logistics_company=#{logisticsCompany},        
+                                tracking_number=#{trackingNumber},        
+                                shipping_status=#{shippingStatus},        
+                                delivery_address=#{deliveryAddress},        
+                                recipient_name=#{recipientName},        
+                                contact_info=#{contactInfo},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.LogisticsInfo">
+    UPDATE logistics_info
+    <set>
+    	                                                <if test="logisticsId != null" >
+                logistics_id=#{logisticsId},                 
+                </if>
+                                                <if test="orderId != null" >
+                order_id=#{orderId},                 
+                </if>
+                                                <if test="productId != null" >
+                product_id=#{productId},                 
+                </if>
+                                                <if test="quantity != null" >
+                quantity=#{quantity},                 
+                </if>
+                                                <if test="shipDate != null" >
+                ship_date=#{shipDate},                 
+                </if>
+                                                <if test="estimatedArrivalDate != null" >
+                estimated_arrival_date=#{estimatedArrivalDate},                 
+                </if>
+                                                <if test="shippingMethod != null" >
+                shipping_method=#{shippingMethod},                 
+                </if>
+                                                <if test="logisticsCompany != null" >
+                logistics_company=#{logisticsCompany},                 
+                </if>
+                                                <if test="trackingNumber != null" >
+                tracking_number=#{trackingNumber},                 
+                </if>
+                                                <if test="shippingStatus != null" >
+                shipping_status=#{shippingStatus},                 
+                </if>
+                                                <if test="deliveryAddress != null" >
+                delivery_address=#{deliveryAddress},                 
+                </if>
+                                                <if test="recipientName != null" >
+                recipient_name=#{recipientName},                 
+                </if>
+                                                <if test="contactInfo != null" >
+                contact_info=#{contactInfo},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

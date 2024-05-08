@@ -1,19 +1,30 @@
 package com.worlds.mes.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.worlds.mes.commons.SimplePageInfo;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.worlds.mes.entity.Contracts;
+import com.worlds.mes.entity.OrdersInfo;
+import com.worlds.mes.mapper.ContractsMapper;
+import com.worlds.mes.mapper.OrdersInfoMapper;
+import com.worlds.mes.service.ContractsService;
+import com.worlds.mes.utils.MesEnumUtils;
+import com.worlds.mes.vo.ContractsVo;
+import com.worlds.mes.vo.OrdersInfoVo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.worlds.mes.entity.Contracts;
-import com.worlds.mes.vo.ContractsVo;
-import com.worlds.mes.service.ContractsService;
-import com.worlds.mes.mapper.ContractsMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ContractsServiceImpl implements  ContractsService  {
@@ -23,6 +34,10 @@ public class ContractsServiceImpl implements  ContractsService  {
 
     @Autowired
     private ContractsMapper contractsMapper;
+    @Autowired
+    private OrdersInfoMapper ordersInfoMapper;
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     /**
      * 查询所有记录
@@ -124,4 +139,42 @@ public class ContractsServiceImpl implements  ContractsService  {
         return contractsMapper.deleteById(contracts.getId());
     }
 
+    /**
+     * 合同下发
+     * @param vo
+     * @return
+     */
+    @Override
+    public boolean contractIssuance(OrdersInfoVo vo) {
+        OrdersInfo ordersInfo = this.setOrdersInfo(vo);
+        int i = ordersInfoMapper.insertIgnoreNull(ordersInfo);
+        if (i <= 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 新增合同
+     * @param vo
+     * @return
+     */
+        @Override
+    public Integer contractInsert(ContractsVo vo) {
+        Contracts contracts = new ModelMapper().map(vo, Contracts.class);
+        return this.insertIgnoreNull(contracts) ;
+    }
+
+    @Transactional
+    public OrdersInfo setOrdersInfo(OrdersInfoVo vo) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSSS");
+        String format = sdf.format(new Date());
+        Random random = new Random();
+        Long counter001 = redisTemplate.opsForValue().increment("counter001", 1);
+        OrdersInfo order = new ModelMapper().map(vo, OrdersInfo.class);
+        order.setOrderId(format+(random.nextInt(9000)+ 1000+counter001));
+        order.setOrderDate(new Date());
+        order.setOrderStatus(MesEnumUtils.OODER_CODE_1.toString());
+        return order;
+    }
 }

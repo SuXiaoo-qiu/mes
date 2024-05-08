@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.ProcessInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.ProcessInfo">
+            <result column="id" property="id" />
+	        <result column="process_id" property="processId" />
+	        <result column="process_name" property="processName" />
+	        <result column="process_version" property="processVersion" />
+	        <result column="process_type" property="processType" />
+	        <result column="applicable_product" property="applicableProduct" />
+	        <result column="process_status" property="processStatus" />
+	        <result column="process_flow" property="processFlow" />
+	        <result column="process_file" property="processFile" />
+	        <result column="remarks" property="remarks" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.process_id
+        , t.process_name
+        , t.process_version
+        , t.process_type
+        , t.applicable_product
+        , t.process_status
+        , t.process_flow
+        , t.process_file
+        , t.remarks
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM process_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM process_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="processId!=null and processId!=''">AND t.process_id = #{processId}</if>
+	           <if test="processName!=null and processName!=''">AND t.process_name = #{processName}</if>
+	           <if test="processVersion!=null and processVersion!=''">AND t.process_version = #{processVersion}</if>
+	           <if test="processType!=null and processType!=''">AND t.process_type = #{processType}</if>
+	           <if test="applicableProduct!=null and applicableProduct!=''">AND t.applicable_product = #{applicableProduct}</if>
+	           <if test="processStatus!=null and processStatus!=''">AND t.process_status = #{processStatus}</if>
+	           <if test="processFlow!=null and processFlow!=''">AND t.process_flow = #{processFlow}</if>
+	           <if test="processFile!=null and processFile!=''">AND t.process_file = #{processFile}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM process_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.ProcessInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO process_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	process_id,
+    	        	    	process_name,
+    	        	    	process_version,
+    	        	    	process_type,
+    	        	    	applicable_product,
+    	        	    	process_status,
+    	        	    	process_flow,
+    	        	    	process_file,
+    	        	    	remarks,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{processId},                   
+    	        	        #{processName},                   
+    	        	        #{processVersion},                   
+    	        	        #{processType},                   
+    	        	        #{applicableProduct},                   
+    	        	        #{processStatus},                   
+    	        	        #{processFlow},                   
+    	        	        #{processFile},                   
+    	        	        #{remarks},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.ProcessInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO process_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="processId != null">
+                   process_id,
+                    </if>
+                                                                <if test="processName != null">
+                   process_name,
+                    </if>
+                                                                <if test="processVersion != null">
+                   process_version,
+                    </if>
+                                                                <if test="processType != null">
+                   process_type,
+                    </if>
+                                                                <if test="applicableProduct != null">
+                   applicable_product,
+                    </if>
+                                                                <if test="processStatus != null">
+                   process_status,
+                    </if>
+                                                                <if test="processFlow != null">
+                   process_flow,
+                    </if>
+                                                                <if test="processFile != null">
+                   process_file,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="processId != null" >
+                    #{processId},                    
+                    </if>
+                                                                <if test="processName != null" >
+                    #{processName},                    
+                    </if>
+                                                                <if test="processVersion != null" >
+                    #{processVersion},                    
+                    </if>
+                                                                <if test="processType != null" >
+                    #{processType},                    
+                    </if>
+                                                                <if test="applicableProduct != null" >
+                    #{applicableProduct},                    
+                    </if>
+                                                                <if test="processStatus != null" >
+                    #{processStatus},                    
+                    </if>
+                                                                <if test="processFlow != null" >
+                    #{processFlow},                    
+                    </if>
+                                                                <if test="processFile != null" >
+                    #{processFile},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.ProcessInfo">
+    UPDATE process_info
+     <set>		
+                                     process_id=#{processId},        
+                                process_name=#{processName},        
+                                process_version=#{processVersion},        
+                                process_type=#{processType},        
+                                applicable_product=#{applicableProduct},        
+                                process_status=#{processStatus},        
+                                process_flow=#{processFlow},        
+                                process_file=#{processFile},        
+                                remarks=#{remarks},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.ProcessInfo">
+    UPDATE process_info
+    <set>
+    	                                                <if test="processId != null" >
+                process_id=#{processId},                 
+                </if>
+                                                <if test="processName != null" >
+                process_name=#{processName},                 
+                </if>
+                                                <if test="processVersion != null" >
+                process_version=#{processVersion},                 
+                </if>
+                                                <if test="processType != null" >
+                process_type=#{processType},                 
+                </if>
+                                                <if test="applicableProduct != null" >
+                applicable_product=#{applicableProduct},                 
+                </if>
+                                                <if test="processStatus != null" >
+                process_status=#{processStatus},                 
+                </if>
+                                                <if test="processFlow != null" >
+                process_flow=#{processFlow},                 
+                </if>
+                                                <if test="processFile != null" >
+                process_file=#{processFile},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

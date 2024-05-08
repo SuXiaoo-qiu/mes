@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.worlds.mes.mapper.OperationInfoMapper">
+	<resultMap id="BaseResultMap" type="com.worlds.mes.entity.OperationInfo">
+            <result column="id" property="id" />
+	        <result column="operation_id" property="operationId" />
+	        <result column="operation_name" property="operationName" />
+	        <result column="standard_time" property="standardTime" />
+	        <result column="actual_time" property="actualTime" />
+	        <result column="responsible_person" property="responsiblePerson" />
+	        <result column="equipment_needed" property="equipmentNeeded" />
+	        <result column="personnel_involved" property="personnelInvolved" />
+	        <result column="quality_inspection" property="qualityInspection" />
+	        <result column="operation_status" property="operationStatus" />
+	        <result column="remarks" property="remarks" />
+	        <result column="process_id" property="processId" />
+		</resultMap>  
+    
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.operation_id
+        , t.operation_name
+        , t.standard_time
+        , t.actual_time
+        , t.responsible_person
+        , t.equipment_needed
+        , t.personnel_involved
+        , t.quality_inspection
+        , t.operation_status
+        , t.remarks
+        , t.process_id
+        </sql> 
+    
+    <!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM operation_info t
+	</select>
+    
+    <!-- 根据条件查询所有记录 -->
+    <select id="listAllByParam" resultMap="BaseResultMap">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM operation_info t
+        <where>
+               <if test="id!=null and id!=''">AND t.id = #{id}</if>
+	           <if test="operationId!=null and operationId!=''">AND t.operation_id = #{operationId}</if>
+	           <if test="operationName!=null and operationName!=''">AND t.operation_name = #{operationName}</if>
+	           <if test="standardTime!=null and standardTime!=''">AND t.standard_time = #{standardTime}</if>
+	           <if test="actualTime!=null and actualTime!=''">AND t.actual_time = #{actualTime}</if>
+	           <if test="responsiblePerson!=null and responsiblePerson!=''">AND t.responsible_person = #{responsiblePerson}</if>
+	           <if test="equipmentNeeded!=null and equipmentNeeded!=''">AND t.equipment_needed = #{equipmentNeeded}</if>
+	           <if test="personnelInvolved!=null and personnelInvolved!=''">AND t.personnel_involved = #{personnelInvolved}</if>
+	           <if test="qualityInspection!=null and qualityInspection!=''">AND t.quality_inspection = #{qualityInspection}</if>
+	           <if test="operationStatus!=null and operationStatus!=''">AND t.operation_status = #{operationStatus}</if>
+	           <if test="remarks!=null and remarks!=''">AND t.remarks = #{remarks}</if>
+	           <if test="processId!=null and processId!=''">AND t.process_id = #{processId}</if>
+	    		</where>
+	 </select>
+    
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="Integer">
+		SELECT         
+        	<include refid="baseColumns" />
+		FROM operation_info t
+		WHERE id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.worlds.mes.entity.OperationInfo"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO operation_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">	 
+        	        	    	operation_id,
+    	        	    	operation_name,
+    	        	    	standard_time,
+    	        	    	actual_time,
+    	        	    	responsible_person,
+    	        	    	equipment_needed,
+    	        	    	personnel_involved,
+    	        	    	quality_inspection,
+    	        	    	operation_status,
+    	        	    	remarks,
+    	        	    	process_id,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+        	        	        #{operationId},                   
+    	        	        #{operationName},                   
+    	        	        #{standardTime},                   
+    	        	        #{actualTime},                   
+    	        	        #{responsiblePerson},                   
+    	        	        #{equipmentNeeded},                   
+    	        	        #{personnelInvolved},                   
+    	        	        #{qualityInspection},                   
+    	        	        #{operationStatus},                   
+    	        	        #{remarks},                   
+    	        	        #{processId},                   
+    	        </trim>
+	</insert>
+    
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.worlds.mes.entity.OperationInfo"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO operation_info    
+        <trim prefix="(" suffix=")" suffixOverrides=",">	 
+
+                                                                            <if test="operationId != null">
+                   operation_id,
+                    </if>
+                                                                <if test="operationName != null">
+                   operation_name,
+                    </if>
+                                                                <if test="standardTime != null">
+                   standard_time,
+                    </if>
+                                                                <if test="actualTime != null">
+                   actual_time,
+                    </if>
+                                                                <if test="responsiblePerson != null">
+                   responsible_person,
+                    </if>
+                                                                <if test="equipmentNeeded != null">
+                   equipment_needed,
+                    </if>
+                                                                <if test="personnelInvolved != null">
+                   personnel_involved,
+                    </if>
+                                                                <if test="qualityInspection != null">
+                   quality_inspection,
+                    </if>
+                                                                <if test="operationStatus != null">
+                   operation_status,
+                    </if>
+                                                                <if test="remarks != null">
+                   remarks,
+                    </if>
+                                                                <if test="processId != null">
+                   process_id,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">            
+                                                                            <if test="operationId != null" >
+                    #{operationId},                    
+                    </if>
+                                                                <if test="operationName != null" >
+                    #{operationName},                    
+                    </if>
+                                                                <if test="standardTime != null" >
+                    #{standardTime},                    
+                    </if>
+                                                                <if test="actualTime != null" >
+                    #{actualTime},                    
+                    </if>
+                                                                <if test="responsiblePerson != null" >
+                    #{responsiblePerson},                    
+                    </if>
+                                                                <if test="equipmentNeeded != null" >
+                    #{equipmentNeeded},                    
+                    </if>
+                                                                <if test="personnelInvolved != null" >
+                    #{personnelInvolved},                    
+                    </if>
+                                                                <if test="qualityInspection != null" >
+                    #{qualityInspection},                    
+                    </if>
+                                                                <if test="operationStatus != null" >
+                    #{operationStatus},                    
+                    </if>
+                                                                <if test="remarks != null" >
+                    #{remarks},                    
+                    </if>
+                                                                <if test="processId != null" >
+                    #{processId},                    
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.worlds.mes.entity.OperationInfo">
+    UPDATE operation_info
+     <set>		
+                                     operation_id=#{operationId},        
+                                operation_name=#{operationName},        
+                                standard_time=#{standardTime},        
+                                actual_time=#{actualTime},        
+                                responsible_person=#{responsiblePerson},        
+                                equipment_needed=#{equipmentNeeded},        
+                                personnel_involved=#{personnelInvolved},        
+                                quality_inspection=#{qualityInspection},        
+                                operation_status=#{operationStatus},        
+                                remarks=#{remarks},        
+                                process_id=#{processId},        
+                   </set>	
+    WHERE id = #{id}
+    </update>  
+    
+    
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.worlds.mes.entity.OperationInfo">
+    UPDATE operation_info
+    <set>
+    	                                                <if test="operationId != null" >
+                operation_id=#{operationId},                 
+                </if>
+                                                <if test="operationName != null" >
+                operation_name=#{operationName},                 
+                </if>
+                                                <if test="standardTime != null" >
+                standard_time=#{standardTime},                 
+                </if>
+                                                <if test="actualTime != null" >
+                actual_time=#{actualTime},                 
+                </if>
+                                                <if test="responsiblePerson != null" >
+                responsible_person=#{responsiblePerson},                 
+                </if>
+                                                <if test="equipmentNeeded != null" >
+                equipment_needed=#{equipmentNeeded},                 
+                </if>
+                                                <if test="personnelInvolved != null" >
+                personnel_involved=#{personnelInvolved},                 
+                </if>
+                                                <if test="qualityInspection != null" >
+                quality_inspection=#{qualityInspection},                 
+                </if>
+                                                <if test="operationStatus != null" >
+                operation_status=#{operationStatus},                 
+                </if>
+                                                <if test="remarks != null" >
+                remarks=#{remarks},                 
+                </if>
+                                                <if test="processId != null" >
+                process_id=#{processId},                 
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+</mapper>

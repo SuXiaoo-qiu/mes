@@ -57,8 +57,13 @@ public interface UrlMapping {
     // 批量新增仓库
     String INSERT_BATCH = "/insertBatch";
 
-
-
+    /*
+     * 合同表
+     */
+    // 下发
+    String CONTRACT_ISSUANCE = "/contractIssuance";
+    // 新增合同
+    String CONTRACT_INSERT = "/contractInsert";
 
 
 

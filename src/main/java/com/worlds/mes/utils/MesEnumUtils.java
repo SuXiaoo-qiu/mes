@@ -18,4 +18,13 @@ public class MesEnumUtils {
     public static final Integer RedisTimeout = 86400; //24小时
     //1800000;  有效期30分钟 1800000毫秒
     public static final Integer TokenTimeout = 86400000 ;//24小时
+
+    /**
+     * 订单的状态，1已创建、2已审核、3已排产、4已生产、5已完成
+     */
+    public static final Integer OODER_CODE_1 = 1;// 已创建
+    public static final Integer OODER_CODE_2 = 2;// 已审核
+    public static final Integer OODER_CODE_3 = 3;// 已排产
+    public static final Integer OODER_CODE_4 = 4;// 已生产
+    public static final Integer OODER_CODE_5 = 5;// 已完成
 }
