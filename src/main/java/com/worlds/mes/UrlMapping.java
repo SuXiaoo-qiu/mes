@@ -66,6 +66,10 @@ public interface UrlMapping {
     String CONTRACT_INSERT = "/contractInsert";
 
 
-
+    /**
+     *  订单
+     */
+    // 订单下发
+    String ORDER_INSERT = "/orderInsert";
 
 }

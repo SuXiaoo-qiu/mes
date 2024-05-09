@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.worlds.mes.UrlMapping;
 import com.worlds.mes.dto.OrdersInfoDto;
 import com.worlds.mes.dto.ResultDto;
+import com.worlds.mes.dto.ResultNoPageDto;
 import com.worlds.mes.entity.OrdersInfo;
 import com.worlds.mes.service.OrdersInfoService;
 import com.worlds.mes.utils.BaseController;
@@ -174,5 +175,21 @@ public class OrdersInfoController extends BaseController {
     public int delete(@RequestBody OrdersInfo ordersInfo) {
         return ordersInfoService.delete(ordersInfo);
     }
-    
+
+    /**
+     * 订单下发
+     * @return
+     */
+    @RequestMapping(value = UrlMapping.ORDER_INSERT)
+    @ApiOperation(value = "订单下发")
+    public ResultNoPageDto orderInsert() {
+
+        return new ResultNoPageDto();
+    }
+
+
+
+
+
+
 }
