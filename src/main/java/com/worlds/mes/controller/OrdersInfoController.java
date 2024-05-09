@@ -26,7 +26,7 @@ import java.util.List;
 @Api(value = "订单信息表",tags = "订单信息表")
 public class OrdersInfoController extends BaseController {
 
-    private static Log log = LogFactory.getLog(OrdersInfoController.class);
+    private static final Log log = LogFactory.getLog(OrdersInfoController.class);
 
     @Autowired
     private OrdersInfoService ordersInfoService;
@@ -52,7 +52,7 @@ public class OrdersInfoController extends BaseController {
     @RequestMapping(value = UrlMapping.LIST_ALL_BY_PARAM)
     @ApiOperation(value = "根据条件分页查询订单信息表所有记录")
     public ResultDto<List<OrdersInfoDto>> LIST_ALL_BY_PARAM (@RequestBody OrdersInfoVo ordersInfoVo) {
-        ResultDto<List<OrdersInfoDto>> result = new ResultDto();
+        ResultDto<List<OrdersInfoDto>> result = new ResultDto<>();
        if (null==ordersInfoVo || null == ordersInfoVo.getPageInfo()){
             result.setCode(MesEnumUtils.CODE_5001);
             result.setSuccess(false);

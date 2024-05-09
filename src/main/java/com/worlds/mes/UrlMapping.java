@@ -72,4 +72,10 @@ public interface UrlMapping {
     // 订单下发
     String ORDER_INSERT = "/orderInsert";
 
+    /**
+     * redis
+     */
+    // 验证码
+    String CODE = "/code";
+
 }

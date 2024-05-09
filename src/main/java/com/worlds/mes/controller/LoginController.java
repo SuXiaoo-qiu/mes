@@ -17,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,9 @@ public class LoginController  extends BaseController {
     @Autowired
     LoginService loginService;
 
+    @Autowired
+    private RedisTemplate<String,String>  redisTemplate;
+
     /**
      * 登录
      *
@@ -48,13 +52,23 @@ public class LoginController  extends BaseController {
     public ResultTokenDto<List<LoginDto>> login(@RequestBody HashMap<String, String> request, HttpServletRequest requestIp) {
         String username = request.get("username");
         String password = request.get("password");
+        String code = request.get("code");
         ResultTokenDto result = new ResultTokenDto();
-        if (StringUtil.isEmpty(username) || StringUtil.isEmpty(password)) {
+        if (StringUtil.isEmpty(username) || StringUtil.isEmpty(password)|| StringUtil.isEmpty(code)) {
             result.setCode(MesEnumUtils.CODE_5001);
             result.setSuccess(false);
-            result.setMessage("用户名或者密码不能为空呦");
+            result.setMessage("用户名或者密码或者验证码不能为空呦");
             return result;
         }
+        String resCode= redisTemplate.opsForValue().get(code);
+        if (!code.equals(resCode)){
+            result.setCode(MesEnumUtils.CODE_5000);
+            result.setSuccess(false);
+            result.setMessage("验证码错误");
+            return result;
+        }
+        //删除验证码
+        redisTemplate.delete(resCode);
         String ip = "";
         if (requestIp != null) {
             ip = requestIp.getHeader("X-FORWARDED-FOR");
