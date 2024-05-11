@@ -1,3 +1,7 @@
+测试地址 : http://localhost:7000/doc.html#/home
+演示地址 : 暂未上线
+前端代码 库/表未更新上来 
+
 1.目前代码拉下来就可以运行 
 
 2.该项目是基于springboot 开发的mes系统
