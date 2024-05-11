@@ -16,7 +16,7 @@ public class ResultTokenDto<T> implements Serializable {
     @ApiModelProperty(value = "附加信息")
     private String message;
     @ApiModelProperty(value = "token")
-    private String token;
+    private String accessToken;
     @ApiModelProperty(value = "分页查询结果的实际内容")
     private T data;
 

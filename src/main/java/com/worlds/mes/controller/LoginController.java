@@ -88,7 +88,9 @@ public class LoginController  extends BaseController {
         }
 
         result = getTokenDataByLogin(login, LoginDto.class);
-        result.setToken(token);
+        result.setAccessToken(token);
+        //删除验证码
+        redisTemplate.delete(code);
         return result;
     }
 
