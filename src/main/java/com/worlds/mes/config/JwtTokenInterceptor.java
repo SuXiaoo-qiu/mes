@@ -33,6 +33,10 @@ public class JwtTokenInterceptor extends HandlerInterceptorAdapter {
         if (path.contains("swagger") || path.contains("doc")) {
             return true;
         }
+        if (request.getMethod().equals("OPTIONS")) {
+            //设置了登录全局拦截，会导致跨域的OPTIONS尝试请求被拦截，这里放开
+            return true;
+        }
 
         String token = request.getHeader("Authorization");
         // 校验 Token

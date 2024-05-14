@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 @Api(value = "验证码",tags = "验证码")
 @RestController
+@CrossOrigin //跨域
 @RequestMapping("/sys")
 public class CodeController extends BaseController {
 
