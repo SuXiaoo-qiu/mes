@@ -30,6 +30,8 @@ public interface UrlMapping {
     String LIST_ALL_BY_PARAM = "/listAllByParam";
     // 不分页查询
     String LIST_ALL_BY_PARAM_NO_PAGE = "/listAllByParamNoPage";
+    // 新增或更新
+    String INSERT_OR_UPDATE = "/insetOrUpdate";
 
     /**
      * login

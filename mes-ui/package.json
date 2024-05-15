@@ -1,0 +1,43 @@
+{
+  "name": "vue3-element-plus-admin",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite --mode development --host",
+    "prod": "vite --mode production",
+    "test": "vite --mode testing",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "build:test": "vite build --mode testing",
+    "deploy": "vite build --mode production && cross-env NODE_ENV=production node ./deploy",
+    "preview": "vite preview --port 4173",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@wangeditor/editor-for-vue": "^5.1.12",
+    "axios": "^1.6.1",
+    "codemirror-editor-vue3": "^2.1.7",
+    "element-plus": "^2.4.2",
+    "js-cookie": "^3.0.5",
+    "json-editor-vue3": "^1.0.8",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.7",
+    "spark-md5": "^3.0.2",
+    "vue": "^3.3.8",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "cross-env": "^7.0.3",
+    "echarts": "^5.4.2",
+    "eslint": "^8.34.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "ora": "^5.4.1",
+    "qs": "^6.11.1",
+    "sass": "^1.60.0",
+    "sass-loader": "^13.2.1",
+    "scp2": "^0.5.0",
+    "unplugin-auto-import": "^0.15.2",
+    "unplugin-vue-components": "^0.24.1",
+    "vite": "^4.1.4"
+  }
+}
