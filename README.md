@@ -6,7 +6,7 @@
 
 2.该项目是基于springboot 开发的mes系统
 
-3.使用到的技术 springboot + mybatis + mybatisPlus + mysql + redis + rabbitmq + jwt 
+3.使用到的技术 springboot + mybatis + mybatisPlus + mysql + redis + rabbitmq(mqtt) + jwt 
           前端:vue3+ts
 
 4.实现功能:
